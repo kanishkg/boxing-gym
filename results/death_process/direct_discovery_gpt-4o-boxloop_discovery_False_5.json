@@ -1,0 +1,164 @@
+{
+    "config": {
+        "seed": 5,
+        "include_prior": false,
+        "use_ppl": true,
+        "llms": {
+            "model_name": "gpt-4o",
+            "temperature": 0.0,
+            "max_tokens": 512
+        },
+        "exp": {
+            "num_experiments": [
+                10
+            ],
+            "experiment_type": "discovery"
+        },
+        "envs": {
+            "num_evals": 10,
+            "env_name": "death_process",
+            "goal_name": "direct_discovery",
+            "com_limit": 200,
+            "env_params": {
+                "N": 50,
+                "mu": 1,
+                "sigma": 1,
+                "lower_bound": 0
+            }
+        }
+    },
+    "data": {
+        "results": [
+            [
+                [
+                    158.7,
+                    120.71375232342005
+                ],
+                [
+                    "The final result is 15.\n Respond with a positive integer.",
+                    "The final result is 15.\n Respond with a positive integer.",
+                    "The final result is 15.\n Respond with a positive integer.",
+                    "The final result is 15.\n Respond with a positive integer.",
+                    "The final result is 15.\n Respond with a positive integer.",
+                    "The final result is 15.\n Respond with a positive integer.",
+                    "The final result is 15.\n Respond with a positive integer.",
+                    "The final result is 15.\n Respond with a positive integer.",
+                    "The final result is 15.\n Respond with a positive integer.",
+                    "The final result is 15.\n Respond with a positive integer."
+                ],
+                [
+                    32,
+                    26,
+                    36,
+                    7,
+                    24,
+                    6,
+                    29,
+                    16,
+                    27,
+                    28
+                ],
+                [
+                    "15",
+                    "15",
+                    "15",
+                    "15",
+                    "15",
+                    "15",
+                    "15",
+                    "15",
+                    "15",
+                    "15"
+                ]
+            ]
+        ],
+        "queries": [
+            "0.1",
+            "0.2",
+            "0.3",
+            "0.4",
+            "0.5",
+            "0.6",
+            "0.7",
+            "0.8",
+            "0.9",
+            "1.0"
+        ],
+        "observations": [
+            4,
+            3,
+            11,
+            9,
+            12,
+            15,
+            15,
+            15,
+            15,
+            15
+        ],
+        "successes": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "explanations": [
+            "Based on the experimental data and the inferred parameters from the statistical model, we can understand the relationship between the input (a float between 0 and 2) and the output (a positive integer between 1 and 50).\n\nThe model suggests that the output is influenced by a linear combination of the input values, transformed through an exponential function. Specifically, the output is modeled as a Poisson distribution with a rate parameter (\u03bb) that is an exponential function of the input. The inferred parameters, \u03b20 and \u03b21, indicate the coefficients of this linear combination.\n\nThe relationship can be summarized as follows:\n- The output is generally increasing with the input, but not in a simple linear fashion.\n- For inputs between 0.1 and 0.5, the output fluctuates significantly, indicating a non-linear relationship.\n- For inputs from 0.6 to 0.9, the output remains constant at 15, suggesting a plateau.\n\nGiven this, when predicting the output for new inputs:\n- Expect fluctuations for inputs below 0.6.\n- For inputs between 0.6 and 0.9, predict an output of 15.\n- Beyond 0.9, further experimentation would be needed to confirm the trend, but it might continue the plateau or change.\n\nThis conceptual understanding should help in making more informed predictions about the output for different input values."
+        ],
+        "eigs": []
+    },
+    "scientist_messages": [
+        "role:system, messaage:You are observing a positive integer (with a maximum value of 50) for a positive real input.\nYour goal is to conduct experiments and explain the environment to the user so that they can achieve their goal.The goal of the user is to reliably predict the positive integer output of the environment for different float inputs. Conduct experiments to learn about the environment.\nThe input must be greater than 0 and less than 2.\nHere is an example:\n<thought> your thought </thought>\n<observe>0.1</observe>\nWhen asked to answer a question about the environement, respond in the format specified in the question.\n<thought> your thought </thought>\n<answer> your answer </answer>\n",
+        "role:user, messaage:Think about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\n<thought>your thought</thought>\n<observe> your observation</observe>\nMake an observation now.",
+        "role:assistant, messaage:<thought>To understand the relationship between the input and the output, I will start by observing the output at the lower boundary of the input range. This will help establish a baseline. I will then incrementally increase the input to see how the output changes. I will start with an input of 0.1.</thought>\n<observe>0.1</observe>",
+        "role:user, messaage:Result: 4\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since the output for an input of 0.1 is 4, I will now observe the output at a slightly higher input value to see if there is a linear or non-linear relationship. I will choose an input of 0.2 to see how the output changes.</thought>\n<observe>0.2</observe>",
+        "role:user, messaage:Result: 3\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output decreased when the input increased from 0.1 to 0.2. This suggests that the relationship might not be linear. To further investigate, I will choose an input of 0.3 to see if the trend continues or if there is a different pattern.</thought>\n<observe>0.3</observe>",
+        "role:user, messaage:Result: 11\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output increased significantly when the input was changed from 0.2 to 0.3, indicating a non-linear relationship. To further understand the pattern, I will choose an input of 0.4 to see if the output continues to increase or if there is another change in the trend.</thought>\n<observe>0.4</observe>",
+        "role:user, messaage:Result: 9\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output decreased when the input increased from 0.3 to 0.4, suggesting a complex, non-linear relationship. To further investigate, I will choose an input of 0.5 to see if the output continues to decrease or if there is another change in the trend.</thought>\n<observe>0.5</observe>",
+        "role:user, messaage:Result: 12\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output increased again when the input was changed from 0.4 to 0.5, reinforcing the idea of a non-linear relationship. To further explore this pattern, I will choose an input of 0.6 to see if the output continues to increase or if there is another change in the trend.</thought>\n<observe>0.6</observe>",
+        "role:user, messaage:Result: 15\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output increased again when the input was changed from 0.5 to 0.6. This suggests that the output might be increasing with some fluctuations. To further investigate, I will choose an input of 0.7 to see if the output continues to increase or if there is another change in the trend.</thought>\n<observe>0.7</observe>",
+        "role:user, messaage:Result: 15\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output remained the same when the input was changed from 0.6 to 0.7. This suggests that there might be intervals where the output remains constant. To further investigate this, I will choose an input of 0.8 to see if the output changes or remains the same.</thought>\n<observe>0.8</observe>",
+        "role:user, messaage:Result: 15\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output has remained constant at 15 for inputs 0.6, 0.7, and 0.8. This suggests a plateau in the output values. To determine if this plateau continues, I will choose an input of 0.9 to see if the output remains the same or changes.</thought>\n<observe>0.9</observe>",
+        "role:user, messaage:Result: 15\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output has remained constant at 15 for inputs 0.6 through 0.9, indicating a sustained plateau. To determine if this plateau continues or if there is a change, I will choose an input of 1.0 to see if the output remains the same or changes.</thought>\n<observe>1.0</observe>",
+        "role:user, messaage:Assume that the user has no prior knowledge, and will not be able to run any experiments before making predictions. \nThey will make predictions based solely on your explanation, so provide as much detail as possible. You cannot provide your own experiments or observations.\nLimit your explanation to 200 words.To make your explanation clearer and more informative, look at the statistical model (written in pymc) designed by a colleague for the experimental data and the inferred parameters. \nHere is the statistical model. \n import pymc as pm\nimport numpy as np\nimport pandas as pd\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    x1_data = observed_data['x1'].values\n    y_data = observed_data['y'].values\n    \n    rng1 = np.random.default_rng(42)\n    rng2 = np.random.default_rng(314)\n    \n    with pm.Model() as model:\n        # Create a pm.MutableData object for each non-observation column\n        x1 = pm.MutableData(\"x1\", x1_data, dims=\"obs_id\")\n        \n        # Priors for the coefficients\n        beta0 = pm.Normal(\"beta0\", mu=0, sigma=10)\n        beta1 = pm.Normal(\"beta1\", mu=0, sigma=10)\n        \n        # Linear model for the rate parameter of the Poisson distribution\n        lambda_ = pm.math.exp(beta0 + beta1 * x1)\n        \n        # Likelihood\n        y_obs = pm.Poisson(\"y_obs\", mu=lambda_, observed=y_data, dims=\"obs_id\")\n        \n        # Sampling\n        trace = pm.sample(1000, tune=500, target_accept=0.90, chains=3, cores=1, random_seed=rng1, idata_kwargs={\"log_likelihood\": True})\n        posterior_predictive = pm.sample_posterior_predictive(trace, random_seed=rng2, return_inferencedata=False)\n        \n        return model, posterior_predictive, trace \nHere are the inferred params. \n beta0    1.692\nbeta1    1.221 \nDon't literally describe the model verbatim but use it to conceptually motivate your explanation.The agent will not be able to use the model explicitly but having a conceptual understanding will be beneficial.",
+        "role:assistant, messaage:Based on the experimental data and the inferred parameters from the statistical model, we can understand the relationship between the input (a float between 0 and 2) and the output (a positive integer between 1 and 50).\n\nThe model suggests that the output is influenced by a linear combination of the input values, transformed through an exponential function. Specifically, the output is modeled as a Poisson distribution with a rate parameter (\u03bb) that is an exponential function of the input. The inferred parameters, \u03b20 and \u03b21, indicate the coefficients of this linear combination.\n\nThe relationship can be summarized as follows:\n- The output is generally increasing with the input, but not in a simple linear fashion.\n- For inputs between 0.1 and 0.5, the output fluctuates significantly, indicating a non-linear relationship.\n- For inputs from 0.6 to 0.9, the output remains constant at 15, suggesting a plateau.\n\nGiven this, when predicting the output for new inputs:\n- Expect fluctuations for inputs below 0.6.\n- For inputs between 0.6 and 0.9, predict an output of 15.\n- Beyond 0.9, further experimentation would be needed to confirm the trend, but it might continue the plateau or change.\n\nThis conceptual understanding should help in making more informed predictions about the output for different input values."
+    ],
+    "naive_messages": [
+        "role:system, messaage:Your goal is to predict the positive integer output of the environment for different float inputs.\nYou must respond with a positive integer. You may also think before providing your predictions.\nHere is an example:\n<thought>your thought</thought>\n<answer>1</answer\nHere is what you know about the enivronment:\nBased on the experimental data and the inferred parameters from the statistical model, we can understand the relationship between the input (a float between 0 and 2) and the output (a positive integer between 1 and 50).\n\nThe model suggests that the output is influenced by a linear combination of the input values, transformed through an exponential function. Specifically, the output is modeled as a Poisson distribution with a rate parameter (\u03bb) that is an exponential function of the input. The inferred parameters, \u03b20 and \u03b21, indicate the coefficients of this linear combination.\n\nThe relationship can be summarized as follows:\n- The output is generally increasing with the input, but not in a simple linear fashion.\n- For inputs between 0.1 and 0.5, the output fluctuates significantly, indicating a non-linear relationship.\n- For inputs from 0.6 to 0.9, the output remains constant at 15, suggesting a plateau.\n\nGiven this, when predicting the output for new inputs:\n- Expect fluctuations for inputs below 0.6.\n- For inputs between 0.6 and 0.9, predict an output of 15.\n- Beyond 0.9, further experimentation would be needed to confirm the trend, but it might continue the plateau or change.\n\nThis conceptual understanding should help in making more informed predictions about the output for different input values.",
+        "role:user, messaage:The final result is 15.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>15</answer>",
+        "role:user, messaage:The final result is 15.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>15</answer>",
+        "role:user, messaage:The final result is 15.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>15</answer>",
+        "role:user, messaage:The final result is 15.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>15</answer>",
+        "role:user, messaage:The final result is 15.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>15</answer>",
+        "role:user, messaage:The final result is 15.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>15</answer>",
+        "role:user, messaage:The final result is 15.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>15</answer>",
+        "role:user, messaage:The final result is 15.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>15</answer>",
+        "role:user, messaage:The final result is 15.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>15</answer>",
+        "role:user, messaage:The final result is 15.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>15</answer>"
+    ]
+}

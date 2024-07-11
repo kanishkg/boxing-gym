@@ -1,0 +1,178 @@
+{
+    "config": {
+        "seed": 5,
+        "include_prior": true,
+        "use_ppl": false,
+        "llms": {
+            "model_name": "gpt-4o",
+            "temperature": 0.0,
+            "max_tokens": 512
+        },
+        "exp": {
+            "num_experiments": [
+                10
+            ],
+            "experiment_type": "discovery"
+        },
+        "envs": {
+            "num_evals": 10,
+            "env_name": "irt",
+            "goal_name": "direct_discovery",
+            "com_limit": 200,
+            "env_params": {
+                "num_students": 6,
+                "num_questions": 6,
+                "mode": "2pl"
+            }
+        }
+    },
+    "data": {
+        "results": [
+            [
+                [
+                    0.19999999999999996,
+                    0.4
+                ],
+                [
+                    "The final result is 1.\nWill student 3 answer question 5 correctly?",
+                    "The final result is 1.\nWill student 3 answer question 0 correctly?",
+                    "The final result is 1.\nWill student 1 answer question 5 correctly?",
+                    "The final result is 1.\nWill student 1 answer question 2 correctly?",
+                    "The final result is 1.\nWill student 1 answer question 2 correctly?",
+                    "The final result is 1.\nWill student 0 answer question 4 correctly?",
+                    "The final result is 1.\nWill student 4 answer question 1 correctly?",
+                    "The final result is 1.\nWill student 2 answer question 4 correctly?",
+                    "The final result is 1.\nWill student 1 answer question 3 correctly?",
+                    "The final result is 1.\nWill student 4 answer question 4 correctly?"
+                ],
+                [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    "0",
+                    "1",
+                    "0",
+                    "1",
+                    "1",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                ]
+            ]
+        ],
+        "queries": [
+            "[0, 0]",
+            "[0, 1]",
+            "[1, 1]",
+            "[2, 1]",
+            "[3, 1]",
+            "[4, 1]",
+            "[1, 0]",
+            "[2, 0]",
+            "[3, 0]",
+            "[3, 2]",
+            "[0, 2]",
+            "[1, 2]",
+            "[4, 2]"
+        ],
+        "observations": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            "You cannot query this observation, try again.",
+            1,
+            1,
+            "You cannot query this observation, try again.",
+            1,
+            1,
+            "You cannot query this observation, try again.",
+            1
+        ],
+        "successes": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            false,
+            true,
+            true,
+            false,
+            true,
+            true,
+            false,
+            true
+        ],
+        "explanations": [
+            "Based on the observations made, we can infer some patterns about the students and the questions:\n\n1. **Question 0**: Students 0, 1, and 2 all answered question 0 correctly. This suggests that question 0 might be relatively easy.\n2. **Question 1**: Students 0, 1, 2, and 3 all answered question 1 incorrectly. This strongly indicates that question 1 is difficult.\n3. **Question 2**: Students 0 and 3 answered question 2 correctly. This suggests that question 2 might be easier, but more data is needed to confirm this.\n\nFrom these observations, we can make some general predictions:\n- If a student is asked question 0, they are likely to answer it correctly.\n- If a student is asked question 1, they are likely to answer it incorrectly.\n- If a student is asked question 2, there is a good chance they will answer it correctly, but this is less certain than for question 0.\n\nFor other questions (3, 4, and 5), no data has been collected, so no reliable predictions can be made for those."
+        ],
+        "eigs": []
+    },
+    "scientist_messages": [
+        "role:system, messaage:There are 6 students and 6 questions.\nYour goal is to conduct experiments and explain the environment to the user so that they can achieve their goal.The goal of the user is to be able to reliably predict the correctness of a student's answer to a specific question. Respond with 1 if you think the student will respond correctly and with 0 if you think the student will answer incorrectly. Conduct experiments to learn about the environment.\nYou may query a student-question pair to check if a student got a specific question right or wrong.\nStudent IDs range from 0 to 5 and question IDs range from 0 to 5.\nMake observations about the students and questions by specifying a single student-question pair in the following format: [student_id, question_id]\nThe environment will respond with the correctness of the student's answer to the question.\n\nYou can think before making an observation by providing your thoughts in <thought>.\n\nHere is an example:\n<thought> your thought </thought>\n<observe>[1, 3](student 1 and question 3)</observe>\nWhen asked to answer a question about the environement, respond in the format specified in the question.\n<thought> your thought </thought>\n<answer> your answer </answer>\n",
+        "role:user, messaage:Think about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\n<thought>your thought</thought>\n<observe> your observation</observe>\nMake an observation now.",
+        "role:assistant, messaage:<thought>To start understanding the environment, I will choose a student and a question at random. This will give me an initial data point to work with. I will start with student 0 and question 0.</thought>\n<observe>[0, 0]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since student 0 answered question 0 correctly, I will now check if student 0 answers another question correctly. This will help me determine if student 0 is generally good at answering questions or if it was specific to question 0. I will choose question 1 for student 0.</thought>\n<observe>[0, 1]</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since student 0 answered question 1 incorrectly, it suggests that student 0's performance may vary by question. To gather more data, I will now check another student on the same question (question 1) to see if the difficulty of the question might be a factor. I will choose student 1 for question 1.</thought>\n<observe>[1, 1]</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since both student 0 and student 1 answered question 1 incorrectly, it might indicate that question 1 is difficult. To further investigate this, I will check if another student also answers question 1 incorrectly. I will choose student 2 for question 1.</thought>\n<observe>[2, 1]</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since students 0, 1, and 2 all answered question 1 incorrectly, it strongly suggests that question 1 is difficult. To confirm this pattern, I will check if another student also answers question 1 incorrectly. I will choose student 3 for question 1.</thought>\n<observe>[3, 1]</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since four students (0, 1, 2, and 3) have all answered question 1 incorrectly, it is highly likely that question 1 is very difficult. To further confirm this, I will check if another student also answers question 1 incorrectly. I will choose student 4 for question 1.</thought>\n<observe>[4, 1]</observe>",
+        "role:user, messaage:You cannot query this observation, try again.",
+        "role:assistant, messaage:<thought>Since querying student 4 for question 1 is not allowed, I will shift my focus to another question to gather more data. I will choose a different question for a student who has not been queried yet. I will select student 1 for question 0 to see if student 1 can answer a different question correctly.</thought>\n<observe>[1, 0]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since student 1 answered question 0 correctly, it suggests that student 1 can answer some questions correctly, and the difficulty of question 1 might be the reason for the incorrect answers. To further explore the performance of another student on a different question, I will now check student 2 on question 0.</thought>\n<observe>[2, 0]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since students 0, 1, and 2 have all answered question 0 correctly, it suggests that question 0 might be easier compared to question 1. To further confirm this pattern, I will check if another student also answers question 0 correctly. I will choose student 3 for question 0.</thought>\n<observe>[3, 0]</observe>",
+        "role:user, messaage:You cannot query this observation, try again.",
+        "role:assistant, messaage:<thought>Since querying student 3 for question 0 is not allowed, I will shift my focus to another student and question combination. I will now check student 3 for question 2 to gather more data on both the student's performance and the difficulty of question 2.</thought>\n<observe>[3, 2]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since student 3 answered question 2 correctly, it suggests that student 3 can answer some questions correctly. To gather more data on the difficulty of question 2, I will now check if another student can also answer question 2 correctly. I will choose student 0 for question 2.</thought>\n<observe>[0, 2]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since both student 3 and student 0 answered question 2 correctly, it suggests that question 2 might be easier. To further confirm this, I will check if another student can also answer question 2 correctly. I will choose student 1 for question 2.</thought>\n<observe>[1, 2]</observe>",
+        "role:user, messaage:You cannot query this observation, try again.",
+        "role:assistant, messaage:<thought>Since querying student 1 for question 2 is not allowed, I will shift my focus to another student and question combination. I will now check student 4 for question 2 to gather more data on both the student's performance and the difficulty of question 2.</thought>\n<observe>[4, 2]</observe>",
+        "role:user, messaage:Assume that the user has no prior knowledge, and will not be able to run any experiments before making predictions. \nThey will make predictions based solely on your explanation, so provide as much detail as possible. You CANNOT provide your own experiments or observations.\nLimit your explanation to 200 words.",
+        "role:assistant, messaage:Based on the observations made, we can infer some patterns about the students and the questions:\n\n1. **Question 0**: Students 0, 1, and 2 all answered question 0 correctly. This suggests that question 0 might be relatively easy.\n2. **Question 1**: Students 0, 1, 2, and 3 all answered question 1 incorrectly. This strongly indicates that question 1 is difficult.\n3. **Question 2**: Students 0 and 3 answered question 2 correctly. This suggests that question 2 might be easier, but more data is needed to confirm this.\n\nFrom these observations, we can make some general predictions:\n- If a student is asked question 0, they are likely to answer it correctly.\n- If a student is asked question 1, they are likely to answer it incorrectly.\n- If a student is asked question 2, there is a good chance they will answer it correctly, but this is less certain than for question 0.\n\nFor other questions (3, 4, and 5), no data has been collected, so no reliable predictions can be made for those."
+    ],
+    "naive_messages": [
+        "role:system, messaage:Your goal is to predict the correctness of a student's answer to a specific question. Respond with 1 if you think the student will respond correctly and with 0 if you think the student will answer incorrectly.You will be provided with a student ID and a question ID. Respond with 1 if you think the student will respond correctly and with 0 if you think the student will answer incorrectly.Here is what you know about the enivronment:\nBased on the observations made, we can infer some patterns about the students and the questions:\n\n1. **Question 0**: Students 0, 1, and 2 all answered question 0 correctly. This suggests that question 0 might be relatively easy.\n2. **Question 1**: Students 0, 1, 2, and 3 all answered question 1 incorrectly. This strongly indicates that question 1 is difficult.\n3. **Question 2**: Students 0 and 3 answered question 2 correctly. This suggests that question 2 might be easier, but more data is needed to confirm this.\n\nFrom these observations, we can make some general predictions:\n- If a student is asked question 0, they are likely to answer it correctly.\n- If a student is asked question 1, they are likely to answer it incorrectly.\n- If a student is asked question 2, there is a good chance they will answer it correctly, but this is less certain than for question 0.\n\nFor other questions (3, 4, and 5), no data has been collected, so no reliable predictions can be made for those.",
+        "role:user, messaage:The final result is 1.\nWill student 3 answer question 5 correctly?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 1.\nWill student 3 answer question 0 correctly?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>1</answer>",
+        "role:user, messaage:The final result is 1.\nWill student 1 answer question 5 correctly?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 1.\nWill student 1 answer question 2 correctly?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>1</answer>",
+        "role:user, messaage:The final result is 1.\nWill student 1 answer question 2 correctly?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>1</answer>.",
+        "role:user, messaage:The final result is 1.\nWill student 0 answer question 4 correctly?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>.",
+        "role:user, messaage:The final result is 1.\nWill student 4 answer question 1 correctly?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 1.\nWill student 2 answer question 4 correctly?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 1.\nWill student 1 answer question 3 correctly?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 1.\nWill student 4 answer question 4 correctly?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>"
+    ]
+}

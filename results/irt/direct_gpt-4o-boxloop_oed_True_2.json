@@ -1,0 +1,233 @@
+{
+    "config": {
+        "seed": 2,
+        "include_prior": true,
+        "use_ppl": true,
+        "llms": {
+            "model_name": "gpt-4o",
+            "temperature": 0.0,
+            "max_tokens": 512
+        },
+        "exp": {
+            "num_experiments": [
+                0,
+                5,
+                10
+            ],
+            "experiment_type": "oed"
+        },
+        "envs": {
+            "num_evals": 10,
+            "env_name": "irt",
+            "goal_name": "direct",
+            "com_limit": 200,
+            "env_params": {
+                "num_students": 6,
+                "num_questions": 6,
+                "mode": "2pl"
+            }
+        }
+    },
+    "data": {
+        "results": [
+            [
+                [
+                    0.5,
+                    0.5
+                ],
+                [
+                    "(2, 3)",
+                    "(0, 2)",
+                    "(1, 3)",
+                    "(5, 2)",
+                    "(4, 4)",
+                    "(4, 5)",
+                    "(3, 4)",
+                    "(1, 2)",
+                    "(5, 0)",
+                    "(1, 2)"
+                ],
+                [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    "1",
+                    "1",
+                    "0",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "0",
+                    "1"
+                ]
+            ],
+            [
+                [
+                    0.6,
+                    0.4898979485566356
+                ],
+                [
+                    "(2, 3)",
+                    "(0, 2)",
+                    "(1, 3)",
+                    "(5, 2)",
+                    "(4, 4)",
+                    "(4, 5)",
+                    "(3, 4)",
+                    "(1, 2)",
+                    "(5, 0)",
+                    "(1, 2)"
+                ],
+                [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    "0",
+                    "0",
+                    "1",
+                    "0",
+                    "0",
+                    "0",
+                    "1",
+                    "1",
+                    "0",
+                    "0"
+                ]
+            ],
+            [
+                [
+                    0.5,
+                    0.5
+                ],
+                [
+                    "(2, 3)",
+                    "(0, 2)",
+                    "(1, 3)",
+                    "(5, 2)",
+                    "(4, 4)",
+                    "(4, 5)",
+                    "(3, 4)",
+                    "(1, 2)",
+                    "(5, 0)",
+                    "(1, 2)"
+                ],
+                [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    "1",
+                    "0",
+                    "1",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1",
+                    "0",
+                    "1"
+                ]
+            ]
+        ],
+        "queries": [
+            "[0, 0]",
+            "[1, 1]",
+            "[2, 2]",
+            "[3, 3]",
+            "[4, 4]",
+            "[4, 0]",
+            "[5, 1]",
+            "[0, 1]",
+            "[2, 1]",
+            "[1, 0]",
+            "[3, 0]"
+        ],
+        "observations": [
+            0,
+            1,
+            0,
+            1,
+            "You cannot query this observation, try again.",
+            0,
+            0,
+            0,
+            1,
+            1,
+            0
+        ],
+        "successes": [
+            true,
+            true,
+            true,
+            true,
+            false,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "explanations": [],
+        "eigs": [],
+        "programs": [
+            "### High-Level Probabilistic Program Sketch\n\n1. **Modeling the Data**:\n   - We have 6 students and 6 questions.\n   - Each student-question pair results in a binary outcome (correct or incorrect).\n   - We will model the probability of a student answering a question correctly using a logistic regression framework.\n   - The probability of correctness can be influenced by both student-specific and question-specific factors.\n\n2. **Hypotheses**:\n   - **H1**: Each student has an inherent ability that affects their probability of answering questions correctly.\n   - **H2**: Each question has an inherent difficulty that affects the probability of being answered correctly.\n   - **H3**: The correctness of a student's answer can be modeled using a logistic function of the student's ability and the question's difficulty.\n\n### Probabilistic Program\n\n```python\nimport pymc as pm\nimport numpy as np\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    student_ids = observed_data['student_id'].to_numpy()\n    question_ids = observed_data['question_id'].to_numpy()\n    \n    rng1 = np.random.default_rng(42)\n    rng2 = np.random.default_rng(314)\n    \n    with pm.Model() as model:\n        # Create pm.MutableData objects for each non-observation column\n        student_id = pm.MutableData(\"student_id\", student_ids, dims=\"obs_id\")\n        question_id = pm.MutableData(\"question_id\", question_ids, dims=\"obs_id\")\n        \n        # Priors for student abilities and question difficulties\n        student_ability = pm.Normal(\"student_ability\", mu=0, sigma=1, shape=6)\n        question_difficulty = pm.Normal(\"question_difficulty\", mu=0, sigma=1, shape=6)\n        \n        # Logistic regression model for the probability of correctness\n        logit_p = student_ability[student_id] - question_difficulty[question_id]\n        p = pm.Deterministic(\"p\", pm.math.sigmoid(logit_p))\n        \n        # Likelihood of observations\n        y_obs = pm.Bernoulli(\"y_obs\", p=p, observed=None, dims=\"obs_id\")\n        \n        # Sample from the prior\n        prior_predictive = pm.sample_prior_predictive(samples=1000, random_seed=rng2, return_inferencedata=False)\n        \n        return model, prior_predictive\n\n# Example usage:\n# observed_data = pd.DataFrame({\n#     'student_id': [0, 1, 2, 3, 4, 5],\n#     'question_id': [0, 1, 2, 3, 4, 5]\n# })\n# model, prior_predictive = gen_model(observed_data)\n```\n\n### Explanation of the Code\n\n1. **Data Conversion**:\n   - Convert the `student_id` and `question_id` columns from the observed data to numpy arrays.\n\n2. **Model Definition**:\n   - Create a PyMC model context.\n   - Define `student_id` and `question_id` as `pm.MutableData` objects with `dims=\"obs_id\"`.\n\n3. **Priors**:\n   - Define priors for `student_ability` and `question_difficulty` using normal distributions.\n\n4. **Logistic Regression**:\n   - Compute the logit of the probability of correctness as the difference between student ability and question difficulty.\n   - Apply the sigmoid function to get the probability `p`.\n\n5. **Likelihood**:\n   - Define the likelihood of the observations using a Bernoulli distribution with the computed probability `p`.\n   - Set `observed=None` to indicate that we are not using actual observations for this step.\n\n6. **Sampling from the Prior**:\n   - Sample from the prior predictive distribution to generate prior samples.\n\n7. **Return**:\n   - Return the model and the prior predictive samples.\n\nThis program sets up a generative model for the data, allowing us to sample from the prior distribution and understand the underlying structure of the data.",
+            "### High-Level Probabilistic Program Sketch\n\nGiven the dataset, we need to model the probability of a student answering a question correctly. This can be influenced by both the student's ability and the question's difficulty. A common approach to model such binary outcomes is to use logistic regression.\n\n**Hypotheses:**\n1. Each student has an inherent ability to answer questions correctly.\n2. Each question has an inherent difficulty.\n3. The probability of a correct answer is a function of both the student's ability and the question's difficulty.\n\n**Plan:**\n1. Model the student's ability as a latent variable.\n2. Model the question's difficulty as a latent variable.\n3. Use a logistic function to model the probability of a correct answer based on the student's ability and the question's difficulty.\n\n### Probabilistic Program\n\n```python\nimport pymc as pm\nimport numpy as np\nimport pandas as pd\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    student_ids = observed_data['student_id'].values\n    question_ids = observed_data['question_id'].values\n    correctness = observed_data['correctness'].values\n\n    rng1 = np.random.default_rng(42)\n    rng2 = np.random.default_rng(314)\n\n    with pm.Model() as model:\n        # Create pm.MutableData objects for each non-observation column\n        student_id = pm.MutableData(\"student_id\", student_ids, dims=\"obs_id\")\n        question_id = pm.MutableData(\"question_id\", question_ids, dims=\"obs_id\")\n\n        # Priors for student abilities and question difficulties\n        student_ability = pm.Normal(\"student_ability\", mu=0, sigma=1, shape=6)\n        question_difficulty = pm.Normal(\"question_difficulty\", mu=0, sigma=1, shape=6)\n\n        # Logistic regression model\n        logit_p = student_ability[student_id] - question_difficulty[question_id]\n        p = pm.Deterministic(\"p\", pm.math.sigmoid(logit_p))\n\n        # Likelihood\n        y_obs = pm.Bernoulli(\"y_obs\", p=p, observed=correctness, dims=\"obs_id\")\n\n        # Sampling\n        trace = pm.sample(1000, tune=500, target_accept=0.90, chains=3, cores=1, random_seed=rng1, idata_kwargs={\"log_likelihood\": True})\n        posterior_predictive = pm.sample_posterior_predictive(trace, random_seed=rng2, return_inferencedata=False)\n\n        return model, posterior_predictive, trace\n```\n\n### Explanation of the Code\n\n1. **Data Preparation:**\n   - Convert the columns of the observed data to numpy arrays for easier manipulation.\n   - Create `pm.MutableData` objects for `student_id` and `question_id` to allow for future updates to the data.\n\n2. **Model Definition:**\n   - Define priors for `student_ability` and `question_difficulty` using normal distributions.\n   - Use a logistic function to model the probability of a correct answer (`p`) based on the difference between the student's ability and the question's difficulty.\n   - Define the likelihood of the observed data (`y_obs`) using a Bernoulli distribution with the probability `p`.\n\n3. **Sampling:**\n   - Sample from the posterior distribution using `pm.sample` with specified parameters for tuning and random seeds for reproducibility.\n   - Sample from the posterior predictive distribution to generate predictions.\n\nThis model should capture the influence of both student ability and question difficulty on the probability of a correct answer. If there are discrepancies between the actual data and the sampled data, we can revise the model in subsequent rounds.",
+            "### High-Level Probabilistic Program Sketch\n\nGiven the dataset, we need to model the correctness of a student's answer to a question. The correctness is binary (0 or 1), so a Bernoulli distribution is appropriate for the likelihood. We can assume that each student has a certain ability and each question has a certain difficulty. The probability of a student answering a question correctly can be modeled using a logistic function of the difference between the student's ability and the question's difficulty.\n\n**Hypotheses:**\n1. Each student has an inherent ability.\n2. Each question has an inherent difficulty.\n3. The probability of a correct answer is a logistic function of the difference between ability and difficulty.\n\n### Plan\n1. Define priors for student abilities and question difficulties.\n2. Use a logistic function to model the probability of a correct answer.\n3. Define the likelihood using a Bernoulli distribution.\n\n### Program\n```python\nimport pymc as pm\nimport numpy as np\nimport pandas as pd\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    student_ids = observed_data['student_id'].to_numpy()\n    question_ids = observed_data['question_id'].to_numpy()\n    correctness = observed_data['correctness'].to_numpy()\n\n    rng1 = np.random.default_rng(42)\n    rng2 = np.random.default_rng(314)\n\n    with pm.Model() as model:\n        # Create pm.MutableData objects for each non-observation column\n        student_id = pm.MutableData(\"student_id\", student_ids, dims=\"obs_id\")\n        question_id = pm.MutableData(\"question_id\", question_ids, dims=\"obs_id\")\n\n        # Priors for student abilities and question difficulties\n        student_ability = pm.Normal(\"student_ability\", mu=0, sigma=1, shape=6)\n        question_difficulty = pm.Normal(\"question_difficulty\", mu=0, sigma=1, shape=6)\n\n        # Logistic function for the probability of correctness\n        logit_p = student_ability[student_id] - question_difficulty[question_id]\n        p = pm.Deterministic(\"p\", pm.math.sigmoid(logit_p))\n\n        # Likelihood\n        y_obs = pm.Bernoulli(\"y_obs\", p=p, observed=correctness, dims=\"obs_id\")\n\n        # Sampling\n        trace = pm.sample(1000, tune=500, target_accept=0.90, chains=3, cores=1, random_seed=rng1, idata_kwargs={\"log_likelihood\": True})\n        posterior_predictive = pm.sample_posterior_predictive(trace, random_seed=rng2, return_inferencedata=False)\n\n        return model, posterior_predictive, trace\n```\n\n### Explanation\n- **Priors**: We assume normal priors for student abilities and question difficulties.\n- **Logistic Function**: The probability of a correct answer is modeled using a logistic function of the difference between student ability and question difficulty.\n- **Likelihood**: The correctness of the answer is modeled using a Bernoulli distribution with the probability obtained from the logistic function.\n- **Sampling**: We sample from the posterior distribution and also generate posterior predictive samples for model evaluation.\n\nThis model should capture the relationship between student abilities, question difficulties, and the correctness of answers. In subsequent rounds, we can refine this model based on the discrepancies between the actual data and the sampled data."
+        ]
+    },
+    "scientist_messages": [
+        "role:system, messaage:There are 6 students and 6 questions.\nYour goal is to be able to reliably predict the correctness of a student's answer to a specific question. Respond with 1 if you think the student will respond correctly and with 0 if you think the student will answer incorrectly. Conduct experiments to learn about the environment and make predictions based on your observations.\nYou may query a student-question pair to check if a student got a specific question right or wrong.\nStudent IDs range from 0 to 5 and question IDs range from 0 to 5.\nMake observations about the students and questions by specifying a single student-question pair in the following format: [student_id, question_id]\nThe environment will respond with the correctness of the student's answer to the question.\n\nYou can think before making an observation by providing your thoughts in <thought>.\n\nHere is an example:\n<thought> your thought </thought>\n<observe>[1, 3](student 1 and question 3)</observe>\nWhen asked to answer a question about the environement, respond in the format specified in the question.\n<thought> your thought </thought>\n<answer> your answer </answer>\n",
+        "role:user, messaage:Think about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\n<thought>your thought</thought>\n<observe> your observation</observe>\nMake an observation now.",
+        "role:assistant, messaage:<thought>Given the program provided, it seems that the correctness of a student's answer is influenced by both the student's ability and the question's difficulty. To start, I should gather some initial data points to get a sense of the range of abilities and difficulties. I will begin by querying a few different students on different questions to get a diverse set of observations. This will help me understand the variability in both student abilities and question difficulties.\n\nI'll start with student 0 and question 0.</thought>\n<observe>[0, 0]</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Student 0 answered question 0 incorrectly. This gives me a data point suggesting that either student 0 has lower ability or question 0 is difficult, or both. To further understand the abilities and difficulties, I should now observe a different student on a different question. This will help me gather more diverse data points.\n\nNext, I'll observe student 1 on question 1.</thought>\n<observe>[1, 1]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Student 1 answered question 1 correctly. This suggests that either student 1 has higher ability or question 1 is easier, or both. To further understand the distribution of abilities and difficulties, I should continue to gather data from different students and questions.\n\nNext, I'll observe student 2 on question 2.</thought>\n<observe>[2, 2]</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Student 2 answered question 2 incorrectly. This suggests that either student 2 has lower ability or question 2 is difficult, or both. To continue building a diverse dataset, I should observe another student on a different question.\n\nNext, I'll observe student 3 on question 3.</thought>\n<observe>[3, 3]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Student 3 answered question 3 correctly. This suggests that either student 3 has higher ability or question 3 is easier, or both. To continue gathering a diverse set of observations, I should now observe another student on a different question.\n\nNext, I'll observe student 4 on question 4.</thought>\n<observe>[4, 4]</observe>",
+        "role:user, messaage:You cannot query this observation, try again.",
+        "role:assistant, messaage:<thought>It seems that querying student 4 on question 4 is not allowed. To continue gathering diverse data points, I will choose another student and question combination that hasn't been observed yet.\n\nNext, I'll observe student 4 on question 0.</thought>\n<observe>[4, 0]</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Student 4 answered question 0 incorrectly. This suggests that either student 4 has lower ability or question 0 is difficult, or both. To continue building a diverse dataset, I should observe another student on a different question.\n\nNext, I'll observe student 5 on question 1.</thought>\n<observe>[5, 1]</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Student 5 answered question 1 incorrectly. This suggests that either student 5 has lower ability or question 1 is difficult, or both. To continue gathering a diverse set of observations, I should now observe another student on a different question.\n\nNext, I'll observe student 0 on question 1 to see if the difficulty of question 1 is consistent across different students.</thought>\n<observe>[0, 1]</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Student 0 answered question 1 incorrectly. This suggests that question 1 might be difficult, as both student 0 and student 5 got it wrong. To further investigate the difficulty of question 1, I should observe another student on the same question.\n\nNext, I'll observe student 2 on question 1.</thought>\n<observe>[2, 1]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Student 2 answered question 1 correctly. This suggests that question 1 might not be universally difficult, and the ability of the student plays a significant role. To continue gathering a diverse set of observations, I should now observe another student on a different question.\n\nNext, I'll observe student 1 on question 0 to see if the difficulty of question 0 is consistent across different students.</thought>\n<observe>[1, 0]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Student 1 answered question 0 correctly. This suggests that question 0 might not be universally difficult, and the ability of the student plays a significant role. To continue gathering a diverse set of observations, I should now observe another student on a different question.\n\nNext, I'll observe student 3 on question 0 to further investigate the difficulty of question 0.</thought>\n<observe>[3, 0]</observe>"
+    ],
+    "naive_messages": null
+}

@@ -1,0 +1,231 @@
+{
+    "config": {
+        "seed": 1,
+        "include_prior": true,
+        "use_ppl": true,
+        "llms": {
+            "model_name": "gpt-4o",
+            "temperature": 0.0,
+            "max_tokens": 512
+        },
+        "exp": {
+            "num_experiments": [
+                0,
+                5,
+                10
+            ],
+            "experiment_type": "oed"
+        },
+        "envs": {
+            "num_evals": 10,
+            "env_name": "peregrines",
+            "goal_name": "direct",
+            "com_limit": 200,
+            "env_params": {
+                "lower_limit": 0,
+                "upper_limit": 5,
+                "alpha": 4.5,
+                "beta1": 1.2,
+                "beta2": 0.07,
+                "beta3": -0.24
+            }
+        }
+    },
+    "data": {
+        "results": [
+            [
+                [
+                    34518.7,
+                    28362.37914227225
+                ],
+                [
+                    "(2.3,)",
+                    "(1.1,)",
+                    "(2.5,)",
+                    "(3.0,)",
+                    "(2.3,)",
+                    "(1.3,)",
+                    "(0.3,)",
+                    "(1.9,)",
+                    "(0.7,)",
+                    "(0.9,)"
+                ],
+                [
+                    120,
+                    278,
+                    70,
+                    13,
+                    99,
+                    288,
+                    134,
+                    226,
+                    191,
+                    224
+                ],
+                [
+                    "0.06069806120234344",
+                    "-0.0599693145442902",
+                    "0.080809290493449",
+                    "0.13108736372121257",
+                    "0.06069806120234344",
+                    "-0.03985808525318464",
+                    "-0.14041423170871287",
+                    "0.020475602620131865",
+                    "-0.10019177312650154",
+                    "-0.08008054383539595"
+                ]
+            ],
+            [
+                [
+                    26105.1,
+                    23969.179800109974
+                ],
+                [
+                    "(2.3,)",
+                    "(1.1,)",
+                    "(2.5,)",
+                    "(3.0,)",
+                    "(2.3,)",
+                    "(1.3,)",
+                    "(0.3,)",
+                    "(1.9,)",
+                    "(0.7,)",
+                    "(0.9,)"
+                ],
+                [
+                    120,
+                    278,
+                    70,
+                    13,
+                    99,
+                    288,
+                    134,
+                    226,
+                    191,
+                    224
+                ],
+                [
+                    "40.06964012798199",
+                    "27.104136695408904",
+                    "41.900566120345125",
+                    "48.07296844750482",
+                    "41.103399960215434",
+                    "27.577307051740927",
+                    "18.804275690201973",
+                    "35.80495172089542",
+                    "22.43023974103306",
+                    "25.936404302945927"
+                ]
+            ],
+            [
+                [
+                    7559.8,
+                    8537.762175183847
+                ],
+                [
+                    "(2.3,)",
+                    "(1.1,)",
+                    "(2.5,)",
+                    "(3.0,)",
+                    "(2.3,)",
+                    "(1.3,)",
+                    "(0.3,)",
+                    "(1.9,)",
+                    "(0.7,)",
+                    "(0.9,)"
+                ],
+                [
+                    120,
+                    278,
+                    70,
+                    13,
+                    99,
+                    288,
+                    134,
+                    226,
+                    191,
+                    224
+                ],
+                [
+                    "76.43166666666667",
+                    "147.12033333333332",
+                    "68.45366666666666",
+                    "51.994",
+                    "76.29333333333334",
+                    "131.99666666666667",
+                    "227.27966666666666",
+                    "94.846",
+                    "182.84333333333333",
+                    "163.848"
+                ]
+            ]
+        ],
+        "queries": [
+            "2.5",
+            "0",
+            "5",
+            "1.25",
+            "1.875",
+            "0.625",
+            "0.9375",
+            "3.75",
+            "3.125",
+            "2.8125"
+        ],
+        "observations": [
+            61,
+            84,
+            0,
+            279,
+            223,
+            171,
+            232,
+            0,
+            5,
+            22
+        ],
+        "successes": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "explanations": [],
+        "eigs": [],
+        "programs": [
+            "### High-Level Probabilistic Program Sketch\n\n1. **Modeling the Population Counts (C) Over Time (year):**\n   - **Hypothesis:** The population counts of Peregrines (C) over the years (year) can be modeled using a linear regression model with some noise.\n   - **Plan:**\n     - Use a linear model to describe the relationship between the year and the population counts.\n     - Introduce parameters for the slope and intercept of the linear model.\n     - Add a noise term to account for the variability in the population counts.\n\n### Probabilistic Program\n\n```python\nimport pymc as pm\nimport numpy as np\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    year = np.array(observed_data['year'])\n    \n    rng1 = np.random.default_rng(42)\n    rng2 = np.random.default_rng(314)\n    \n    with pm.Model() as model:\n        # Create a pm.MutableData object for each non-observation column\n        year_data = pm.MutableData(\"year\", year, dims=\"obs_id\")\n        \n        # Define priors for the slope and intercept of the linear model\n        slope = pm.Normal(\"slope\", mu=0, sigma=10)\n        intercept = pm.Normal(\"intercept\", mu=0, sigma=10)\n        \n        # Define the linear model\n        mu = intercept + slope * year_data\n        \n        # Define the noise term\n        sigma = pm.HalfNormal(\"sigma\", sigma=10)\n        \n        # Define the likelihood of the observations\n        y_obs = pm.Normal(\"y_obs\", mu=mu, sigma=sigma, observed=None, dims=\"obs_id\")\n        \n        # Sample from the prior predictive distribution\n        prior_predictive = pm.sample_prior_predictive(samples=1000, random_seed=rng2, return_inferencedata=False)\n        \n        return model, prior_predictive\n\n# Example usage:\n# observed_data = {'year': np.arange(1964, 2004)}\n# model, prior_predictive = gen_model(observed_data)\n```\n\n### Explanation of the Code\n\n1. **Data Preparation:**\n   - Convert the `year` column from the observed data to a numpy array.\n\n2. **Model Definition:**\n   - Create a `pm.MutableData` object for the `year` column.\n   - Define priors for the slope and intercept of the linear model using normal distributions.\n   - Define the linear model as `mu = intercept + slope * year_data`.\n   - Define the noise term using a half-normal distribution.\n   - Define the likelihood of the observations using a normal distribution with the mean (`mu`) and standard deviation (`sigma`).\n\n3. **Sampling from the Prior Predictive Distribution:**\n   - Use `pm.sample_prior_predictive` to sample from the prior predictive distribution with 1000 samples and a fixed random seed for reproducibility.\n\n4. **Return Values:**\n   - Return the model and the prior predictive samples.\n\nThis program sets up a linear regression model to describe the relationship between the year and the population counts of Peregrines, with appropriate priors and noise terms. The model is then used to sample from the prior predictive distribution.",
+            "### High-Level Probabilistic Program Sketch\n\nGiven the dataset and the task, we need to model the population counts of Peregrines (`C`) over the years (`year`). The data spans from 1964 to 2003, and we need to account for potential trends or patterns over time. \n\n#### Hypotheses:\n1. The population count (`C`) might have a trend over the years.\n2. There could be some random fluctuations around this trend.\n\n#### Plan:\n1. **Model the trend**: Use a linear regression model to capture the trend over the years.\n2. **Model the fluctuations**: Assume the fluctuations around the trend follow a normal distribution.\n\n### Probabilistic Program\n\n```python\nimport pymc as pm\nimport numpy as np\nimport pandas as pd\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    year = observed_data['year'].values\n    C = observed_data['C'].values\n\n    rng1 = np.random.default_rng(42)\n    rng2 = np.random.default_rng(314)\n    \n    with pm.Model() as model:\n        # Create a pm.MutableData object for each non-observation column\n        year_data = pm.MutableData(\"year\", year, dims=\"obs_id\")\n        \n        # Priors for the linear regression coefficients\n        intercept = pm.Normal(\"intercept\", mu=0, sigma=10)\n        slope = pm.Normal(\"slope\", mu=0, sigma=10)\n        \n        # Linear model for the mean\n        mu = intercept + slope * year_data\n        \n        # Prior for the standard deviation of the noise\n        sigma = pm.HalfNormal(\"sigma\", sigma=10)\n        \n        # Likelihood of the observations\n        y_obs = pm.Normal(\"y_obs\", mu=mu, sigma=sigma, observed=C, dims=\"obs_id\")\n        \n        # Sampling\n        trace = pm.sample(1000, tune=500, target_accept=0.90, chains=3, cores=1, random_seed=rng1, idata_kwargs={\"log_likelihood\": True})\n        posterior_predictive = pm.sample_posterior_predictive(trace, random_seed=rng2, return_inferencedata=False)\n        \n        return model, posterior_predictive, trace\n```\n\n### Explanation of the Code:\n1. **Data Preparation**: Convert the columns `year` and `C` to numpy arrays.\n2. **Model Definition**:\n   - **MutableData**: Create a `pm.MutableData` object for the `year` column.\n   - **Priors**: Define priors for the intercept and slope of the linear regression model.\n   - **Linear Model**: Define the linear relationship between `year` and the mean population count (`mu`).\n   - **Noise**: Define a prior for the standard deviation (`sigma`) of the noise around the trend.\n   - **Likelihood**: Define the likelihood of the observed population counts (`C`) given the linear model and noise.\n3. **Sampling**: Sample from the posterior distribution and the posterior predictive distribution.\n\nThis model captures the potential trend in the population counts over the years and accounts for random fluctuations around this trend.",
+            "### High-Level Probabilistic Program Sketch\n\nGiven the dataset and the task, we need to model the population counts of Peregrines (`C`) over the years (`year`). The data shows that the population counts can vary significantly, including some years with zero counts. This suggests that the population dynamics might be influenced by various factors, including environmental conditions, predation, and human activities.\n\n#### Hypotheses:\n1. The population count (`C`) is influenced by the year (`year`).\n2. The population count might exhibit some form of trend over the years, possibly due to conservation efforts or environmental changes.\n\n#### Model Plan:\n1. **Data Transformation**: Convert the `year` and `C` columns to numpy arrays.\n2. **Model Specification**:\n   - Use a Poisson distribution for the population counts (`C`) since it is a count data.\n   - Model the rate parameter (`lambda`) of the Poisson distribution as a function of the year. This can be done using a linear regression or a more flexible model like a polynomial regression.\n3. **Priors**:\n   - Use weakly informative priors for the regression coefficients to allow the data to inform the posterior distribution.\n\n### Program\n\n```python\nimport pymc as pm\nimport numpy as np\nimport pandas as pd\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    year = observed_data['year'].values\n    C = observed_data['C'].values\n\n    rng1 = np.random.default_rng(42)\n    rng2 = np.random.default_rng(314)\n\n    with pm.Model() as model:\n        # Create a pm.MutableData object for each non-observation column\n        year_data = pm.MutableData(\"year\", year, dims=\"obs_id\")\n        \n        # Define priors for the regression coefficients\n        intercept = pm.Normal(\"intercept\", mu=0, sigma=10)\n        slope = pm.Normal(\"slope\", mu=0, sigma=10)\n        \n        # Define the linear model for the rate parameter (lambda)\n        lambda_ = pm.math.exp(intercept + slope * year_data)\n        \n        # Define the likelihood using a Poisson distribution\n        y_obs = pm.Poisson(\"y_obs\", mu=lambda_, observed=C, dims=\"obs_id\")\n        \n        # Sample from the posterior\n        trace = pm.sample(1000, tune=500, target_accept=0.90, chains=3, cores=1, random_seed=rng1, idata_kwargs={\"log_likelihood\": True})\n        \n        # Sample from the posterior predictive distribution\n        posterior_predictive = pm.sample_posterior_predictive(trace, random_seed=rng2, return_inferencedata=False)\n        \n        return model, posterior_predictive, trace\n```\n\n### Explanation:\n1. **Data Transformation**: The `year` and `C` columns are converted to numpy arrays.\n2. **Model Specification**:\n   - `year_data` is created as a `pm.MutableData` object to allow for future updates.\n   - Priors for the intercept and slope of the linear model are defined using normal distributions with mean 0 and standard deviation 10.\n   - The rate parameter (`lambda_`) of the Poisson distribution is modeled as an exponential function of the linear combination of the intercept and slope times the year.\n   - The likelihood is defined using a Poisson distribution with the observed population counts (`C`).\n3. **Sampling**:\n   - The posterior distribution is sampled using `pm.sample` with specified parameters.\n   - The posterior predictive distribution is sampled using `pm.sample_posterior_predictive`.\n\nThis model should capture the trend in the population counts over the years while allowing for the count nature of the data."
+        ]
+    },
+    "scientist_messages": [
+        "role:system, messaage:The population count of peregrine falcons varies at different times.\nYour goal is to be able to predict the population count of peregrines given the time. Conduct experiments to learn about the environment and make predictions based on your observations.\nMake observations by specifying a single time you want to observe with a float number. The environment will return the population count of peregrine falcons at that time.\nThe time values are between 0 and 5.\n\nHere is an example:\n<thought> your thought </thought>\n<observe>2</observe>\nWhen asked to answer a question about the environment, respond in the format specified in the question.\n<thought> your thought </thought>\n<answer> your answer </answer>\n",
+        "role:user, messaage:Think about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\n<thought>your thought</thought>\n<observe> your observation</observe>\nMake an observation now.",
+        "role:assistant, messaage:<thought>To start understanding the population trend, I will take an initial observation at the midpoint of the given time range, which is 2.5. This will give me a central reference point to compare future observations.</thought>\n<observe>2.5</observe>",
+        "role:user, messaage:Result: 61\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>With an initial observation at 2.5 yielding a population count of 61, I will now observe at the boundaries of the time range to understand the overall trend. I will start with the lower boundary, 0, to see the population count at the beginning of the time range.</thought>\n<observe>0</observe>",
+        "role:user, messaage:Result: 84\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>With the population count at 0 being 84 and at 2.5 being 61, it appears there might be a decreasing trend. To confirm this trend and understand the rate of change, I will now observe at the upper boundary of the time range, 5.</thought>\n<observe>5</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The observations so far suggest a decreasing trend in the population count from 84 at time 0 to 61 at time 2.5, and down to 0 at time 5. To better understand the trend and possibly identify any non-linear behavior, I will take an observation at the midpoint between 0 and 2.5, which is 1.25.</thought>\n<observe>1.25</observe>",
+        "role:user, messaage:Result: 279\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The observation at 1.25 yielded a population count of 279, which is significantly higher than the counts at 0, 2.5, and 5. This suggests a non-linear trend with a peak around 1.25. To further understand the shape of this trend, I will now observe at the midpoint between 1.25 and 2.5, which is 1.875.</thought>\n<observe>1.875</observe>",
+        "role:user, messaage:Result: 223\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The observation at 1.875 yielded a population count of 223, which is still relatively high but lower than the peak at 1.25. This suggests a decreasing trend after the peak. To better understand the trend before the peak, I will now observe at the midpoint between 0 and 1.25, which is 0.625.</thought>\n<observe>0.625</observe>",
+        "role:user, messaage:Result: 171\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The observation at 0.625 yielded a population count of 171, which is lower than the peak at 1.25 but higher than the count at 0. This suggests an increasing trend from 0 to 1.25. To further refine our understanding of the trend before the peak, I will now observe at the midpoint between 0.625 and 1.25, which is 0.9375.</thought>\n<observe>0.9375</observe>",
+        "role:user, messaage:Result: 232\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The observation at 0.9375 yielded a population count of 232, which is higher than the count at 0.625 and closer to the peak at 1.25. This confirms the increasing trend towards the peak. To better understand the trend after the peak, I will now observe at the midpoint between 2.5 and 5, which is 3.75.</thought>\n<observe>3.75</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The observation at 3.75 yielded a population count of 0, consistent with the count at 5. This suggests a rapid decline after 2.5. To better understand the transition between the higher counts around 2.5 and the drop to 0, I will now observe at the midpoint between 2.5 and 3.75, which is 3.125.</thought>\n<observe>3.125</observe>",
+        "role:user, messaage:Result: 5\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The observation at 3.125 yielded a population count of 5, indicating a sharp decline from 2.5 to 3.125 and continuing to drop towards 0 at 3.75 and beyond. To further refine our understanding of the decline, I will now observe at the midpoint between 2.5 and 3.125, which is 2.8125.</thought>\n<observe>2.8125</observe>"
+    ],
+    "naive_messages": null
+}

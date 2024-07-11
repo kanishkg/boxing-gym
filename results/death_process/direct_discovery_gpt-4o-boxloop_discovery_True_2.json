@@ -1,0 +1,167 @@
+{
+    "config": {
+        "seed": 2,
+        "include_prior": true,
+        "use_ppl": true,
+        "llms": {
+            "model_name": "gpt-4o",
+            "temperature": 0.0,
+            "max_tokens": 512
+        },
+        "exp": {
+            "num_experiments": [
+                10
+            ],
+            "experiment_type": "discovery"
+        },
+        "envs": {
+            "num_evals": 10,
+            "env_name": "death_process",
+            "goal_name": "direct_discovery",
+            "com_limit": 200,
+            "env_params": {
+                "N": 50,
+                "mu": 1,
+                "sigma": 1,
+                "lower_bound": 0
+            }
+        }
+    },
+    "data": {
+        "results": [
+            [
+                [
+                    345.9,
+                    383.2219852774629
+                ],
+                [
+                    "The final result is 41.\n Respond with a positive integer.",
+                    "The final result is 41.\n Respond with a positive integer.",
+                    "The final result is 41.\n Respond with a positive integer.",
+                    "The final result is 41.\n Respond with a positive integer.",
+                    "The final result is 41.\n Respond with a positive integer.",
+                    "The final result is 41.\n Respond with a positive integer.",
+                    "The final result is 41.\n Respond with a positive integer.",
+                    "The final result is 41.\n Respond with a positive integer.",
+                    "The final result is 41.\n Respond with a positive integer.",
+                    "The final result is 41.\n Respond with a positive integer."
+                ],
+                [
+                    39,
+                    22,
+                    19,
+                    41,
+                    25,
+                    18,
+                    27,
+                    33,
+                    27,
+                    4
+                ],
+                [
+                    "41",
+                    "41",
+                    "41",
+                    "41",
+                    "41",
+                    "41",
+                    "41",
+                    "41",
+                    "41",
+                    "41"
+                ]
+            ]
+        ],
+        "queries": [
+            "0.1",
+            "0.5",
+            "1.0",
+            "1.5",
+            "1.8",
+            "1.9",
+            "1.95",
+            "1.85",
+            "1.99",
+            "1.98"
+        ],
+        "observations": [
+            1,
+            18,
+            30,
+            38,
+            41,
+            43,
+            40,
+            42,
+            43,
+            41
+        ],
+        "successes": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "explanations": [
+            "Based on the observations and the inferred parameters from the statistical model, we can understand the spread of the disease in the population of 50 individuals using a logistic growth model. This model describes how the number of infected individuals changes over time, starting slowly, increasing rapidly, and then slowing down as it approaches a maximum limit, known as the carrying capacity.\n\nKey parameters of the model include:\n- **Carrying Capacity (K)**: The maximum number of individuals that can be infected, which is around 50.\n- **Growth Rate (r)**: The rate at which the infection spreads, which is approximately 1.78.\n- **Inflection Point (t0)**: The time at which the infection rate is fastest, around 0.93.\n- **Observation Noise (sigma)**: The variability in the observations, around 4.01.\n\nFrom the observations:\n- At time 0.1, 1 individual was infected.\n- At time 0.5, 18 individuals were infected.\n- At time 1.0, 30 individuals were infected.\n- At time 1.5, 38 individuals were infected.\n- At time 1.8, 41 individuals were infected.\n- At time 1.9, 43 individuals were infected.\n- At time 1.95, 40 individuals were infected.\n- At time 1.99, 43 individuals were infected.\n\nThe infection starts slowly, increases rapidly around time 0.5 to 1.0, and then slows down as it approaches the carrying capacity. By time 1.99, the number of infected individuals stabilizes around 43, indicating the disease is nearing its maximum spread. This pattern is typical of logistic growth, where the infection rate decreases as the number of susceptible individuals decreases."
+        ],
+        "eigs": [],
+        "programs": [
+            []
+        ]
+    },
+    "scientist_messages": [
+        "role:system, messaage:There is a disease spreading in a population of 50 individuals. \nYour goal is to conduct experiments and explain the environment to the user so that they can achieve their goal.The goal of the user is to reliably predict the number of infected individuals at specific times. Conduct experiments to learn about the environment.\nMake observations by querying how many healthy individuals are infected at a specific time (positive real numbers). You cannot query at time 0. Please specify the observation time as real number. The input time must be greater than 0 and less than 2.\n\nHere is an example:\n<thought> your thought </thought>\n<observe>0.1(time to observe)</observe>\nWhen asked to answer a question about the environement, respond in the format specified in the question.\n<thought> your thought </thought>\n<answer> your answer </answer>\n",
+        "role:user, messaage:Think about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\n<thought>your thought</thought>\n<observe> your observation</observe>\nMake an observation now.",
+        "role:assistant, messaage:<thought>To understand the spread of the disease, I will start by observing the number of infected individuals at an early time point. This will give me an initial rate of infection. I will choose 0.1 as the first observation time.</thought>\n<observe>0.1</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Given that 1 individual is infected at time 0.1, I will now observe at a later time point to understand the progression of the disease. I will choose 0.5 as the next observation time to see how the infection spreads over a more extended period.</thought>\n<observe>0.5</observe>",
+        "role:user, messaage:Result: 18\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>With 18 individuals infected at time 0.5, it appears the disease is spreading rapidly. To better understand the infection rate and predict future infections, I will observe at a later time point closer to the upper limit. I will choose 1.0 as the next observation time to see how the infection progresses further.</thought>\n<observe>1.0</observe>",
+        "role:user, messaage:Result: 30\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>With 30 individuals infected at time 1.0, the infection rate seems to be increasing significantly. To capture the trend more accurately, I will choose a time point closer to the upper limit but not too close to the previous observation. I will choose 1.5 as the next observation time to see how the infection rate changes as we approach the upper limit.</thought>\n<observe>1.5</observe>",
+        "role:user, messaage:Result: 38\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>With 38 individuals infected at time 1.5, the infection rate appears to be slowing down as we approach the upper limit. To better understand the final stages of the infection spread, I will choose a time point closer to the upper limit. I will choose 1.8 as the next observation time to see how the infection rate changes as we near the end of the observation window.</thought>\n<observe>1.8</observe>",
+        "role:user, messaage:Result: 41\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>With 41 individuals infected at time 1.8, it seems the infection rate is continuing to slow down. To capture the final stages of the infection spread, I will choose a time point very close to the upper limit. I will choose 1.9 as the next observation time to see if the infection rate has plateaued or if there is still a slight increase.</thought>\n<observe>1.9</observe>",
+        "role:user, messaage:Result: 43\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>With 43 individuals infected at time 1.9, it appears that the infection rate is indeed slowing down and approaching a plateau. To confirm this trend and get a final understanding of the infection spread, I will choose a time point very close to the upper limit. I will choose 1.95 as the next observation time to see if the number of infected individuals has stabilized.</thought>\n<observe>1.95</observe>",
+        "role:user, messaage:Result: 40\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>With 40 individuals infected at time 1.95, it seems there might be some fluctuation or error in the data, as the number of infected individuals has decreased. To better understand this anomaly and confirm the trend, I will choose a time point slightly earlier than 1.95 but still close to the upper limit. I will choose 1.85 as the next observation time to see if the number of infected individuals is consistent.</thought>\n<observe>1.85</observe>",
+        "role:user, messaage:Result: 42\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>With 42 individuals infected at time 1.85, it seems the number of infected individuals is fluctuating slightly around the low 40s. To confirm the trend and understand the final stages of the infection spread, I will choose a time point very close to the upper limit again. I will choose 1.99 as the next observation time to see if the number of infected individuals has stabilized or if there are further fluctuations.</thought>\n<observe>1.99</observe>",
+        "role:user, messaage:Result: 43\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>With 43 individuals infected at time 1.99, it appears that the number of infected individuals has stabilized around the low 40s. To confirm this stabilization and ensure there are no further significant changes, I will choose a time point very close to 1.99. I will choose 1.98 as the next observation time to see if the number of infected individuals remains consistent.</thought>\n<observe>1.98</observe>",
+        "role:user, messaage:Assume that the user has no prior knowledge, and will not be able to run any experiments before making predictions. \nThey will make predictions based solely on your explanation, so provide as much detail as possible. You cannot provide your own experiments or observations.\nLimit your explanation to 200 words.To make your explanation clearer and more informative, look at the statistical model (written in pymc) designed by a colleague for the experimental data and the inferred parameters. \nHere is the statistical model. \n import pymc as pm\nimport numpy as np\nimport pandas as pd\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    x = observed_data['x'].values\n    infection_num = observed_data['infection_num'].values\n    \n    rng1 = np.random.default_rng(42)\n    rng2 = np.random.default_rng(314)\n    \n    with pm.Model() as model:\n        # Create pm.MutableData objects for each non-observation column\n        x_data = pm.MutableData(\"x\", x, dims=\"obs_id\")\n        \n        # Priors for the logistic growth model parameters\n        K = pm.Normal(\"K\", mu=50, sigma=10)  # Carrying capacity\n        r = pm.Normal(\"r\", mu=1, sigma=0.5)  # Growth rate\n        t0 = pm.Normal(\"t0\", mu=1, sigma=0.5)  # Inflection point\n        \n        # Logistic growth model\n        logistic_growth = K / (1 + pm.math.exp(-r * (x_data - t0)))\n        \n        # Observation noise\n        sigma = pm.HalfNormal(\"sigma\", sigma=5)\n        \n        # Likelihood of the observations\n        y_obs = pm.Normal(\"y_obs\", mu=logistic_growth, sigma=sigma, observed=infection_num, dims=\"obs_id\")\n        \n        # Sampling\n        trace = pm.sample(1000, tune=500, target_accept=0.90, chains=3, cores=1, random_seed=rng1, idata_kwargs={\"log_likelihood\": True})\n        posterior_predictive = pm.sample_posterior_predictive(trace, random_seed=rng2, return_inferencedata=False)\n        \n        return model, posterior_predictive, trace \nHere are the inferred params. \n K        50.338\nr         1.781\nt0        0.934\nsigma     4.011 \nDon't literally describe the model verbatim but use it to conceptually motivate your explanation.The agent will not be able to use the model explicitly but having a conceptual understanding will be beneficial.",
+        "role:assistant, messaage:Based on the observations and the inferred parameters from the statistical model, we can understand the spread of the disease in the population of 50 individuals using a logistic growth model. This model describes how the number of infected individuals changes over time, starting slowly, increasing rapidly, and then slowing down as it approaches a maximum limit, known as the carrying capacity.\n\nKey parameters of the model include:\n- **Carrying Capacity (K)**: The maximum number of individuals that can be infected, which is around 50.\n- **Growth Rate (r)**: The rate at which the infection spreads, which is approximately 1.78.\n- **Inflection Point (t0)**: The time at which the infection rate is fastest, around 0.93.\n- **Observation Noise (sigma)**: The variability in the observations, around 4.01.\n\nFrom the observations:\n- At time 0.1, 1 individual was infected.\n- At time 0.5, 18 individuals were infected.\n- At time 1.0, 30 individuals were infected.\n- At time 1.5, 38 individuals were infected.\n- At time 1.8, 41 individuals were infected.\n- At time 1.9, 43 individuals were infected.\n- At time 1.95, 40 individuals were infected.\n- At time 1.99, 43 individuals were infected.\n\nThe infection starts slowly, increases rapidly around time 0.5 to 1.0, and then slows down as it approaches the carrying capacity. By time 1.99, the number of infected individuals stabilizes around 43, indicating the disease is nearing its maximum spread. This pattern is typical of logistic growth, where the infection rate decreases as the number of susceptible individuals decreases."
+    ],
+    "naive_messages": [
+        "role:system, messaage:Your goal is to predict the number of infected individuals at specific times.\nYou must respond with a positive integer. You may also think before providing your predictions.\nHere is an example:\n<thought>your thought</thought>\n<answer>1</answer\nHere is what you know about the enivronment:\nBased on the observations and the inferred parameters from the statistical model, we can understand the spread of the disease in the population of 50 individuals using a logistic growth model. This model describes how the number of infected individuals changes over time, starting slowly, increasing rapidly, and then slowing down as it approaches a maximum limit, known as the carrying capacity.\n\nKey parameters of the model include:\n- **Carrying Capacity (K)**: The maximum number of individuals that can be infected, which is around 50.\n- **Growth Rate (r)**: The rate at which the infection spreads, which is approximately 1.78.\n- **Inflection Point (t0)**: The time at which the infection rate is fastest, around 0.93.\n- **Observation Noise (sigma)**: The variability in the observations, around 4.01.\n\nFrom the observations:\n- At time 0.1, 1 individual was infected.\n- At time 0.5, 18 individuals were infected.\n- At time 1.0, 30 individuals were infected.\n- At time 1.5, 38 individuals were infected.\n- At time 1.8, 41 individuals were infected.\n- At time 1.9, 43 individuals were infected.\n- At time 1.95, 40 individuals were infected.\n- At time 1.99, 43 individuals were infected.\n\nThe infection starts slowly, increases rapidly around time 0.5 to 1.0, and then slows down as it approaches the carrying capacity. By time 1.99, the number of infected individuals stabilizes around 43, indicating the disease is nearing its maximum spread. This pattern is typical of logistic growth, where the infection rate decreases as the number of susceptible individuals decreases.",
+        "role:user, messaage:The final result is 41.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<thought>Given the observations and the logistic growth model parameters, the number of infected individuals stabilizes around 41 to 43 as it approaches the carrying capacity. Since the final result is 41, it aligns with the expected stabilization near the carrying capacity.</thought>\n<answer>41</answer>",
+        "role:user, messaage:The final result is 41.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>41</answer>",
+        "role:user, messaage:The final result is 41.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>41</answer>",
+        "role:user, messaage:The final result is 41.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>41</answer>",
+        "role:user, messaage:The final result is 41.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>41</answer>",
+        "role:user, messaage:The final result is 41.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>41</answer>",
+        "role:user, messaage:The final result is 41.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>41</answer>",
+        "role:user, messaage:The final result is 41.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>41</answer>",
+        "role:user, messaage:The final result is 41.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>41</answer>",
+        "role:user, messaage:The final result is 41.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>41</answer>"
+    ]
+}

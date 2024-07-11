@@ -1,0 +1,227 @@
+{
+    "config": {
+        "seed": 4,
+        "include_prior": true,
+        "use_ppl": true,
+        "llms": {
+            "model_name": "gpt-4o",
+            "temperature": 0.0,
+            "max_tokens": 512
+        },
+        "exp": {
+            "num_experiments": [
+                0,
+                5,
+                10
+            ],
+            "experiment_type": "oed"
+        },
+        "envs": {
+            "num_evals": 10,
+            "env_name": "location_finding",
+            "goal_name": "direct",
+            "com_limit": 200,
+            "env_params": {
+                "num_sources": 3,
+                "dim": 2
+            }
+        }
+    },
+    "data": {
+        "results": [
+            [
+                [
+                    21.044486373223798,
+                    29.23855933069202
+                ],
+                [
+                    "(array([-0.64770677,  0.59857517]),)",
+                    "(array([ 0.33225003, -1.14747663]),)",
+                    "(array([ 0.61866969, -0.08798693]),)",
+                    "(array([0.4250724 , 0.33225315]),)",
+                    "(array([-1.15681626,  0.35099715]),)",
+                    "(array([-0.60688728,  1.54697933]),)",
+                    "(array([0.72334161, 0.04613557]),)",
+                    "(array([-0.98299165,  0.05443274]),)",
+                    "(array([ 0.15989294, -1.20894816]),)",
+                    "(array([2.22336022, 0.39429521]),)"
+                ],
+                [
+                    9.98817942841187,
+                    1.9774229343147391,
+                    2.208255008994764,
+                    6.728554468570485,
+                    7.983760340550983,
+                    1.9925480941362526,
+                    2.166824048327796,
+                    3.668306361700055,
+                    2.7458308136203664,
+                    0.49876603804006764
+                ],
+                [
+                    "0.48204847043126914",
+                    "0.42962652787807215",
+                    "0.5552921589704191",
+                    "0.6193900000385064",
+                    "0.43027179854902",
+                    "0.5296227975470423",
+                    "0.5971119953539384",
+                    "0.42884635617694217",
+                    "0.41876879077461643",
+                    "0.7433743917130703"
+                ]
+            ],
+            [
+                [
+                    21.014684298847136,
+                    29.195574574788136
+                ],
+                [
+                    "(array([-0.64770677,  0.59857517]),)",
+                    "(array([ 0.33225003, -1.14747663]),)",
+                    "(array([ 0.61866969, -0.08798693]),)",
+                    "(array([0.4250724 , 0.33225315]),)",
+                    "(array([-1.15681626,  0.35099715]),)",
+                    "(array([-0.60688728,  1.54697933]),)",
+                    "(array([0.72334161, 0.04613557]),)",
+                    "(array([-0.98299165,  0.05443274]),)",
+                    "(array([ 0.15989294, -1.20894816]),)",
+                    "(array([2.22336022, 0.39429521]),)"
+                ],
+                [
+                    9.98817942841187,
+                    1.9774229343147391,
+                    2.208255008994764,
+                    6.728554468570485,
+                    7.983760340550983,
+                    1.9925480941362526,
+                    2.166824048327796,
+                    3.668306361700055,
+                    2.7458308136203664,
+                    0.49876603804006764
+                ],
+                [
+                    "0.4994856943152183",
+                    "0.4122308195961414",
+                    "0.5594235814475698",
+                    "0.5964719340554505",
+                    "0.42479154295704324",
+                    "0.48911345336211115",
+                    "0.5819176153242069",
+                    "0.4930485269695276",
+                    "0.43592115809157195",
+                    "0.6102480063580954"
+                ]
+            ],
+            [
+                [
+                    14.722505311329627,
+                    25.084575752171094
+                ],
+                [
+                    "(array([-0.64770677,  0.59857517]),)",
+                    "(array([ 0.33225003, -1.14747663]),)",
+                    "(array([ 0.61866969, -0.08798693]),)",
+                    "(array([0.4250724 , 0.33225315]),)",
+                    "(array([-1.15681626,  0.35099715]),)",
+                    "(array([-0.60688728,  1.54697933]),)",
+                    "(array([0.72334161, 0.04613557]),)",
+                    "(array([-0.98299165,  0.05443274]),)",
+                    "(array([ 0.15989294, -1.20894816]),)",
+                    "(array([2.22336022, 0.39429521]),)"
+                ],
+                [
+                    9.98817942841187,
+                    1.9774229343147391,
+                    2.208255008994764,
+                    6.728554468570485,
+                    7.983760340550983,
+                    1.9925480941362526,
+                    2.166824048327796,
+                    3.668306361700055,
+                    2.7458308136203664,
+                    0.49876603804006764
+                ],
+                [
+                    "1.243790543434639",
+                    "0.9384052249752787",
+                    "2.204176839080295",
+                    "3.8658450702009395",
+                    "0.9245477859460749",
+                    "0.882813189417002",
+                    "2.161616819383937",
+                    "1.0213181321407863",
+                    "0.9304045730652412",
+                    "0.8447384688495687"
+                ]
+            ]
+        ],
+        "queries": [
+            "[5.0, 5.0]",
+            "[0.0, 0.0]",
+            "[10.0, 0.0]",
+            "[0.0, 10.0]",
+            "[2.5, 2.5]",
+            "[1.0, 1.0]",
+            "[1.5, 0.5]",
+            "[0.0, 2.5]",
+            "[2.5, 0.0]",
+            "[1.0, 2.0]"
+        ],
+        "observations": [
+            1.0,
+            4.55,
+            0.95,
+            -0.55,
+            -0.02,
+            0.98,
+            1.17,
+            1.03,
+            0.3,
+            1.08
+        ],
+        "successes": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "explanations": [],
+        "eigs": [],
+        "programs": [
+            "### High-Level Probabilistic Program Sketch\n\n1. **Modeling the Sources**:\n   - We have three unknown sources emitting signals of identical strength.\n   - The locations of these sources are unknown and need to be inferred.\n\n2. **Signal Strength Calculation**:\n   - The signal strength at any point \\((x1, x2)\\) is the superposition of signals from the three sources.\n   - Each source's signal strength decreases with distance from the source.\n\n3. **Distance Calculation**:\n   - Use Euclidean distance to calculate the distance from each source to the observation point.\n\n4. **Superposition of Signals**:\n   - Sum the contributions from each source to get the total signal strength at each point.\n\n5. **Likelihood**:\n   - Model the observed signal strength as a normal distribution centered around the calculated total signal strength with some noise.\n\n### Probabilistic Program\n\n```python\nimport pymc as pm\nimport numpy as np\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    x1_data = observed_data['x1'].to_numpy()\n    x2_data = observed_data['x2'].to_numpy()\n    \n    rng1 = np.random.default_rng(42)\n    rng2 = np.random.default_rng(314)\n    \n    with pm.Model() as model:\n        # Create pm.MutableData objects for each non-observation column\n        x1 = pm.MutableData(\"x1\", x1_data, dims=\"obs_id\")\n        x2 = pm.MutableData(\"x2\", x2_data, dims=\"obs_id\")\n        \n        # Priors for the unknown source locations\n        source_x1 = pm.Uniform(\"source_x1\", lower=0, upper=10, shape=3)\n        source_x2 = pm.Uniform(\"source_x2\", lower=0, upper=10, shape=3)\n        \n        # Signal strength from each source\n        signal_strength = pm.Normal(\"signal_strength\", mu=1, sigma=0.1, shape=3)\n        \n        # Calculate distances from each source to each observation point\n        distances = pm.math.sqrt((x1[:, None] - source_x1[None, :])**2 + (x2[:, None] - source_x2[None, :])**2)\n        \n        # Superposition of signals\n        total_signal = pm.math.sum(signal_strength / distances, axis=1)\n        \n        # Likelihood\n        y_obs = pm.Normal(\"y_obs\", mu=total_signal, sigma=0.1, observed=None, dims=\"obs_id\")\n        \n        # Sample from the prior\n        prior_predictive = pm.sample_prior_predictive(samples=1000, random_seed=rng2, return_inferencedata=False)\n        \n        return model, prior_predictive\n\n# Example usage:\n# observed_data = pd.DataFrame({'x1': [1, 2, 3], 'x2': [4, 5, 6]})\n# model, prior_predictive = gen_model(observed_data)\n```\n\n### Explanation of the Code\n\n1. **Data Conversion**:\n   - Convert the columns `x1` and `x2` from the observed data to numpy arrays.\n\n2. **Model Definition**:\n   - Define the model using `pm.Model()`.\n   - Create `pm.MutableData` objects for `x1` and `x2` with `dims=\"obs_id\"`.\n\n3. **Priors**:\n   - Define uniform priors for the unknown source locations (`source_x1` and `source_x2`).\n   - Define a normal prior for the signal strength emitted by each source.\n\n4. **Distance Calculation**:\n   - Calculate the Euclidean distance from each source to each observation point.\n\n5. **Superposition of Signals**:\n   - Sum the contributions from each source to get the total signal strength at each point.\n\n6. **Likelihood**:\n   - Model the observed signal strength as a normal distribution centered around the calculated total signal strength with some noise.\n\n7. **Sampling from the Prior**:\n   - Use `pm.sample_prior_predictive` to sample from the prior distribution.\n\n### Important Notes\n- Ensure that the `observed` argument in the likelihood is set to `None`.\n- Use `sigma` instead of `sd` for the standard deviation in the normal distribution.\n- Set the random seeds for reproducibility.\n- Do not use `pm.Constant()` for parameters.\n- Do not pass `dims` for latent variables or parameters.",
+            "### High-Level Probabilistic Program Sketch\n\n1. **Modeling the Data**:\n   - We have three unknown sources emitting signals of identical strength.\n   - The signal strength at any point in the grid is the superposition of signals from these sources.\n   - The location of the sources is unknown.\n   - We will model the signal strength at each point as a function of the distance from these unknown sources.\n\n2. **Plan**:\n   - Define the locations of the three sources as latent variables.\n   - Model the signal strength at each point as a function of the distances from these sources.\n   - Use a normal distribution to model the noise in the observed signal strength.\n\n### Probabilistic Program\n\n```python\nimport pymc as pm\nimport numpy as np\nimport pandas as pd\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    x1 = observed_data['x1'].values\n    x2 = observed_data['x2'].values\n    signal_strength = observed_data['signal_strength'].values\n\n    with pm.Model() as model:\n        # Create pm.MutableData objects for each non-observation column\n        x1_data = pm.MutableData(\"x1\", x1, dims=\"obs_id\")\n        x2_data = pm.MutableData(\"x2\", x2, dims=\"obs_id\")\n\n        # Define the locations of the three sources as latent variables\n        source1_x = pm.Uniform(\"source1_x\", lower=0, upper=10)\n        source1_y = pm.Uniform(\"source1_y\", lower=0, upper=10)\n        source2_x = pm.Uniform(\"source2_x\", lower=0, upper=10)\n        source2_y = pm.Uniform(\"source2_y\", lower=0, upper=10)\n        source3_x = pm.Uniform(\"source3_x\", lower=0, upper=10)\n        source3_y = pm.Uniform(\"source3_y\", lower=0, upper=10)\n\n        # Calculate the distances from each source to each observation point\n        dist1 = pm.math.sqrt((x1_data - source1_x)**2 + (x2_data - source1_y)**2)\n        dist2 = pm.math.sqrt((x1_data - source2_x)**2 + (x2_data - source2_y)**2)\n        dist3 = pm.math.sqrt((x1_data - source3_x)**2 + (x2_data - source3_y)**2)\n\n        # Model the signal strength as a function of the distances\n        signal_strength_mu = pm.Deterministic(\"signal_strength_mu\", 1 / (dist1 + 1) + 1 / (dist2 + 1) + 1 / (dist3 + 1))\n\n        # Define the likelihood of the observations\n        y_obs = pm.Normal(\"y_obs\", mu=signal_strength_mu, sigma=1, observed=signal_strength, dims=\"obs_id\")\n\n        # Sample from the posterior\n        trace = pm.sample(1000, tune=500, target_accept=0.90, chains=3, cores=1, random_seed=np.random.default_rng(42), idata_kwargs={\"log_likelihood\": True})\n        posterior_predictive = pm.sample_posterior_predictive(trace, random_seed=np.random.default_rng(314), return_inferencedata=False)\n\n        return model, posterior_predictive, trace\n```\n\n### Explanation of the Code\n\n- **Latent Variables**: The locations of the three sources are modeled as uniform distributions over the grid (0 to 10).\n- **Distances**: The distances from each source to each observation point are calculated using the Euclidean distance formula.\n- **Signal Strength**: The signal strength at each point is modeled as the sum of the inverse distances from the sources, with a small constant added to avoid division by zero.\n- **Likelihood**: The observed signal strength is modeled as a normal distribution centered around the calculated signal strength, with a standard deviation of 1.\n\nThis model should capture the superposition of signals from the three sources and allow us to infer their locations based on the observed data.",
+            "### High-Level Probabilistic Program Sketch\n\nGiven the dataset and the problem description, we need to model the signal strength at any point in the grid as a superposition of signals from three unknown sources. Each source emits a signal of identical strength. The signal strength at any point is likely influenced by the distance from these sources.\n\n**Hypotheses:**\n1. The signal strength at any point is a function of the distances to the three sources.\n2. Each source emits a signal of identical strength.\n3. The signal strength decreases with distance from the source.\n\n**Plan:**\n1. Define the locations of the three sources as latent variables.\n2. Model the signal strength at any point as a function of the distances to these sources.\n3. Use a Gaussian likelihood to model the observed signal strength with some noise.\n\n### Probabilistic Program\n\n```python\nimport pymc as pm\nimport numpy as np\nimport pandas as pd\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    x1 = observed_data['x1'].values\n    x2 = observed_data['x2'].values\n    signal_strength = observed_data['signal_strength'].values\n\n    with pm.Model() as model:\n        # Create pm.MutableData objects for each non-observation column\n        x1_data = pm.MutableData(\"x1\", x1, dims=\"obs_id\")\n        x2_data = pm.MutableData(\"x2\", x2, dims=\"obs_id\")\n        \n        # Define the locations of the three sources as latent variables\n        source_x1 = pm.Uniform(\"source_x1\", lower=0, upper=10, shape=3)\n        source_x2 = pm.Uniform(\"source_x2\", lower=0, upper=10, shape=3)\n        \n        # Calculate the distances from each point to each source\n        distances = pm.math.sqrt((x1_data[:, None] - source_x1[None, :])**2 + (x2_data[:, None] - source_x2[None, :])**2)\n        \n        # Assume signal strength decreases with distance (e.g., inverse relationship)\n        signal_strengths = pm.math.sum(1 / (distances + 1e-6), axis=1)\n        \n        # Define the likelihood of the observations\n        y_obs = pm.Normal(\"y_obs\", mu=signal_strengths, sigma=1, observed=signal_strength, dims=\"obs_id\")\n        \n        # Sample from the posterior\n        trace = pm.sample(1000, tune=500, target_accept=0.90, chains=3, cores=1, random_seed=np.random.default_rng(42), idata_kwargs={\"log_likelihood\": True})\n        posterior_predictive = pm.sample_posterior_predictive(trace, random_seed=np.random.default_rng(314), return_inferencedata=False)\n        \n        return model, posterior_predictive, trace\n```\n\n### Explanation of the Code\n1. **Data Preparation**: Convert the observed data columns to numpy arrays and create `pm.MutableData` objects for `x1` and `x2`.\n2. **Latent Variables**: Define the locations of the three sources (`source_x1` and `source_x2`) as uniform distributions between 0 and 10.\n3. **Distance Calculation**: Calculate the Euclidean distances from each observation point to each source.\n4. **Signal Strength Calculation**: Model the signal strength as the sum of inverse distances to the sources.\n5. **Likelihood**: Use a Gaussian likelihood to model the observed signal strength with some noise.\n6. **Sampling**: Sample from the posterior and posterior predictive distributions.\n\nThis model should capture the superposition of signals from three sources and how the signal strength varies with distance. Adjustments can be made based on the discrepancies between the actual data and the sampled data in subsequent rounds."
+        ]
+    },
+    "scientist_messages": [
+        "role:system, messaage:The intensity at any point in the grid is determined by the superposition of signals from 3 sources.\nEach source emits a signal of identical strength. \nNote that the location of the sources is unknown to us!\nMake observations by specifying a single point where you want to measure the signal in a length-2 list of floating-point numbers enclosed by double brackets. \n\n\nYour goal is to be able to reliably predict the signal intensity (scalar-values) at any given 2-dimensional coordinate.\n\nHere is an example:\n<thought> your thought </thought>\n<observe>[0.5, 1]</observe>\nWhen asked to answer a question about the environement, respond in the format specified in the question.\nExample:\n<thought> your thought </thought>\n<answer> your answer </answer>\n",
+        "role:user, messaage:Think about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\n<thought>your thought</thought>\n<observe> your observation</observe>\nMake an observation now.",
+        "role:assistant, messaage:<thought>To begin, I will take measurements at points that are spread out across the grid. This will help in identifying the general pattern of signal intensity and potentially locating the sources. I will start with a point near the center of the grid.</thought>\n<observe>[5.0, 5.0]</observe>",
+        "role:user, messaage:Result: 1.0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Given that the signal intensity at the center of the grid is 1.0, I will now take measurements at the corners of the grid. This will help in understanding the distribution of the signal intensity across the grid. I will start with the bottom-left corner.</thought>\n<observe>[0.0, 0.0]</observe>",
+        "role:user, messaage:Result: 4.55\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The signal intensity at the bottom-left corner is significantly higher than at the center, suggesting that one or more sources might be closer to this corner. To further investigate, I will now measure the signal intensity at the bottom-right corner to see if the intensity is similarly high, which could indicate the presence of sources along the bottom edge.</thought>\n<observe>[10.0, 0.0]</observe>",
+        "role:user, messaage:Result: 0.95\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The signal intensity at the bottom-right corner is low, similar to the center, which suggests that the sources are not located near this corner. Given the high intensity at the bottom-left corner, I will now measure the signal intensity at the top-left corner to see if the intensity remains high along the left edge, which could help in triangulating the source locations.</thought>\n<observe>[0.0, 10.0]</observe>",
+        "role:user, messaage:Result: -0.55\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The signal intensity at the top-left corner is negative, which is unexpected and suggests that the sources are not near this corner either. Given the high intensity at the bottom-left corner, I will now measure the signal intensity at a point closer to the bottom-left corner but not at the edge, to better understand the gradient of the signal intensity in that region.</thought>\n<observe>[2.5, 2.5]</observe>",
+        "role:user, messaage:Result: -0.02\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The signal intensity at [2.5, 2.5] is close to zero, which is surprising given the high intensity at [0.0, 0.0]. This suggests that the sources might be very close to [0.0, 0.0]. To further investigate, I will now measure the signal intensity at a point even closer to [0.0, 0.0] to see if the intensity increases significantly.</thought>\n<observe>[1.0, 1.0]</observe>",
+        "role:user, messaage:Result: 0.98\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The signal intensity at [1.0, 1.0] is higher than at [2.5, 2.5], but still not as high as at [0.0, 0.0]. This suggests that the sources might be very close to [0.0, 0.0]. To further refine the location of the sources, I will now measure the signal intensity at a point slightly further from [0.0, 0.0] but still within the bottom-left quadrant.</thought>\n<observe>[1.5, 0.5]</observe>",
+        "role:user, messaage:Result: 1.17\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The signal intensity at [1.5, 0.5] is slightly higher than at [1.0, 1.0], but still not as high as at [0.0, 0.0]. This suggests that the sources might be clustered near the bottom-left corner. To further investigate, I will now measure the signal intensity at a point along the left edge but slightly higher up to see if the intensity decreases or remains high.</thought>\n<observe>[0.0, 2.5]</observe>",
+        "role:user, messaage:Result: 1.03\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The signal intensity at [0.0, 2.5] is slightly higher than at [1.0, 1.0] but lower than at [0.0, 0.0]. This suggests that the sources are likely closer to the bottom-left corner but not necessarily along the left edge. To further refine the location of the sources, I will now measure the signal intensity at a point in the bottom-left quadrant but closer to the center of the grid.</thought>\n<observe>[2.5, 0.0]</observe>",
+        "role:user, messaage:Result: 0.3\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The signal intensity at [2.5, 0.0] is relatively low compared to the bottom-left corner, suggesting that the sources are not along the bottom edge but closer to the bottom-left corner. To further investigate, I will now measure the signal intensity at a point in the bottom-left quadrant but closer to the bottom-left corner, specifically along the diagonal from [0.0, 0.0] to [5.0, 5.0].</thought>\n<observe>[1.0, 2.0]</observe>"
+    ],
+    "naive_messages": null
+}

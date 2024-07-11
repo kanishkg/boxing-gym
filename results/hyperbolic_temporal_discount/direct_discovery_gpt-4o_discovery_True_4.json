@@ -1,0 +1,164 @@
+{
+    "config": {
+        "seed": 4,
+        "include_prior": true,
+        "use_ppl": false,
+        "llms": {
+            "model_name": "gpt-4o",
+            "temperature": 0.0,
+            "max_tokens": 512
+        },
+        "exp": {
+            "num_experiments": [
+                10
+            ],
+            "experiment_type": "discovery"
+        },
+        "envs": {
+            "num_evals": 10,
+            "env_name": "hyperbolic_temporal_discount",
+            "goal_name": "direct_discovery",
+            "com_limit": 200,
+            "env_params": {
+                "epsilon": 0.01,
+                "k_mean": -4.25,
+                "k_std": 0.5,
+                "alpha_scale": 2
+            }
+        }
+    },
+    "data": {
+        "results": [
+            [
+                [
+                    0.7,
+                    0.45825756949558394
+                ],
+                [
+                    "The final result is 1.\nGiven the immediate reward iR = 53, delayed reward dR = 267, and delay in days D = 208, what is the person's choice? Respond using a binary value 0 or 1.",
+                    "The final result is 1.\nGiven the immediate reward iR = 261, delayed reward dR = 293, and delay in days D = 241, what is the person's choice? Respond using a binary value 0 or 1.",
+                    "The final result is 1.\nGiven the immediate reward iR = 48, delayed reward dR = 185, and delay in days D = 152, what is the person's choice? Respond using a binary value 0 or 1.",
+                    "The final result is 1.\nGiven the immediate reward iR = 95, delayed reward dR = 145, and delay in days D = 332, what is the person's choice? Respond using a binary value 0 or 1.",
+                    "The final result is 1.\nGiven the immediate reward iR = 20, delayed reward dR = 284, and delay in days D = 16, what is the person's choice? Respond using a binary value 0 or 1.",
+                    "The final result is 1.\nGiven the immediate reward iR = 184, delayed reward dR = 226, and delay in days D = 127, what is the person's choice? Respond using a binary value 0 or 1.",
+                    "The final result is 1.\nGiven the immediate reward iR = 2, delayed reward dR = 140, and delay in days D = 228, what is the person's choice? Respond using a binary value 0 or 1.",
+                    "The final result is 1.\nGiven the immediate reward iR = 228, delayed reward dR = 285, and delay in days D = 156, what is the person's choice? Respond using a binary value 0 or 1.",
+                    "The final result is 1.\nGiven the immediate reward iR = 69, delayed reward dR = 78, and delay in days D = 5, what is the person's choice? Respond using a binary value 0 or 1.",
+                    "The final result is 1.\nGiven the immediate reward iR = 279, delayed reward dR = 298, and delay in days D = 336, what is the person's choice? Respond using a binary value 0 or 1."
+                ],
+                [
+                    1,
+                    0,
+                    1,
+                    0,
+                    1,
+                    0,
+                    1,
+                    0,
+                    1,
+                    0
+                ],
+                [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "1",
+                    "0",
+                    "0",
+                    "0",
+                    "1",
+                    "0"
+                ]
+            ]
+        ],
+        "queries": [
+            "[5, 10, 7]",
+            "[5, 10, 3]",
+            "[7, 10, 3]",
+            "[9, 10, 3]",
+            "[5, 10, 30]",
+            "[5, 10, 15]",
+            "[5, 10, 20]",
+            "[5, 10, 25]",
+            "[5, 10, 28]",
+            "[5, 10, 29]"
+        ],
+        "observations": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1
+        ],
+        "successes": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "explanations": [
+            "Based on the observations, the person shows a strong preference for delayed rewards over immediate rewards, even when the delay is substantial. Here are the key findings:\n\n1. **Immediate vs. Delayed Reward**: The person consistently chose the delayed reward when the immediate reward was 5 and the delayed reward was 10, regardless of shorter delays (3, 7, 15, 20, 25, and 28 days).\n\n2. **Threshold of Delay**: The person switched to choosing the immediate reward when the delay was 30 days, indicating that this delay was too long. However, they chose the delayed reward for a 28-day delay, suggesting their threshold is very close to 30 days.\n\n3. **Incremental Testing**: By incrementally increasing the delay, it was found that the person is willing to wait up to 29 days for the delayed reward but not 30 days.\n\n**Conclusion**: The person values the delayed reward significantly more than the immediate reward, up to a delay of 29 days. Beyond this, the immediate reward becomes more attractive. This indicates a high level of patience and a strong preference for larger rewards, but with a clear limit around the 30-day mark."
+        ],
+        "eigs": []
+    },
+    "scientist_messages": [
+        "role:system, messaage:A person has to choose between a delayed reward dR dollars in x days and an immediate reward iR dollars today.\nYour goal is to conduct experiments and explain the environment to the user so that they can achieve their goal.The goal of the user is to be able to predict the choice of a person between a delayed reward and an immediate reward.\nMake observations by specifying the three parameters iR, dR, D to query the person's choices, where D is a positive integer specifying\nthe number of days delayed. \n1 means the person selects the delayed reward and 0 means the person selects the immediate reward.\nAssume the delayed reward dR is a strictly larger positive number compared to the positive immediate reward iR. \nPlease specify the three integer parameters in a list [iR, dR, D].\n\nHere is an example:\n<thought> your thought </thought>\n<observe>[1, 2, 3] (trivial example)</observe>\nWhen asked to answer a question about the environement, respond in the format specified in the question.\n<thought> your thought</thought>\n<answer> your answer </answer>\n",
+        "role:user, messaage:Think about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\n<thought>your thought</thought>\n<observe> your observation</observe>\nMake an observation now.",
+        "role:assistant, messaage:<thought>To understand the person's preference between immediate and delayed rewards, I will start with a simple case where the immediate reward is relatively small and the delayed reward is significantly larger. This will help establish a baseline for how much the person values immediate gratification versus waiting for a larger reward. I will choose iR = 5, dR = 10, and D = 7 days to see if the person is willing to wait a week for double the reward.</thought>\n<observe>[5, 10, 7]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since the person chose the delayed reward when the immediate reward was 5 and the delayed reward was 10 with a delay of 7 days, it indicates a willingness to wait for a larger reward. To further understand their preference, I will reduce the delay to see if they still prefer the delayed reward. I will choose iR = 5, dR = 10, and D = 3 days to see if a shorter delay affects their choice.</thought>\n<observe>[5, 10, 3]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The person continues to choose the delayed reward even with a shorter delay of 3 days. This suggests a strong preference for the larger reward. To test the limits of this preference, I will increase the immediate reward while keeping the delayed reward and delay constant. This will help determine the threshold at which the immediate reward becomes more attractive. I will choose iR = 7, dR = 10, and D = 3 days.</thought>\n<observe>[7, 10, 3]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The person still prefers the delayed reward even when the immediate reward is increased to 7. This indicates a strong preference for the delayed reward. To further test this, I will increase the immediate reward closer to the delayed reward to see if there is a tipping point. I will choose iR = 9, dR = 10, and D = 3 days.</thought>\n<observe>[9, 10, 3]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The person continues to choose the delayed reward even when the immediate reward is very close to the delayed reward. This suggests a very strong preference for the delayed reward. To further explore this, I will now increase the delay significantly to see if there is a point where the delay becomes too long for the person to wait. I will choose iR = 5, dR = 10, and D = 30 days.</thought>\n<observe>[5, 10, 30]</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The person chose the immediate reward when the delay was increased to 30 days, indicating that the delay was too long for them to wait, even for a significantly larger reward. To find a more precise threshold, I will reduce the delay to a midpoint between the previous successful delay (3 days) and the unsuccessful delay (30 days). I will choose iR = 5, dR = 10, and D = 15 days.</thought>\n<observe>[5, 10, 15]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The person chose the delayed reward when the delay was 15 days, indicating that this delay is acceptable. To further narrow down the threshold, I will test a delay that is between 15 days and 30 days. This will help pinpoint the maximum delay the person is willing to accept for the larger reward. I will choose iR = 5, dR = 10, and D = 20 days.</thought>\n<observe>[5, 10, 20]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The person chose the delayed reward even with a 20-day delay, indicating that this delay is still acceptable. To further narrow down the threshold, I will test a delay that is between 20 days and 30 days. This will help pinpoint the maximum delay the person is willing to accept for the larger reward. I will choose iR = 5, dR = 10, and D = 25 days.</thought>\n<observe>[5, 10, 25]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The person chose the delayed reward even with a 25-day delay, indicating that this delay is still acceptable. Since the person chose the immediate reward at 30 days but the delayed reward at 25 days, the threshold seems to be between these two values. To pinpoint the exact threshold, I will test a delay that is very close to 30 days but slightly less. I will choose iR = 5, dR = 10, and D = 28 days.</thought>\n<observe>[5, 10, 28]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The person chose the delayed reward with a 28-day delay, indicating that this delay is still acceptable. Since the person chose the immediate reward at 30 days but the delayed reward at 28 days, the threshold seems to be very close to 30 days. To pinpoint the exact threshold, I will test a delay that is slightly less than 30 days. I will choose iR = 5, dR = 10, and D = 29 days.</thought>\n<observe>[5, 10, 29]</observe>",
+        "role:user, messaage:Assume that the user has no prior knowledge, and will not be able to run any experiments before making predictions. \nThey will make predictions based solely on your explanation, so provide as much detail as possible.\nLimit your explanation to 200 words.",
+        "role:assistant, messaage:Based on the observations, the person shows a strong preference for delayed rewards over immediate rewards, even when the delay is substantial. Here are the key findings:\n\n1. **Immediate vs. Delayed Reward**: The person consistently chose the delayed reward when the immediate reward was 5 and the delayed reward was 10, regardless of shorter delays (3, 7, 15, 20, 25, and 28 days).\n\n2. **Threshold of Delay**: The person switched to choosing the immediate reward when the delay was 30 days, indicating that this delay was too long. However, they chose the delayed reward for a 28-day delay, suggesting their threshold is very close to 30 days.\n\n3. **Incremental Testing**: By incrementally increasing the delay, it was found that the person is willing to wait up to 29 days for the delayed reward but not 30 days.\n\n**Conclusion**: The person values the delayed reward significantly more than the immediate reward, up to a delay of 29 days. Beyond this, the immediate reward becomes more attractive. This indicates a high level of patience and a strong preference for larger rewards, but with a clear limit around the 30-day mark."
+    ],
+    "naive_messages": [
+        "role:system, messaage:Here is what you know about the environment:\nBased on the observations, the person shows a strong preference for delayed rewards over immediate rewards, even when the delay is substantial. Here are the key findings:\n\n1. **Immediate vs. Delayed Reward**: The person consistently chose the delayed reward when the immediate reward was 5 and the delayed reward was 10, regardless of shorter delays (3, 7, 15, 20, 25, and 28 days).\n\n2. **Threshold of Delay**: The person switched to choosing the immediate reward when the delay was 30 days, indicating that this delay was too long. However, they chose the delayed reward for a 28-day delay, suggesting their threshold is very close to 30 days.\n\n3. **Incremental Testing**: By incrementally increasing the delay, it was found that the person is willing to wait up to 29 days for the delayed reward but not 30 days.\n\n**Conclusion**: The person values the delayed reward significantly more than the immediate reward, up to a delay of 29 days. Beyond this, the immediate reward becomes more attractive. This indicates a high level of patience and a strong preference for larger rewards, but with a clear limit around the 30-day mark.",
+        "role:user, messaage:The final result is 1.\nGiven the immediate reward iR = 53, delayed reward dR = 267, and delay in days D = 208, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 1.\nGiven the immediate reward iR = 261, delayed reward dR = 293, and delay in days D = 241, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 1.\nGiven the immediate reward iR = 48, delayed reward dR = 185, and delay in days D = 152, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 1.\nGiven the immediate reward iR = 95, delayed reward dR = 145, and delay in days D = 332, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 1.\nGiven the immediate reward iR = 20, delayed reward dR = 284, and delay in days D = 16, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>1</answer>",
+        "role:user, messaage:The final result is 1.\nGiven the immediate reward iR = 184, delayed reward dR = 226, and delay in days D = 127, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 1.\nGiven the immediate reward iR = 2, delayed reward dR = 140, and delay in days D = 228, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 1.\nGiven the immediate reward iR = 228, delayed reward dR = 285, and delay in days D = 156, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 1.\nGiven the immediate reward iR = 69, delayed reward dR = 78, and delay in days D = 5, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>1</answer>",
+        "role:user, messaage:The final result is 1.\nGiven the immediate reward iR = 279, delayed reward dR = 298, and delay in days D = 336, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>"
+    ]
+}

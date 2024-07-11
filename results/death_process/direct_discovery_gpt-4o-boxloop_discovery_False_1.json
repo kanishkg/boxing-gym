@@ -1,0 +1,164 @@
+{
+    "config": {
+        "seed": 1,
+        "include_prior": false,
+        "use_ppl": true,
+        "llms": {
+            "model_name": "gpt-4o",
+            "temperature": 0.0,
+            "max_tokens": 512
+        },
+        "exp": {
+            "num_experiments": [
+                10
+            ],
+            "experiment_type": "discovery"
+        },
+        "envs": {
+            "num_evals": 10,
+            "env_name": "death_process",
+            "goal_name": "direct_discovery",
+            "com_limit": 200,
+            "env_params": {
+                "N": 50,
+                "mu": 1,
+                "sigma": 1,
+                "lower_bound": 0
+            }
+        }
+    },
+    "data": {
+        "results": [
+            [
+                [
+                    242.4,
+                    217.6112129463921
+                ],
+                [
+                    "The final result is 30.\n Respond with a positive integer.",
+                    "The final result is 30.\n Respond with a positive integer.",
+                    "The final result is 30.\n Respond with a positive integer.",
+                    "The final result is 30.\n Respond with a positive integer.",
+                    "The final result is 30.\n Respond with a positive integer.",
+                    "The final result is 30.\n Respond with a positive integer.",
+                    "The final result is 30.\n Respond with a positive integer.",
+                    "The final result is 30.\n Respond with a positive integer.",
+                    "The final result is 30.\n Respond with a positive integer.",
+                    "The final result is 30.\n Respond with a positive integer."
+                ],
+                [
+                    11,
+                    25,
+                    17,
+                    18,
+                    28,
+                    20,
+                    4,
+                    38,
+                    11,
+                    34
+                ],
+                [
+                    "30",
+                    "2",
+                    "30",
+                    "30",
+                    "30",
+                    "30",
+                    "30",
+                    "30",
+                    "30",
+                    "30"
+                ]
+            ]
+        ],
+        "queries": [
+            "0.1",
+            "0.2",
+            "0.3",
+            "0.4",
+            "0.5",
+            "0.6",
+            "0.7",
+            "0.8",
+            "0.9",
+            "1.0"
+        ],
+        "observations": [
+            5,
+            0,
+            10,
+            11,
+            13,
+            17,
+            21,
+            24,
+            27,
+            30
+        ],
+        "successes": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "explanations": [
+            "Based on the experimental data and the inferred parameters, it appears that the relationship between the input (a float between 0 and 2) and the output (a positive integer) can be modeled using a Poisson distribution with a rate parameter that increases exponentially with the input.\n\nThe observed data suggests that the output increases as the input increases, but not in a simple linear fashion. Instead, the rate of increase accelerates as the input grows. For example, the output for an input of 0.1 is 5, while for 0.2 it drops to 0, and then for 0.3 it jumps to 10. This non-linear pattern continues, with the output generally increasing more rapidly as the input gets larger.\n\nThe inferred parameters from the model indicate that the rate parameter (lambda) for the Poisson distribution grows exponentially with the input. Specifically, the rate parameter is determined by an exponential function of the input, with coefficients that have been inferred from the data.\n\nTo predict the output for a given input, you can expect that small increases in the input will lead to larger increases in the output, especially as the input approaches the upper limit of 2. The relationship is not straightforward, so predictions should account for the possibility of rapid changes in the output as the input increases."
+        ],
+        "eigs": []
+    },
+    "scientist_messages": [
+        "role:system, messaage:You are observing a positive integer (with a maximum value of 50) for a positive real input.\nYour goal is to conduct experiments and explain the environment to the user so that they can achieve their goal.The goal of the user is to reliably predict the positive integer output of the environment for different float inputs. Conduct experiments to learn about the environment.\nThe input must be greater than 0 and less than 2.\nHere is an example:\n<thought> your thought </thought>\n<observe>0.1</observe>\nWhen asked to answer a question about the environement, respond in the format specified in the question.\n<thought> your thought </thought>\n<answer> your answer </answer>\n",
+        "role:user, messaage:Think about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\n<thought>your thought</thought>\n<observe> your observation</observe>\nMake an observation now.",
+        "role:assistant, messaage:<thought>To understand the relationship between the input and the output, I will start by observing the output at the lower boundary of the input range. This will help establish a baseline. I will then incrementally increase the input to see how the output changes. I will start with an input of 0.1 and then move to 0.2.</thought>\n<observe>0.1</observe>",
+        "role:user, messaage:Result: 5\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since the output for an input of 0.1 is 5, I will now observe the output for an input of 0.2. This will help me determine if the output increases linearly, exponentially, or in some other manner as the input increases.</thought>\n<observe>0.2</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output for an input of 0.2 is 0, which is unexpected given the previous result of 5 for an input of 0.1. This suggests that the relationship between the input and output may not be linear or straightforward. To further investigate, I will try an input of 0.3 to see if there is a pattern or if the output changes in a non-linear fashion.</thought>\n<observe>0.3</observe>",
+        "role:user, messaage:Result: 10\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output for an input of 0.3 is 10, which is higher than the output for 0.1 and 0.2. This suggests that the relationship between the input and output might be non-linear and possibly discontinuous. To further explore this, I will try an input of 0.4 to see if the output continues to increase or if it follows a different pattern.</thought>\n<observe>0.4</observe>",
+        "role:user, messaage:Result: 11\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output for an input of 0.4 is 11, which is only slightly higher than the output for 0.3. This suggests that the output might increase gradually for some ranges of input values. To further investigate, I will try an input of 0.5 to see if the output continues to increase gradually or if there is another pattern.</thought>\n<observe>0.5</observe>",
+        "role:user, messaage:Result: 13\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output for an input of 0.5 is 13, which continues the trend of a gradual increase. To further understand the pattern, I will try an input of 0.6 to see if the output continues to increase gradually or if there is a different behavior at this point.</thought>\n<observe>0.6</observe>",
+        "role:user, messaage:Result: 17\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output for an input of 0.6 is 17, which is a larger increase compared to the previous increments. This suggests that the rate of increase might be accelerating. To further investigate this potential acceleration, I will try an input of 0.7 to see if the output continues to increase at a faster rate.</thought>\n<observe>0.7</observe>",
+        "role:user, messaage:Result: 21\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output for an input of 0.7 is 21, which continues the trend of increasing output values. The increase from 0.6 to 0.7 is 4, which is consistent with the previous larger increment. To further explore this trend and see if the output continues to increase at a similar rate, I will try an input of 0.8.</thought>\n<observe>0.8</observe>",
+        "role:user, messaage:Result: 24\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output for an input of 0.8 is 24, which is an increase of 3 from the previous input. This suggests that the rate of increase might be stabilizing or following a specific pattern. To further investigate, I will try an input of 0.9 to see if the output continues to increase and to better understand the pattern of change.</thought>\n<observe>0.9</observe>",
+        "role:user, messaage:Result: 27\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output for an input of 0.9 is 27, which is an increase of 3 from the previous input. This suggests a consistent pattern of increasing by 3 for each 0.1 increment in this range. To confirm this pattern, I will try an input of 1.0 to see if the output continues to increase by 3.</thought>\n<observe>1.0</observe>",
+        "role:user, messaage:Assume that the user has no prior knowledge, and will not be able to run any experiments before making predictions. \nThey will make predictions based solely on your explanation, so provide as much detail as possible. You cannot provide your own experiments or observations.\nLimit your explanation to 200 words.To make your explanation clearer and more informative, look at the statistical model (written in pymc) designed by a colleague for the experimental data and the inferred parameters. \nHere is the statistical model. \n import pymc as pm\nimport numpy as np\nimport pandas as pd\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    x1_data = observed_data['x1'].values\n    y_data = observed_data['y'].values\n\n    rng1 = np.random.default_rng(42)\n    rng2 = np.random.default_rng(314)\n\n    with pm.Model() as model:\n        # Create a pm.MutableData object for each non-observation column\n        x1 = pm.MutableData(\"x1\", x1_data, dims='obs_id')\n        \n        # Define priors for the regression coefficients\n        beta_0 = pm.Normal(\"beta_0\", mu=0, sigma=10)\n        beta_1 = pm.Normal(\"beta_1\", mu=0, sigma=10)\n        \n        # Define the linear model for the log of the rate parameter\n        log_lambda = beta_0 + beta_1 * x1\n        \n        # Define the Poisson likelihood\n        lambda_ = pm.Deterministic(\"lambda_\", pm.math.exp(log_lambda))\n        y_obs = pm.Poisson(\"y_obs\", mu=lambda_, observed=y_data, dims=\"obs_id\")\n        \n        # Sample from the posterior\n        trace = pm.sample(1000, tune=500, target_accept=0.90, chains=3, cores=1, random_seed=rng1, idata_kwargs={\"log_likelihood\": True})\n        posterior_predictive = pm.sample_posterior_predictive(trace, random_seed=rng2, return_inferencedata=False)\n        \n        return model, posterior_predictive, trace \nHere are the inferred params. \n beta_0         1.380\nbeta_1         2.158\nlambda_[0]     5.043\nlambda_[1]     6.222\nlambda_[2]     7.686\nlambda_[3]     9.502\nlambda_[4]    11.761\nlambda_[5]    14.571\nlambda_[6]    18.071\nlambda_[7]    22.435\nlambda_[8]    27.882\nlambda_[9]    34.687 \nDon't literally describe the model verbatim but use it to conceptually motivate your explanation.The agent will not be able to use the model explicitly but having a conceptual understanding will be beneficial.",
+        "role:assistant, messaage:Based on the experimental data and the inferred parameters, it appears that the relationship between the input (a float between 0 and 2) and the output (a positive integer) can be modeled using a Poisson distribution with a rate parameter that increases exponentially with the input.\n\nThe observed data suggests that the output increases as the input increases, but not in a simple linear fashion. Instead, the rate of increase accelerates as the input grows. For example, the output for an input of 0.1 is 5, while for 0.2 it drops to 0, and then for 0.3 it jumps to 10. This non-linear pattern continues, with the output generally increasing more rapidly as the input gets larger.\n\nThe inferred parameters from the model indicate that the rate parameter (lambda) for the Poisson distribution grows exponentially with the input. Specifically, the rate parameter is determined by an exponential function of the input, with coefficients that have been inferred from the data.\n\nTo predict the output for a given input, you can expect that small increases in the input will lead to larger increases in the output, especially as the input approaches the upper limit of 2. The relationship is not straightforward, so predictions should account for the possibility of rapid changes in the output as the input increases."
+    ],
+    "naive_messages": [
+        "role:system, messaage:Your goal is to predict the positive integer output of the environment for different float inputs.\nYou must respond with a positive integer. You may also think before providing your predictions.\nHere is an example:\n<thought>your thought</thought>\n<answer>1</answer\nHere is what you know about the enivronment:\nBased on the experimental data and the inferred parameters, it appears that the relationship between the input (a float between 0 and 2) and the output (a positive integer) can be modeled using a Poisson distribution with a rate parameter that increases exponentially with the input.\n\nThe observed data suggests that the output increases as the input increases, but not in a simple linear fashion. Instead, the rate of increase accelerates as the input grows. For example, the output for an input of 0.1 is 5, while for 0.2 it drops to 0, and then for 0.3 it jumps to 10. This non-linear pattern continues, with the output generally increasing more rapidly as the input gets larger.\n\nThe inferred parameters from the model indicate that the rate parameter (lambda) for the Poisson distribution grows exponentially with the input. Specifically, the rate parameter is determined by an exponential function of the input, with coefficients that have been inferred from the data.\n\nTo predict the output for a given input, you can expect that small increases in the input will lead to larger increases in the output, especially as the input approaches the upper limit of 2. The relationship is not straightforward, so predictions should account for the possibility of rapid changes in the output as the input increases.",
+        "role:user, messaage:The final result is 30.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>30</answer>",
+        "role:user, messaage:The final result is 30.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<thought>Given the exponential nature of the rate parameter and the rapid increase in output as the input approaches 2, an input that results in an output of 30 is likely closer to the upper limit of 2. Based on the pattern, I will estimate the input to be around 1.5 to 2.</thought>\n<answer>2</answer>",
+        "role:user, messaage:The final result is 30.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>30</answer>",
+        "role:user, messaage:The final result is 30.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<thought>Given the exponential nature of the rate parameter and the rapid increase in output as the input grows, an input that results in an output of 30 is likely to be closer to the upper limit of 2. However, without the exact input value, I will make an educated guess based on the pattern.</thought>\n<answer>30</answer>",
+        "role:user, messaage:The final result is 30.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>30</answer>",
+        "role:user, messaage:The final result is 30.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>30</answer>",
+        "role:user, messaage:The final result is 30.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>30</answer>",
+        "role:user, messaage:The final result is 30.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>30</answer>",
+        "role:user, messaage:The final result is 30.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>30</answer>",
+        "role:user, messaage:The final result is 30.\n Respond with a positive integer.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>30</answer>"
+    ]
+}

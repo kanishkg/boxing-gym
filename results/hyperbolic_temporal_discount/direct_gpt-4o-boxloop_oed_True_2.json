@@ -1,0 +1,229 @@
+{
+    "config": {
+        "seed": 2,
+        "include_prior": true,
+        "use_ppl": true,
+        "llms": {
+            "model_name": "gpt-4o",
+            "temperature": 0.0,
+            "max_tokens": 512
+        },
+        "exp": {
+            "num_experiments": [
+                0,
+                5,
+                10
+            ],
+            "experiment_type": "oed"
+        },
+        "envs": {
+            "num_evals": 10,
+            "env_name": "hyperbolic_temporal_discount",
+            "goal_name": "direct",
+            "com_limit": 200,
+            "env_params": {
+                "epsilon": 0.01,
+                "k_mean": -4.25,
+                "k_std": 0.5,
+                "alpha_scale": 2
+            }
+        }
+    },
+    "data": {
+        "results": [
+            [
+                [
+                    0.9,
+                    0.30000000000000004
+                ],
+                [
+                    "(47, 224, 48)",
+                    "(80, 217, 294)",
+                    "(67, 246, 50)",
+                    "(140, 173, 272)",
+                    "(152, 209, 249)",
+                    "(36, 76, 253)",
+                    "(150, 283, 27)",
+                    "(224, 257, 344)",
+                    "(14, 295, 203)",
+                    "(265, 284, 27)"
+                ],
+                [
+                    1,
+                    0,
+                    1,
+                    0,
+                    1,
+                    0,
+                    1,
+                    0,
+                    1,
+                    0
+                ],
+                [
+                    "0.519",
+                    "0.533",
+                    "0.514",
+                    "0.523",
+                    "0.529",
+                    "0.528",
+                    "0.518",
+                    "0.526",
+                    "0.531",
+                    "0.532"
+                ]
+            ],
+            [
+                [
+                    0.4,
+                    0.4898979485566356
+                ],
+                [
+                    "(47, 224, 48)",
+                    "(80, 217, 294)",
+                    "(67, 246, 50)",
+                    "(140, 173, 272)",
+                    "(152, 209, 249)",
+                    "(36, 76, 253)",
+                    "(150, 283, 27)",
+                    "(224, 257, 344)",
+                    "(14, 295, 203)",
+                    "(265, 284, 27)"
+                ],
+                [
+                    1,
+                    0,
+                    1,
+                    0,
+                    1,
+                    0,
+                    1,
+                    0,
+                    1,
+                    0
+                ],
+                [
+                    "0.95",
+                    "0.8593333333333333",
+                    "0.9646666666666667",
+                    "0.871",
+                    "0.9096666666666666",
+                    "0.7346666666666667",
+                    "0.9833333333333333",
+                    "0.9013333333333333",
+                    "0.8913333333333333",
+                    "0.962"
+                ]
+            ],
+            [
+                [
+                    0.3,
+                    0.45825756949558405
+                ],
+                [
+                    "(47, 224, 48)",
+                    "(80, 217, 294)",
+                    "(67, 246, 50)",
+                    "(140, 173, 272)",
+                    "(152, 209, 249)",
+                    "(36, 76, 253)",
+                    "(150, 283, 27)",
+                    "(224, 257, 344)",
+                    "(14, 295, 203)",
+                    "(265, 284, 27)"
+                ],
+                [
+                    1,
+                    0,
+                    1,
+                    0,
+                    1,
+                    0,
+                    1,
+                    0,
+                    1,
+                    0
+                ],
+                [
+                    "0.8466666666666667",
+                    "0.2836666666666667",
+                    "0.8943333333333333",
+                    "0.15233333333333332",
+                    "0.29833333333333334",
+                    "0.103",
+                    "0.9666666666666667",
+                    "0.21566666666666667",
+                    "0.5133333333333333",
+                    "0.9343333333333333"
+                ]
+            ]
+        ],
+        "queries": [
+            "[5, 10, 1]",
+            "[5, 10, 5]",
+            "[7, 10, 5]",
+            "[8, 10, 5]",
+            "[9, 10, 5]",
+            "[9, 10, 10]",
+            "[9, 10, 7]",
+            "[9, 10, 8]",
+            "[9, 10, 9]",
+            "[9.5, 10, 10]"
+        ],
+        "observations": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            1,
+            1,
+            1
+        ],
+        "successes": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "explanations": [],
+        "eigs": [],
+        "programs": [
+            "### High-Level Probabilistic Program Sketch\n\n1. **Modeling the Choice**:\n   - The choice between an immediate reward (`ir`) and a delayed reward (`dr`) after a certain number of days (`days`) can be modeled using a logistic regression framework.\n   - The probability of choosing the delayed reward can be modeled as a function of the immediate reward, delayed reward, and the number of days.\n   - We can use a logistic function to model the probability of choosing the delayed reward.\n\n2. **Parameters**:\n   - We will introduce parameters for the coefficients of the logistic regression model.\n   - These parameters will be given prior distributions.\n\n3. **Likelihood**:\n   - The likelihood of the observed choices will be modeled using a Bernoulli distribution with the probability parameter derived from the logistic function.\n\n### Probabilistic Program\n\n```python\nimport pymc as pm\nimport numpy as np\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    ir = observed_data['ir'].to_numpy()\n    dr = observed_data['dr'].to_numpy()\n    days = observed_data['days'].to_numpy()\n    \n    rng1 = np.random.default_rng(42)\n    rng2 = np.random.default_rng(314)\n    \n    with pm.Model() as model:\n        # Create pm.MutableData objects for each non-observation column\n        ir_data = pm.MutableData(\"ir\", ir, dims=\"obs_id\")\n        dr_data = pm.MutableData(\"dr\", dr, dims=\"obs_id\")\n        days_data = pm.MutableData(\"days\", days, dims=\"obs_id\")\n        \n        # Define priors for the coefficients\n        beta_ir = pm.Normal(\"beta_ir\", mu=0, sigma=1)\n        beta_dr = pm.Normal(\"beta_dr\", mu=0, sigma=1)\n        beta_days = pm.Normal(\"beta_days\", mu=0, sigma=1)\n        intercept = pm.Normal(\"intercept\", mu=0, sigma=1)\n        \n        # Define the logistic regression model\n        logit_p = intercept + beta_ir * ir_data + beta_dr * dr_data + beta_days * days_data\n        p = pm.Deterministic(\"p\", pm.math.sigmoid(logit_p))\n        \n        # Define the likelihood\n        y_obs = pm.Bernoulli(\"y_obs\", p=p, observed=None, dims=\"obs_id\")\n        \n        # Sample from the prior\n        prior_predictive = pm.sample_prior_predictive(samples=1000, random_seed=rng2, return_inferencedata=False)\n        \n        return model, prior_predictive\n\n# Example usage:\n# observed_data = pd.DataFrame({\n#     'ir': [10, 20, 30],\n#     'dr': [15, 25, 35],\n#     'days': [5, 10, 15]\n# })\n# model, prior_predictive = gen_model(observed_data)\n```\n\n### Explanation of the Code\n\n1. **Data Preparation**:\n   - Convert the columns `ir`, `dr`, and `days` from the `observed_data` DataFrame to numpy arrays.\n\n2. **Model Definition**:\n   - Create a PyMC model context.\n   - Define `pm.MutableData` objects for `ir`, `dr`, and `days` with `dims=\"obs_id\"` to ensure they are treated as observed data.\n   - Define priors for the coefficients (`beta_ir`, `beta_dr`, `beta_days`) and the intercept using normal distributions.\n   - Define the logistic regression model using the logistic function (`pm.math.sigmoid`).\n   - Define the likelihood of the observed choices using a Bernoulli distribution with the probability parameter `p`.\n\n3. **Sampling from the Prior**:\n   - Use `pm.sample_prior_predictive` to sample from the prior distributions and return the model and prior predictive samples.\n\nThis program models the choice between an immediate and a delayed reward using logistic regression, with the probability of choosing the delayed reward as a function of the immediate reward, delayed reward, and the number of days.",
+            "### High-Level Probabilistic Program Sketch\n\nGiven the dataset, we need to model a person's choice between a delayed reward and an immediate reward. The choice is likely influenced by the immediate reward (`ir`), the delayed reward (`dr`), and the number of days (`days`) one has to wait for the delayed reward. \n\nA common approach to model such decision-making processes is to use a logistic regression model where the probability of choosing the delayed reward over the immediate reward is modeled as a function of the input variables (`ir`, `dr`, `days`). \n\n### Plan\n1. **Model the Choice**: Use a logistic regression model to predict the probability of choosing the delayed reward.\n2. **Define Priors**: Set priors for the coefficients of the logistic regression model.\n3. **Likelihood**: Define the likelihood of the observed choices given the logistic regression model.\n\n### Program\n```python\nimport pymc as pm\nimport numpy as np\nimport pandas as pd\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    ir = observed_data['ir'].values\n    dr = observed_data['dr'].values\n    days = observed_data['days'].values\n    choice = observed_data['Choice'].values\n\n    rng1 = np.random.default_rng(42)\n    rng2 = np.random.default_rng(314)\n    \n    with pm.Model() as model:\n        # Create pm.MutableData objects for each non-observation column\n        ir_data = pm.MutableData(\"ir\", ir, dims=\"obs_id\")\n        dr_data = pm.MutableData(\"dr\", dr, dims=\"obs_id\")\n        days_data = pm.MutableData(\"days\", days, dims=\"obs_id\")\n        \n        # Define priors for the coefficients\n        beta_ir = pm.Normal(\"beta_ir\", mu=0, sigma=1)\n        beta_dr = pm.Normal(\"beta_dr\", mu=0, sigma=1)\n        beta_days = pm.Normal(\"beta_days\", mu=0, sigma=1)\n        intercept = pm.Normal(\"intercept\", mu=0, sigma=1)\n        \n        # Logistic regression model\n        logit_p = intercept + beta_ir * ir_data + beta_dr * dr_data + beta_days * days_data\n        p = pm.Deterministic(\"p\", pm.math.sigmoid(logit_p))\n        \n        # Likelihood\n        y_obs = pm.Bernoulli(\"y_obs\", p=p, observed=choice, dims=\"obs_id\")\n        \n        # Sampling\n        trace = pm.sample(1000, tune=500, target_accept=0.90, chains=3, cores=1, random_seed=rng1, idata_kwargs={\"log_likelihood\": True})\n        posterior_predictive = pm.sample_posterior_predictive(trace, random_seed=rng2, return_inferencedata=False)\n        \n        return model, posterior_predictive, trace\n```\n\n### Explanation\n1. **Data Preparation**: Convert the columns of the observed data to numpy arrays.\n2. **Model Definition**:\n   - **MutableData**: Create `pm.MutableData` objects for `ir`, `dr`, and `days`.\n   - **Priors**: Define normal priors for the coefficients (`beta_ir`, `beta_dr`, `beta_days`) and the intercept.\n   - **Logistic Regression**: Model the log-odds (`logit_p`) as a linear combination of the input variables and their respective coefficients.\n   - **Likelihood**: Define the likelihood of the observed choices using a Bernoulli distribution with the probability `p` derived from the logistic regression model.\n3. **Sampling**: Sample from the posterior distribution and the posterior predictive distribution.\n\nThis model should capture the relationship between the input variables and the choice, allowing us to understand the factors influencing the decision-making process.",
+            "### High-Level Probabilistic Program Sketch\n\nGiven the dataset, we need to model a person's choice between a delayed reward and an immediate reward. The choice is likely influenced by the immediate reward (`ir`), the delayed reward (`dr`), and the number of days (`days`) one has to wait for the delayed reward. \n\nA common approach to model such binary choices is to use logistic regression, where the probability of choosing the delayed reward can be modeled as a logistic function of the input variables (`ir`, `dr`, and `days`). \n\n### Plan\n1. **Data Preparation**: Convert the observed data columns to numpy arrays.\n2. **Model Specification**:\n   - Use a logistic regression model to predict the probability of choosing the delayed reward.\n   - Define the logistic regression parameters (intercept and coefficients for `ir`, `dr`, and `days`).\n   - Use a Bernoulli distribution for the observed choices, with the probability given by the logistic function.\n3. **Sampling**: Use PyMC to sample from the posterior distribution and generate posterior predictive samples.\n\n### Program\n```python\nimport pymc as pm\nimport numpy as np\nimport pandas as pd\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    ir = observed_data['ir'].values\n    dr = observed_data['dr'].values\n    days = observed_data['days'].values\n    choice = observed_data['Choice'].values\n\n    with pm.Model() as model:\n        # Create pm.MutableData objects for each non-observation column\n        ir_data = pm.MutableData(\"ir\", ir, dims=\"obs_id\")\n        dr_data = pm.MutableData(\"dr\", dr, dims=\"obs_id\")\n        days_data = pm.MutableData(\"days\", days, dims=\"obs_id\")\n\n        # Define priors for the logistic regression coefficients\n        intercept = pm.Normal(\"intercept\", mu=0, sigma=10)\n        beta_ir = pm.Normal(\"beta_ir\", mu=0, sigma=10)\n        beta_dr = pm.Normal(\"beta_dr\", mu=0, sigma=10)\n        beta_days = pm.Normal(\"beta_days\", mu=0, sigma=10)\n\n        # Define the logistic regression model\n        logit_p = intercept + beta_ir * ir_data + beta_dr * dr_data + beta_days * days_data\n        p = pm.Deterministic(\"p\", pm.math.sigmoid(logit_p))\n\n        # Define the likelihood of the observations\n        y_obs = pm.Bernoulli(\"y_obs\", p=p, observed=choice, dims=\"obs_id\")\n\n        # Sample from the posterior\n        trace = pm.sample(1000, tune=500, target_accept=0.90, chains=3, cores=1, random_seed=np.random.default_rng(42), idata_kwargs={\"log_likelihood\": True})\n        posterior_predictive = pm.sample_posterior_predictive(trace, random_seed=np.random.default_rng(314), return_inferencedata=False)\n\n        return model, posterior_predictive, trace\n```\n\n### Explanation\n- **Data Preparation**: The columns `ir`, `dr`, `days`, and `Choice` are converted to numpy arrays.\n- **Model Specification**:\n  - `pm.MutableData` is used to create mutable data objects for `ir`, `dr`, and `days`.\n  - Priors for the logistic regression coefficients (`intercept`, `beta_ir`, `beta_dr`, `beta_days`) are defined as normal distributions with mean 0 and standard deviation 10.\n  - The logistic regression model is defined using the logistic function (`pm.math.sigmoid`).\n  - The likelihood of the observations is defined using a Bernoulli distribution with the probability `p`.\n- **Sampling**: The posterior distribution is sampled using `pm.sample`, and posterior predictive samples are generated using `pm.sample_posterior_predictive`.\n\nThis model should provide a good starting point for understanding the factors influencing the choice between immediate and delayed rewards."
+        ]
+    },
+    "scientist_messages": [
+        "role:system, messaage:A person has to choose between a delayed reward dR dollars in x days and an immediate reward iR dollars today.\nYour goal is to be able to predict the choice of a person between a delayed reward and an immediate reward.\nRemember, the decisions are not deterministic.\nMake observations by specifying the three parameters iR, dR, D to query the person's choices, where D is a positive integer specifying\nthe number of days delayed. \n1 means the person selects the delayed reward and 0 means the person selects the immediate reward.\nAssume the delayed reward dR is a strictly larger positive number compared to the positive immediate reward iR. \nPlease specify the three integer parameters in a list [iR, dR, D].\n\nHere is an example:\n<thought> your thought </thought>\n<observe>[1, 2, 3] (trivial example)</observe>\nWhen asked to answer a question about the environement, respond in the format specified in the question.\n<thought> your thought</thought>\n<answer> your answer </answer>\n",
+        "role:user, messaage:Think about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\n<thought>your thought</thought>\n<observe> your observation</observe>\nMake an observation now.",
+        "role:assistant, messaage:<thought>To understand the person's decision-making process, I need to explore how the choice between immediate and delayed rewards changes with varying amounts and delay periods. Since the delayed reward is always larger, I will start by observing a scenario with a small immediate reward, a slightly larger delayed reward, and a short delay period. This will help establish a baseline for the person's preference when the delay is minimal and the reward difference is small.</thought>\n<observe>[5, 10, 1]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Given that the person chose the delayed reward when the immediate reward was 5, the delayed reward was 10, and the delay was 1 day, it suggests a preference for the delayed reward even with a short delay. To further understand the impact of the delay, I will increase the delay period while keeping the rewards the same. This will help determine how sensitive the person is to the delay period when the reward difference is constant.</thought>\n<observe>[5, 10, 5]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The person chose the delayed reward again, even with a 5-day delay. This indicates a strong preference for the delayed reward when the immediate reward is 5 and the delayed reward is 10. To explore the effect of increasing the immediate reward while keeping the delayed reward and delay period constant, I will increase the immediate reward. This will help determine the threshold at which the person might switch to preferring the immediate reward.</thought>\n<observe>[7, 10, 5]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The person still chose the delayed reward when the immediate reward was increased to 7, with the delayed reward remaining at 10 and the delay period at 5 days. This suggests a continued preference for the delayed reward. To further explore this, I will increase the immediate reward again while keeping the delayed reward and delay period constant. This will help identify the point at which the person might switch to preferring the immediate reward.</thought>\n<observe>[8, 10, 5]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The person continues to choose the delayed reward even when the immediate reward is 8, the delayed reward is 10, and the delay period is 5 days. This indicates a strong preference for the delayed reward. To further test the boundaries, I will increase the immediate reward to 9 while keeping the delayed reward and delay period constant. This will help determine if there is a point where the immediate reward becomes more attractive.</thought>\n<observe>[9, 10, 5]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The person still prefers the delayed reward even when the immediate reward is 9, the delayed reward is 10, and the delay period is 5 days. This suggests a very strong preference for the delayed reward. To explore the effect of a longer delay period, I will increase the delay period while keeping the immediate reward at 9 and the delayed reward at 10. This will help determine if a longer delay period influences the person's choice.</thought>\n<observe>[9, 10, 10]</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>With a delay period of 10 days, the person chose the immediate reward when the immediate reward was 9 and the delayed reward was 10. This indicates that the delay period significantly impacts the person's choice. To further understand the sensitivity to the delay period, I will reduce the delay period slightly while keeping the rewards the same. This will help identify the threshold delay period at which the person switches their preference.</thought>\n<observe>[9, 10, 7]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The person chose the delayed reward when the delay period was reduced to 7 days, with the immediate reward at 9 and the delayed reward at 10. This suggests that the threshold delay period for switching preference is between 7 and 10 days. To narrow down this threshold, I will test a delay period of 8 days while keeping the rewards the same. This will help pinpoint the exact delay period at which the person switches their preference.</thought>\n<observe>[9, 10, 8]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The person chose the delayed reward with an 8-day delay, indicating that the threshold delay period is likely between 8 and 10 days. To further narrow down this threshold, I will test a delay period of 9 days while keeping the rewards the same. This will help determine if the switch in preference occurs precisely at 9 days.</thought>\n<observe>[9, 10, 9]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The person chose the delayed reward even with a 9-day delay, indicating that the threshold delay period is very close to 10 days. To further explore the impact of the immediate reward amount, I will increase the immediate reward slightly while keeping the delay period at 10 days and the delayed reward at 10. This will help determine if a slightly higher immediate reward can shift the person's preference when the delay period is at the threshold.</thought>\n<observe>[9.5, 10, 10]</observe>"
+    ],
+    "naive_messages": null
+}

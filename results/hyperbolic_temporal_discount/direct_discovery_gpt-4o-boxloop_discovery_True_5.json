@@ -1,0 +1,167 @@
+{
+    "config": {
+        "seed": 5,
+        "include_prior": true,
+        "use_ppl": true,
+        "llms": {
+            "model_name": "gpt-4o",
+            "temperature": 0.0,
+            "max_tokens": 512
+        },
+        "exp": {
+            "num_experiments": [
+                10
+            ],
+            "experiment_type": "discovery"
+        },
+        "envs": {
+            "num_evals": 10,
+            "env_name": "hyperbolic_temporal_discount",
+            "goal_name": "direct_discovery",
+            "com_limit": 200,
+            "env_params": {
+                "epsilon": 0.01,
+                "k_mean": -4.25,
+                "k_std": 0.5,
+                "alpha_scale": 2
+            }
+        }
+    },
+    "data": {
+        "results": [
+            [
+                [
+                    0.5,
+                    0.5
+                ],
+                [
+                    "The final result is 0.\nGiven the immediate reward iR = 44, delayed reward dR = 252, and delay in days D = 61, what is the person's choice? Respond using a binary value 0 or 1.",
+                    "The final result is 0.\nGiven the immediate reward iR = 85, delayed reward dR = 145, and delay in days D = 82, what is the person's choice? Respond using a binary value 0 or 1.",
+                    "The final result is 0.\nGiven the immediate reward iR = 71, delayed reward dR = 294, and delay in days D = 49, what is the person's choice? Respond using a binary value 0 or 1.",
+                    "The final result is 0.\nGiven the immediate reward iR = 241, delayed reward dR = 295, and delay in days D = 292, what is the person's choice? Respond using a binary value 0 or 1.",
+                    "The final result is 0.\nGiven the immediate reward iR = 19, delayed reward dR = 228, and delay in days D = 113, what is the person's choice? Respond using a binary value 0 or 1.",
+                    "The final result is 0.\nGiven the immediate reward iR = 136, delayed reward dR = 254, and delay in days D = 342, what is the person's choice? Respond using a binary value 0 or 1.",
+                    "The final result is 0.\nGiven the immediate reward iR = 31, delayed reward dR = 43, and delay in days D = 23, what is the person's choice? Respond using a binary value 0 or 1.",
+                    "The final result is 0.\nGiven the immediate reward iR = 91, delayed reward dR = 137, and delay in days D = 151, what is the person's choice? Respond using a binary value 0 or 1.",
+                    "The final result is 0.\nGiven the immediate reward iR = 9, delayed reward dR = 10, and delay in days D = 295, what is the person's choice? Respond using a binary value 0 or 1.",
+                    "The final result is 0.\nGiven the immediate reward iR = 159, delayed reward dR = 208, and delay in days D = 244, what is the person's choice? Respond using a binary value 0 or 1."
+                ],
+                [
+                    1,
+                    0,
+                    1,
+                    0,
+                    1,
+                    0,
+                    1,
+                    0,
+                    1,
+                    0
+                ],
+                [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                ]
+            ]
+        ],
+        "queries": [
+            "[5, 10, 2]",
+            "[5, 10, 5]",
+            "[5, 10, 10]",
+            "[5, 10, 20]",
+            "[5, 10, 30]",
+            "[7, 10, 30]",
+            "[7, 10, 20]",
+            "[7, 10, 25]",
+            "[7, 10, 22]",
+            "[7, 10, 23]"
+        ],
+        "observations": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0
+        ],
+        "successes": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "explanations": [
+            "To predict whether a person will choose an immediate reward (iR) or a delayed reward (dR) after D days, consider the following insights derived from a statistical model:\n\n1. **Immediate Reward (iR)**: The attractiveness of the immediate reward negatively impacts the likelihood of choosing the delayed reward. A higher iR makes the immediate option more appealing.\n\n2. **Delayed Reward (dR)**: The attractiveness of the delayed reward positively impacts the likelihood of choosing it. A higher dR makes waiting more worthwhile.\n\n3. **Delay (D)**: The length of the delay negatively impacts the likelihood of choosing the delayed reward. A longer delay makes the immediate reward more appealing.\n\n4. **Intercept**: This represents the baseline preference for the delayed reward when all other factors are zero.\n\nThe model uses these factors to calculate a probability (p) of choosing the delayed reward. If p is high (close to 1), the person is likely to choose the delayed reward. If p is low (close to 0), they are likely to choose the immediate reward.\n\nFor example, if iR is $7, dR is $10, and D is 23 days, the person is likely to choose the immediate reward. However, if D is reduced to 22 days, they might switch to preferring the delayed reward. This indicates a threshold around 22-23 days where their preference changes.\n\nUnderstanding these relationships helps predict choices based on the values of iR, dR, and D."
+        ],
+        "eigs": [],
+        "programs": [
+            []
+        ]
+    },
+    "scientist_messages": [
+        "role:system, messaage:A person has to choose between a delayed reward dR dollars in x days and an immediate reward iR dollars today.\nYour goal is to conduct experiments and explain the environment to the user so that they can achieve their goal.The goal of the user is to be able to predict the choice of a person between a delayed reward and an immediate reward.\nMake observations by specifying the three parameters iR, dR, D to query the person's choices, where D is a positive integer specifying\nthe number of days delayed. \n1 means the person selects the delayed reward and 0 means the person selects the immediate reward.\nAssume the delayed reward dR is a strictly larger positive number compared to the positive immediate reward iR. \nPlease specify the three integer parameters in a list [iR, dR, D].\n\nHere is an example:\n<thought> your thought </thought>\n<observe>[1, 2, 3] (trivial example)</observe>\nWhen asked to answer a question about the environement, respond in the format specified in the question.\n<thought> your thought</thought>\n<answer> your answer </answer>\n",
+        "role:user, messaage:Think about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\n<thought>your thought</thought>\n<observe> your observation</observe>\nMake an observation now.",
+        "role:assistant, messaage:<thought>To understand the person's preference between an immediate reward and a delayed reward, I will start by choosing a small immediate reward and a slightly larger delayed reward with a short delay period. This will help establish a baseline for how much the person values immediate gratification versus waiting for a larger reward. I will then gradually increase the delay period to see how it affects their choice. \n\nFor the first observation, I will choose an immediate reward of $5, a delayed reward of $10, and a delay of 2 days.</thought>\n<observe>[5, 10, 2]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since the person chose the delayed reward of $10 over the immediate reward of $5 with a delay of 2 days, it indicates that they are willing to wait for a larger reward in the short term. To further understand their preference, I will increase the delay period to see if there is a point at which they switch to preferring the immediate reward. \n\nFor the next observation, I will keep the immediate reward at $5 and the delayed reward at $10, but increase the delay to 5 days.</thought>\n<observe>[5, 10, 5]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since the person still chose the delayed reward of $10 over the immediate reward of $5 with a delay of 5 days, it suggests that they are relatively patient and value the larger reward even with a moderate delay. To further test their patience, I will increase the delay period more significantly to see if there is a threshold where they switch to preferring the immediate reward.\n\nFor the next observation, I will keep the immediate reward at $5 and the delayed reward at $10, but increase the delay to 10 days.</thought>\n<observe>[5, 10, 10]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since the person continues to choose the delayed reward of $10 over the immediate reward of $5 even with a delay of 10 days, it indicates a strong preference for the larger reward despite the increasing delay. To further explore their patience, I will significantly increase the delay period to see if there is a point where they switch to the immediate reward.\n\nFor the next observation, I will keep the immediate reward at $5 and the delayed reward at $10, but increase the delay to 20 days.</thought>\n<observe>[5, 10, 20]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since the person still prefers the delayed reward of $10 over the immediate reward of $5 even with a delay of 20 days, it suggests a high level of patience and a strong preference for the larger reward. To further test the limits of their patience, I will increase the delay period even more significantly.\n\nFor the next observation, I will keep the immediate reward at $5 and the delayed reward at $10, but increase the delay to 30 days.</thought>\n<observe>[5, 10, 30]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since the person continues to choose the delayed reward of $10 over the immediate reward of $5 even with a delay of 30 days, it indicates a very high level of patience. To further explore their decision-making process, I will now increase the immediate reward to see if there is a point where the immediate reward becomes more attractive than the delayed reward.\n\nFor the next observation, I will increase the immediate reward to $7 while keeping the delayed reward at $10 and the delay at 30 days.</thought>\n<observe>[7, 10, 30]</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since the person chose the immediate reward of $7 over the delayed reward of $10 with a delay of 30 days, it suggests that the immediate reward has become sufficiently attractive to outweigh the delayed reward given the long delay. To better understand the threshold, I will now decrease the delay period while keeping the immediate reward at $7 and the delayed reward at $10. This will help identify the point at which the person switches back to preferring the delayed reward.\n\nFor the next observation, I will keep the immediate reward at $7 and the delayed reward at $10, but decrease the delay to 20 days.</thought>\n<observe>[7, 10, 20]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since the person chose the delayed reward of $10 over the immediate reward of $7 with a delay of 20 days, it indicates that the delay period is a significant factor in their decision-making. To pinpoint the threshold more precisely, I will further narrow down the delay period. I will now test with a delay period between 20 and 30 days to find the exact point where the person switches their preference.\n\nFor the next observation, I will keep the immediate reward at $7 and the delayed reward at $10, but set the delay to 25 days.</thought>\n<observe>[7, 10, 25]</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since the person chose the immediate reward of $7 over the delayed reward of $10 with a delay of 25 days, it suggests that the threshold lies between 20 and 25 days. To further narrow down the threshold, I will test with a delay period between 20 and 25 days. This will help identify the exact point at which the person switches their preference.\n\nFor the next observation, I will keep the immediate reward at $7 and the delayed reward at $10, but set the delay to 22 days.</thought>\n<observe>[7, 10, 22]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since the person chose the delayed reward of $10 over the immediate reward of $7 with a delay of 22 days, it suggests that the threshold is very close to 22 days. To pinpoint the exact threshold, I will test with a delay period between 22 and 25 days. This will help identify the precise point at which the person switches their preference.\n\nFor the next observation, I will keep the immediate reward at $7 and the delayed reward at $10, but set the delay to 23 days.</thought>\n<observe>[7, 10, 23]</observe>",
+        "role:user, messaage:Assume that the user has no prior knowledge, and will not be able to run any experiments before making predictions. \nThey will make predictions based solely on your explanation, so provide as much detail as possible. You cannot provide your own experiments or observations.\nLimit your explanation to 200 words.To make your explanation clearer and more informative, look at the statistical model (written in pymc) designed by a colleague for the experimental data and the inferred parameters. \nHere is the statistical model. \n import pymc as pm\nimport numpy as np\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    ir = observed_data['ir'].values\n    dr = observed_data['dr'].values\n    days = observed_data['days'].values\n    choice = observed_data['Choice'].values\n\n    rng1 = np.random.default_rng(42)\n    rng2 = np.random.default_rng(314)\n    \n    with pm.Model() as model:\n        # Create pm.MutableData objects for each non-observation column\n        ir_data = pm.MutableData(\"ir\", ir, dims=\"obs_id\")\n        dr_data = pm.MutableData(\"dr\", dr, dims=\"obs_id\")\n        days_data = pm.MutableData(\"days\", days, dims=\"obs_id\")\n        \n        # Priors for the coefficients\n        beta_ir = pm.Normal(\"beta_ir\", mu=0, sigma=1)\n        beta_dr = pm.Normal(\"beta_dr\", mu=0, sigma=1)\n        beta_days = pm.Normal(\"beta_days\", mu=0, sigma=1)\n        intercept = pm.Normal(\"intercept\", mu=0, sigma=1)\n        \n        # Logistic regression model\n        logit_p = intercept + beta_ir * ir_data + beta_dr * dr_data + beta_days * days_data\n        p = pm.Deterministic(\"p\", pm.math.sigmoid(logit_p))\n        \n        # Likelihood\n        y_obs = pm.Bernoulli(\"y_obs\", p=p, observed=choice, dims=\"obs_id\")\n        \n        # Sampling\n        trace = pm.sample(1000, tune=500, target_accept=0.90, chains=3, cores=1, random_seed=rng1, idata_kwargs={\"log_likelihood\": True})\n        posterior_predictive = pm.sample_posterior_predictive(trace, random_seed=rng2, return_inferencedata=False)\n        \n        return model, posterior_predictive, trace \nHere are the inferred params. \n beta_ir     -0.699\nbeta_dr      1.069\nbeta_days   -0.243\nintercept    0.133\np[0]         0.972\np[1]         0.970\np[2]         0.960\np[3]         0.872\np[4]         0.509\np[5]         0.273\np[6]         0.699\np[7]         0.471\np[8]         0.617\np[9]         0.570 \nDon't literally describe the model verbatim but use it to conceptually motivate your explanation.The agent will not be able to use the model explicitly but having a conceptual understanding will be beneficial.",
+        "role:assistant, messaage:To predict whether a person will choose an immediate reward (iR) or a delayed reward (dR) after D days, consider the following insights derived from a statistical model:\n\n1. **Immediate Reward (iR)**: The attractiveness of the immediate reward negatively impacts the likelihood of choosing the delayed reward. A higher iR makes the immediate option more appealing.\n\n2. **Delayed Reward (dR)**: The attractiveness of the delayed reward positively impacts the likelihood of choosing it. A higher dR makes waiting more worthwhile.\n\n3. **Delay (D)**: The length of the delay negatively impacts the likelihood of choosing the delayed reward. A longer delay makes the immediate reward more appealing.\n\n4. **Intercept**: This represents the baseline preference for the delayed reward when all other factors are zero.\n\nThe model uses these factors to calculate a probability (p) of choosing the delayed reward. If p is high (close to 1), the person is likely to choose the delayed reward. If p is low (close to 0), they are likely to choose the immediate reward.\n\nFor example, if iR is $7, dR is $10, and D is 23 days, the person is likely to choose the immediate reward. However, if D is reduced to 22 days, they might switch to preferring the delayed reward. This indicates a threshold around 22-23 days where their preference changes.\n\nUnderstanding these relationships helps predict choices based on the values of iR, dR, and D."
+    ],
+    "naive_messages": [
+        "role:system, messaage:Here is what you know about the environment:\nTo predict whether a person will choose an immediate reward (iR) or a delayed reward (dR) after D days, consider the following insights derived from a statistical model:\n\n1. **Immediate Reward (iR)**: The attractiveness of the immediate reward negatively impacts the likelihood of choosing the delayed reward. A higher iR makes the immediate option more appealing.\n\n2. **Delayed Reward (dR)**: The attractiveness of the delayed reward positively impacts the likelihood of choosing it. A higher dR makes waiting more worthwhile.\n\n3. **Delay (D)**: The length of the delay negatively impacts the likelihood of choosing the delayed reward. A longer delay makes the immediate reward more appealing.\n\n4. **Intercept**: This represents the baseline preference for the delayed reward when all other factors are zero.\n\nThe model uses these factors to calculate a probability (p) of choosing the delayed reward. If p is high (close to 1), the person is likely to choose the delayed reward. If p is low (close to 0), they are likely to choose the immediate reward.\n\nFor example, if iR is $7, dR is $10, and D is 23 days, the person is likely to choose the immediate reward. However, if D is reduced to 22 days, they might switch to preferring the delayed reward. This indicates a threshold around 22-23 days where their preference changes.\n\nUnderstanding these relationships helps predict choices based on the values of iR, dR, and D.",
+        "role:user, messaage:The final result is 0.\nGiven the immediate reward iR = 44, delayed reward dR = 252, and delay in days D = 61, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 0.\nGiven the immediate reward iR = 85, delayed reward dR = 145, and delay in days D = 82, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 0.\nGiven the immediate reward iR = 71, delayed reward dR = 294, and delay in days D = 49, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 0.\nGiven the immediate reward iR = 241, delayed reward dR = 295, and delay in days D = 292, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 0.\nGiven the immediate reward iR = 19, delayed reward dR = 228, and delay in days D = 113, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 0.\nGiven the immediate reward iR = 136, delayed reward dR = 254, and delay in days D = 342, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 0.\nGiven the immediate reward iR = 31, delayed reward dR = 43, and delay in days D = 23, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 0.\nGiven the immediate reward iR = 91, delayed reward dR = 137, and delay in days D = 151, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 0.\nGiven the immediate reward iR = 9, delayed reward dR = 10, and delay in days D = 295, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 0.\nGiven the immediate reward iR = 159, delayed reward dR = 208, and delay in days D = 244, what is the person's choice? Respond using a binary value 0 or 1.\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>"
+    ]
+}

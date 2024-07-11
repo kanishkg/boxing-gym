@@ -1,0 +1,173 @@
+{
+    "config": {
+        "seed": 5,
+        "include_prior": false,
+        "use_ppl": true,
+        "llms": {
+            "model_name": "gpt-4o",
+            "temperature": 0.0,
+            "max_tokens": 512
+        },
+        "exp": {
+            "num_experiments": [
+                10
+            ],
+            "experiment_type": "discovery"
+        },
+        "envs": {
+            "num_evals": 10,
+            "env_name": "irt",
+            "goal_name": "direct_discovery",
+            "com_limit": 200,
+            "env_params": {
+                "num_students": 6,
+                "num_questions": 6,
+                "mode": "2pl"
+            }
+        }
+    },
+    "data": {
+        "results": [
+            [
+                [
+                    0.30000000000000004,
+                    0.45825756949558394
+                ],
+                [
+                    "The final result is 1.\nWhat is the output of the environment at input [3, 5]?",
+                    "The final result is 1.\nWhat is the output of the environment at input [0, 1]?",
+                    "The final result is 1.\nWhat is the output of the environment at input [3, 0]?",
+                    "The final result is 1.\nWhat is the output of the environment at input [0, 3]?",
+                    "The final result is 1.\nWhat is the output of the environment at input [4, 5]?",
+                    "The final result is 1.\nWhat is the output of the environment at input [3, 1]?",
+                    "The final result is 1.\nWhat is the output of the environment at input [2, 1]?",
+                    "The final result is 1.\nWhat is the output of the environment at input [1, 2]?",
+                    "The final result is 1.\nWhat is the output of the environment at input [1, 2]?",
+                    "The final result is 1.\nWhat is the output of the environment at input [2, 0]?"
+                ],
+                [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
+                ],
+                [
+                    "1",
+                    "1",
+                    "0",
+                    "1",
+                    "1",
+                    "0",
+                    "0",
+                    "1",
+                    "1",
+                    "0"
+                ]
+            ]
+        ],
+        "queries": [
+            "[0, 0]",
+            "[0, 5]",
+            "[5, 0]",
+            "[5, 5]",
+            "[3, 0]",
+            "[0, 3]",
+            "[1, 1]",
+            "[2, 2]",
+            "[3, 3]",
+            "[4, 4]",
+            "[2, 3]",
+            "[3, 2]"
+        ],
+        "observations": [
+            0,
+            1,
+            0,
+            1,
+            "You cannot query this observation, try again.",
+            "You cannot query this observation, try again.",
+            1,
+            1,
+            0,
+            0,
+            1,
+            1
+        ],
+        "successes": [
+            true,
+            true,
+            true,
+            true,
+            false,
+            false,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "explanations": [
+            "Based on the observations and the inferred parameters from the statistical model, we can make some educated guesses about the environment's behavior.\n\nThe environment maps two integers, each ranging from 0 to 5, to a boolean output (0 or 1). The statistical model suggests that the output is influenced by a combination of the two integers, with different weights assigned to each integer. Specifically, the model uses an intercept and coefficients for each integer to calculate a probability, which is then used to determine the boolean output.\n\nFrom the inferred parameters:\n- The intercept is approximately 0.201.\n- The coefficient for the first integer (beta_x1) is approximately -1.388.\n- The coefficient for the second integer (beta_x2) is approximately 1.581.\n\nThis means that the second integer has a stronger positive influence on the output, while the first integer has a negative influence. When the second integer is high (closer to 5), the probability of the output being 1 increases. Conversely, when the first integer is high, the probability of the output being 1 decreases.\n\nIn practical terms:\n- If the second integer is 5, the output is likely to be 1.\n- If both integers are the same and relatively low (e.g., 1 or 2), the output is likely to be 1.\n- If both integers are the same and relatively high (e.g., 3 or 4), the output is likely to be 0.\n\nBy understanding these patterns, you can make more reliable predictions about the boolean output for different integer inputs."
+        ],
+        "eigs": []
+    },
+    "scientist_messages": [
+        "role:system, messaage:The environment maps two integers to a boolean value. The first integer ranges from 0 to 5, and the second integer ranges from 0 to 5.\nThe function outputs a boolean 0 or 1.\nYour goal is to conduct experiments and explain the environment to the user so that they can achieve their goal.The goal of the user is to be able to reliably predict the boolean output (0 or 1) of the environment for different integer inputs. Conduct experiments to learn about the environment.\nMake observations by specifying an input in the following format: [integer 1, integer 2]\nYou can think before making an observation by providing your thoughts in <thought>.\n\nHere is an example:\n<thought> your thought </thought>\n<observe>[1, 3]</observe>\nWhen asked to answer a question about the environement, respond in the format specified in the question.\n<thought> your thought</thought>\n<answer> your answer </answer>\n",
+        "role:user, messaage:Think about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\n<thought>your thought</thought>\n<observe> your observation</observe>\nMake an observation now.",
+        "role:assistant, messaage:<thought>To understand the environment, I should start by observing the output for a range of values. A good strategy is to begin with the corners and edges of the input space, as these might reveal patterns or boundaries. I'll start with the smallest values, [0, 0], and then move to other corners like [0, 5], [5, 0], and [5, 5]. This will help me see if there's a simple pattern or rule governing the outputs.</thought>\n<observe>[0, 0]</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>Since the output for [0, 0] is 0, I will now check the other corners to see if there is a consistent pattern. Next, I will observe [0, 5] to see if changing the second integer while keeping the first one constant affects the output.</thought>\n<observe>[0, 5]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output changed from 0 to 1 when the second integer changed from 0 to 5 while the first integer remained 0. This suggests that the second integer might influence the output. To further investigate, I will now check the output for [5, 0] to see if changing the first integer while keeping the second one constant at 0 affects the output.</thought>\n<observe>[5, 0]</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output for [5, 0] is 0, which is the same as [0, 0]. This suggests that the first integer being 0 or 5 does not change the output when the second integer is 0. To further explore the influence of the first integer, I will now check the output for [5, 5] to see if changing both integers to their maximum values affects the output.</thought>\n<observe>[5, 5]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output for [5, 5] is 1, which matches the output for [0, 5]. This suggests that when the second integer is 5, the output is 1 regardless of the first integer. To further investigate the pattern, I will now check the output for [3, 0] to see if an intermediate value for the first integer while keeping the second integer at 0 affects the output.</thought>\n<observe>[3, 0]</observe>",
+        "role:user, messaage:You cannot query this observation, try again.",
+        "role:assistant, messaage:<thought>Since [3, 0] is not a valid observation, I will choose another point that fits within the allowed range. I will now check the output for [0, 3] to see if an intermediate value for the second integer while keeping the first integer at 0 affects the output.</thought>\n<observe>[0, 3]</observe>",
+        "role:user, messaage:You cannot query this observation, try again.",
+        "role:assistant, messaage:<thought>Since [0, 3] is not a valid observation, I will choose another point that fits within the allowed range. I will now check the output for [1, 1] to see if an intermediate value for both integers affects the output.</thought>\n<observe>[1, 1]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output for [1, 1] is 1. So far, the outputs are:\n- [0, 0] -> 0\n- [0, 5] -> 1\n- [5, 0] -> 0\n- [5, 5] -> 1\n- [1, 1] -> 1\n\nIt seems that the output is 1 when the second integer is 5 or when both integers are 1. To further investigate, I will now check the output for [2, 2] to see if another pair of identical intermediate values also results in 1.</thought>\n<observe>[2, 2]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output for [2, 2] is 1, which matches the output for [1, 1]. This suggests that when both integers are the same and non-zero, the output is 1. To further test this hypothesis, I will now check the output for [3, 3] to see if this pattern continues.</thought>\n<observe>[3, 3]</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output for [3, 3] is 0, which breaks the pattern observed with [1, 1] and [2, 2]. This suggests that the rule might be more complex than initially thought. To further investigate, I will now check the output for [4, 4] to see if the pattern of identical values resulting in 1 holds for other values or if [3, 3] was an exception.</thought>\n<observe>[4, 4]</observe>",
+        "role:user, messaage:Result: 0\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output for [4, 4] is 0, which matches the output for [3, 3]. This suggests that the output is 0 for higher identical values. To further investigate, I will now check the output for [2, 3] to see if changing one of the integers while keeping the other constant at an intermediate value affects the output.</thought>\n<observe>[2, 3]</observe>",
+        "role:user, messaage:Result: 1\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>The output for [2, 3] is 1. This suggests that the output might be 1 when the integers are not identical and at least one of them is an intermediate value. To further test this hypothesis, I will now check the output for [3, 2] to see if swapping the values still results in 1.</thought>\n<observe>[3, 2]</observe>",
+        "role:user, messaage:Assume that the user has no prior knowledge, and will not be able to run any experiments before making predictions. \nThey will make predictions based solely on your explanation, so provide as much detail as possible. You CANNOT provide your own experiments or observations.\nLimit your explanation to 200 words.To make your explanation clearer and more informative, look at the statistical model (written in pymc) designed by a colleague for the experimental data and the inferred parameters. \nHere is the statistical model. \n import pymc as pm\nimport numpy as np\nimport pandas as pd\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    x1_data = observed_data['x1'].values\n    x2_data = observed_data['x2'].values\n    y_data = observed_data['y'].values\n\n    rng1 = np.random.default_rng(42)\n    rng2 = np.random.default_rng(314)\n\n    with pm.Model() as model:\n        # Create pm.MutableData objects for each non-observation column\n        x1 = pm.MutableData(\"x1\", x1_data, dims=\"obs_id\")\n        x2 = pm.MutableData(\"x2\", x2_data, dims=\"obs_id\")\n\n        # Define priors for the coefficients and intercept\n        intercept = pm.Normal(\"intercept\", mu=0, sigma=10)\n        beta_x1 = pm.Normal(\"beta_x1\", mu=0, sigma=10)\n        beta_x2 = pm.Normal(\"beta_x2\", mu=0, sigma=10)\n\n        # Define the linear combination of predictors\n        logit_p = intercept + beta_x1 * x1 + beta_x2 * x2\n\n        # Define the likelihood using a Bernoulli distribution\n        p = pm.Deterministic(\"p\", pm.math.sigmoid(logit_p))\n        y_obs = pm.Bernoulli(\"y_obs\", p=p, observed=y_data, dims=\"obs_id\")\n\n        # Sample from the posterior\n        trace = pm.sample(1000, tune=500, target_accept=0.90, chains=3, cores=1, random_seed=rng1, idata_kwargs={\"log_likelihood\": True})\n        posterior_predictive = pm.sample_posterior_predictive(trace, random_seed=rng2, return_inferencedata=False)\n\n        return model, posterior_predictive, trace \nHere are the inferred params. \n intercept    0.201\nbeta_x1     -1.388\nbeta_x2      1.581\np[0]         0.531\np[1]         0.965\np[2]         0.071\np[3]         0.680\np[4]         0.574\np[5]         0.622\np[6]         0.658\np[7]         0.675\np[8]         0.836\np[9]         0.360 \nDon't literally describe the model verbatim but use it to conceptually motivate your explanation.The agent will not be able to use the model explicitly but having a conceptual understanding will be beneficial.",
+        "role:assistant, messaage:Based on the observations and the inferred parameters from the statistical model, we can make some educated guesses about the environment's behavior.\n\nThe environment maps two integers, each ranging from 0 to 5, to a boolean output (0 or 1). The statistical model suggests that the output is influenced by a combination of the two integers, with different weights assigned to each integer. Specifically, the model uses an intercept and coefficients for each integer to calculate a probability, which is then used to determine the boolean output.\n\nFrom the inferred parameters:\n- The intercept is approximately 0.201.\n- The coefficient for the first integer (beta_x1) is approximately -1.388.\n- The coefficient for the second integer (beta_x2) is approximately 1.581.\n\nThis means that the second integer has a stronger positive influence on the output, while the first integer has a negative influence. When the second integer is high (closer to 5), the probability of the output being 1 increases. Conversely, when the first integer is high, the probability of the output being 1 decreases.\n\nIn practical terms:\n- If the second integer is 5, the output is likely to be 1.\n- If both integers are the same and relatively low (e.g., 1 or 2), the output is likely to be 1.\n- If both integers are the same and relatively high (e.g., 3 or 4), the output is likely to be 0.\n\nBy understanding these patterns, you can make more reliable predictions about the boolean output for different integer inputs."
+    ],
+    "naive_messages": [
+        "role:system, messaage:Your goal is to predict the boolean output of the environment for different integer inputs.You will be provided with two integer inputs. Respond with 1 if you think the student will respond correctly and with 0 if you think the student will answer incorrectly.Here is what you know about the enivronment:\nBased on the observations and the inferred parameters from the statistical model, we can make some educated guesses about the environment's behavior.\n\nThe environment maps two integers, each ranging from 0 to 5, to a boolean output (0 or 1). The statistical model suggests that the output is influenced by a combination of the two integers, with different weights assigned to each integer. Specifically, the model uses an intercept and coefficients for each integer to calculate a probability, which is then used to determine the boolean output.\n\nFrom the inferred parameters:\n- The intercept is approximately 0.201.\n- The coefficient for the first integer (beta_x1) is approximately -1.388.\n- The coefficient for the second integer (beta_x2) is approximately 1.581.\n\nThis means that the second integer has a stronger positive influence on the output, while the first integer has a negative influence. When the second integer is high (closer to 5), the probability of the output being 1 increases. Conversely, when the first integer is high, the probability of the output being 1 decreases.\n\nIn practical terms:\n- If the second integer is 5, the output is likely to be 1.\n- If both integers are the same and relatively low (e.g., 1 or 2), the output is likely to be 1.\n- If both integers are the same and relatively high (e.g., 3 or 4), the output is likely to be 0.\n\nBy understanding these patterns, you can make more reliable predictions about the boolean output for different integer inputs.",
+        "role:user, messaage:The final result is 1.\nWhat is the output of the environment at input [3, 5]?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>1</answer>",
+        "role:user, messaage:The final result is 1.\nWhat is the output of the environment at input [0, 1]?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>1</answer>",
+        "role:user, messaage:The final result is 1.\nWhat is the output of the environment at input [3, 0]?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 1.\nWhat is the output of the environment at input [0, 3]?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>1</answer>",
+        "role:user, messaage:The final result is 1.\nWhat is the output of the environment at input [4, 5]?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>1</answer>",
+        "role:user, messaage:The final result is 1.\nWhat is the output of the environment at input [3, 1]?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 1.\nWhat is the output of the environment at input [2, 1]?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>",
+        "role:user, messaage:The final result is 1.\nWhat is the output of the environment at input [1, 2]?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>1</answer>",
+        "role:user, messaage:The final result is 1.\nWhat is the output of the environment at input [1, 2]?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>1</answer>",
+        "role:user, messaage:The final result is 1.\nWhat is the output of the environment at input [2, 0]?\nAnswer in the following format:\n<answer>your answer</answer>.",
+        "role:assistant, messaage:<answer>0</answer>"
+    ]
+}

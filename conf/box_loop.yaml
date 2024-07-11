@@ -1,0 +1,17 @@
+llm: GPT4-V  # model to use
+experiment: box_loop # experiment type
+num_rounds: 1  # optimization rounds to run
+proposal_temperature: 0.0  # temperature for proposing
+# proposal_temperature: 0.7  # temperature for proposing
+critic_temperature: 0.0  # temperature for synthesizing
+num_exemplars: 3  # programs to keep in context
+num_to_consider: 50  # programs for critic LLM to consider
+language_synthesize: true  # generate meta-instruction to guide iterations
+corrupt: false
+warm_start: false # warm start with an expert program
+incontext_heuristic: recent  # heuristic for in-context selection
+critic_exemplar_heuristic: recent # heuristic for critic exemplar selection
+vision_only: false 
+use_vision: false
+num_proposals: 1
+

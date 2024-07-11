@@ -1,0 +1,270 @@
+{
+    "config": {
+        "seed": 3,
+        "include_prior": true,
+        "use_ppl": true,
+        "llms": {
+            "model_name": "gpt-4o",
+            "temperature": 0.0,
+            "max_tokens": 512
+        },
+        "exp": {
+            "num_experiments": [
+                0,
+                5,
+                7,
+                10
+            ],
+            "experiment_type": "oed"
+        },
+        "envs": {
+            "num_evals": 10,
+            "env_name": "morals",
+            "goal_name": "direct",
+            "com_limit": 200,
+            "env_params": {
+                "model_name": "openai/gpt-4-1106-preview"
+            }
+        }
+    },
+    "data": {
+        "results": [
+            [
+                [
+                    0.6,
+                    0.48989794855663565
+                ],
+                [
+                    "(array(['dog', 'cat', 'homeless', 'female_executive'], dtype='<U16'), array(['old_man', 'homeless', 'male_athlete'], dtype='<U16'), 'swerve')",
+                    "(array(['criminal'], dtype='<U16'), array(['female_executive'], dtype='<U16'), 'stay')",
+                    "(array(['large_man', 'cat', 'male_athlete'], dtype='<U16'), array(['female_athlete', 'male_athlete', 'female_athlete', 'old_woman'],\n      dtype='<U16'), 'stay')",
+                    "(array(['male_executive', 'old_woman'], dtype='<U16'), array(['large_woman', 'cat', 'dog', 'homeless'], dtype='<U16'), 'swerve')",
+                    "(array(['male_doctor', 'stroller'], dtype='<U16'), array(['stroller', 'stroller', 'old_woman', 'boy'], dtype='<U16'), 'swerve')",
+                    "(array(['female_athlete'], dtype='<U16'), array(['large_man', 'dog', 'large_man'], dtype='<U16'), 'stay')",
+                    "(array(['dog', 'dog', 'female_executive'], dtype='<U16'), array(['male_doctor', 'old_man', 'homeless'], dtype='<U16'), 'stay')",
+                    "(array(['old_man', 'old_man', 'old_man'], dtype='<U16'), array(['large_woman', 'pregnant_woman', 'female_executive'], dtype='<U16'), 'stay')",
+                    "(array(['cat', 'female_doctor', 'cat', 'dog'], dtype='<U16'), array(['male_doctor', 'pregnant_woman'], dtype='<U16'), 'swerve')",
+                    "(array(['homeless', 'male_executive'], dtype='<U16'), array(['old_woman'], dtype='<U16'), 'stay')"
+                ],
+                [
+                    2,
+                    1,
+                    2,
+                    1,
+                    2,
+                    1,
+                    2,
+                    1,
+                    2,
+                    1
+                ],
+                [
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "1",
+                    "2",
+                    "1"
+                ]
+            ],
+            [
+                [
+                    1.0,
+                    0.0
+                ],
+                [
+                    "(array(['dog', 'cat', 'homeless', 'female_executive'], dtype='<U16'), array(['old_man', 'homeless', 'male_athlete'], dtype='<U16'), 'swerve')",
+                    "(array(['criminal'], dtype='<U16'), array(['female_executive'], dtype='<U16'), 'stay')",
+                    "(array(['large_man', 'cat', 'male_athlete'], dtype='<U16'), array(['female_athlete', 'male_athlete', 'female_athlete', 'old_woman'],\n      dtype='<U16'), 'stay')",
+                    "(array(['male_executive', 'old_woman'], dtype='<U16'), array(['large_woman', 'cat', 'dog', 'homeless'], dtype='<U16'), 'swerve')",
+                    "(array(['male_doctor', 'stroller'], dtype='<U16'), array(['stroller', 'stroller', 'old_woman', 'boy'], dtype='<U16'), 'swerve')",
+                    "(array(['female_athlete'], dtype='<U16'), array(['large_man', 'dog', 'large_man'], dtype='<U16'), 'stay')",
+                    "(array(['dog', 'dog', 'female_executive'], dtype='<U16'), array(['male_doctor', 'old_man', 'homeless'], dtype='<U16'), 'stay')",
+                    "(array(['old_man', 'old_man', 'old_man'], dtype='<U16'), array(['large_woman', 'pregnant_woman', 'female_executive'], dtype='<U16'), 'stay')",
+                    "(array(['cat', 'female_doctor', 'cat', 'dog'], dtype='<U16'), array(['male_doctor', 'pregnant_woman'], dtype='<U16'), 'swerve')",
+                    "(array(['homeless', 'male_executive'], dtype='<U16'), array(['old_woman'], dtype='<U16'), 'stay')"
+                ],
+                [
+                    2,
+                    1,
+                    2,
+                    1,
+                    2,
+                    1,
+                    2,
+                    1,
+                    2,
+                    1
+                ],
+                [
+                    "2",
+                    "1",
+                    "2",
+                    "1",
+                    "2",
+                    "1",
+                    "2",
+                    "1",
+                    "2",
+                    "1"
+                ]
+            ],
+            [
+                [
+                    0.8,
+                    0.4
+                ],
+                [
+                    "(array(['dog', 'cat', 'homeless', 'female_executive'], dtype='<U16'), array(['old_man', 'homeless', 'male_athlete'], dtype='<U16'), 'swerve')",
+                    "(array(['criminal'], dtype='<U16'), array(['female_executive'], dtype='<U16'), 'stay')",
+                    "(array(['large_man', 'cat', 'male_athlete'], dtype='<U16'), array(['female_athlete', 'male_athlete', 'female_athlete', 'old_woman'],\n      dtype='<U16'), 'stay')",
+                    "(array(['male_executive', 'old_woman'], dtype='<U16'), array(['large_woman', 'cat', 'dog', 'homeless'], dtype='<U16'), 'swerve')",
+                    "(array(['male_doctor', 'stroller'], dtype='<U16'), array(['stroller', 'stroller', 'old_woman', 'boy'], dtype='<U16'), 'swerve')",
+                    "(array(['female_athlete'], dtype='<U16'), array(['large_man', 'dog', 'large_man'], dtype='<U16'), 'stay')",
+                    "(array(['dog', 'dog', 'female_executive'], dtype='<U16'), array(['male_doctor', 'old_man', 'homeless'], dtype='<U16'), 'stay')",
+                    "(array(['old_man', 'old_man', 'old_man'], dtype='<U16'), array(['large_woman', 'pregnant_woman', 'female_executive'], dtype='<U16'), 'stay')",
+                    "(array(['cat', 'female_doctor', 'cat', 'dog'], dtype='<U16'), array(['male_doctor', 'pregnant_woman'], dtype='<U16'), 'swerve')",
+                    "(array(['homeless', 'male_executive'], dtype='<U16'), array(['old_woman'], dtype='<U16'), 'stay')"
+                ],
+                [
+                    2,
+                    1,
+                    2,
+                    1,
+                    2,
+                    1,
+                    2,
+                    1,
+                    2,
+                    1
+                ],
+                [
+                    "2",
+                    "2",
+                    "2",
+                    "1",
+                    "2",
+                    "1",
+                    "2",
+                    "2",
+                    "2",
+                    "1"
+                ]
+            ],
+            [
+                [
+                    0.9,
+                    0.3
+                ],
+                [
+                    "(array(['dog', 'cat', 'homeless', 'female_executive'], dtype='<U16'), array(['old_man', 'homeless', 'male_athlete'], dtype='<U16'), 'swerve')",
+                    "(array(['criminal'], dtype='<U16'), array(['female_executive'], dtype='<U16'), 'stay')",
+                    "(array(['large_man', 'cat', 'male_athlete'], dtype='<U16'), array(['female_athlete', 'male_athlete', 'female_athlete', 'old_woman'],\n      dtype='<U16'), 'stay')",
+                    "(array(['male_executive', 'old_woman'], dtype='<U16'), array(['large_woman', 'cat', 'dog', 'homeless'], dtype='<U16'), 'swerve')",
+                    "(array(['male_doctor', 'stroller'], dtype='<U16'), array(['stroller', 'stroller', 'old_woman', 'boy'], dtype='<U16'), 'swerve')",
+                    "(array(['female_athlete'], dtype='<U16'), array(['large_man', 'dog', 'large_man'], dtype='<U16'), 'stay')",
+                    "(array(['dog', 'dog', 'female_executive'], dtype='<U16'), array(['male_doctor', 'old_man', 'homeless'], dtype='<U16'), 'stay')",
+                    "(array(['old_man', 'old_man', 'old_man'], dtype='<U16'), array(['large_woman', 'pregnant_woman', 'female_executive'], dtype='<U16'), 'stay')",
+                    "(array(['cat', 'female_doctor', 'cat', 'dog'], dtype='<U16'), array(['male_doctor', 'pregnant_woman'], dtype='<U16'), 'swerve')",
+                    "(array(['homeless', 'male_executive'], dtype='<U16'), array(['old_woman'], dtype='<U16'), 'stay')"
+                ],
+                [
+                    2,
+                    1,
+                    2,
+                    1,
+                    2,
+                    1,
+                    2,
+                    1,
+                    2,
+                    1
+                ],
+                [
+                    "2",
+                    "1",
+                    "2",
+                    "1",
+                    "2",
+                    "1",
+                    "2",
+                    "1",
+                    "2",
+                    "2"
+                ]
+            ]
+        ],
+        "queries": [
+            "Group 1: [male_doctor, female_athlete]\nGroup 2: [dog, cat]\nIntervention: swerve",
+            "Group 1: [male_executive, female_executive]\nGroup 2: [boy, girl]\nIntervention: stay",
+            "Group 1: [male_executive, female_executive]\nGroup 2: [old_man, old_woman]\nIntervention: swerve",
+            "Group 1: [boy, girl]\nGroup 2: [old_man, old_woman]\nIntervention: stay",
+            "Group 1: [boy, girl]\nGroup 2: [male_executive, female_executive]\nIntervention: swerve",
+            "Group 1: [male_executive, female_executive]\nGroup 2: [male_athlete, female_athlete]\nIntervention: stay",
+            "Group 1: [male_athlete, female_athlete]\nGroup 2: [boy, girl]\nIntervention: swerve",
+            "Group 1: [old_man, old_woman]\nGroup 2: [male_athlete, female_athlete]\nIntervention: stay",
+            "Group 1: [male_executive, female_executive]\nGroup 2: [pregnant_woman, boy]\nIntervention: swerve",
+            "Group 1: [male_executive, female_executive]\nGroup 2: [pregnant_woman, old_man]\nIntervention: stay"
+        ],
+        "observations": [
+            "The participant responded with: I choose to save group 1 because the presence of a healthcare professional and a physically fit individual outweighs the lives of pets.\n",
+            "The participant responded with: I choose to save group 1 because their professional status may contribute significantly to society.\n",
+            "The participant responded with: I choose to save group 2 because the well-being of every human life is important regardless of their social status or physical condition.\n",
+            "The participant responded with: I choose to save group 1 because the presence of younger individuals aligns more closely with the value placed on preserving the lives of the young.\n",
+            "The participant responded with: I choose to save group 2 because their professional status suggests they may have a greater impact on society.\n",
+            "The participant responded with: I choose to save group 2 because the presence of the athletes suggests a higher level of fitness, which is a significant priority in my decision-making.\n",
+            "The participant responded with: I choose to save group 1 because their athletic status suggests they have a high fitness level and social contribution.\n",
+            "The participant responded with: I choose to save group 2 because the presence of athletes suggests a higher level of fitness and potential social contribution.\n",
+            "The participant responded with: I choose to save group 2 because the presence of a pregnant woman and a child suggests a higher potential for saving lives, including that of an unborn child.\n",
+            "The participant responded with: I choose to save group 2 because the life of a pregnant woman and an elderly individual is valued higher than the professional status of the individuals in group 1.\n"
+        ],
+        "successes": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "explanations": [],
+        "eigs": [],
+        "programs": [
+            "### High-Level Probabilistic Program Sketch\n\n1. **Modeling the Choice**:\n   - The participant's choice (`choice`) is a binary outcome (1 or 2).\n   - We will model this using a logistic regression where the probability of choosing group 2 is determined by a logistic function of the input features.\n\n2. **Input Features**:\n   - The input features are `group1_group2_count_diff`, `group1_group2_gender_diff`, `group1_group2_age_diff`, `group1_group2_social_status_diff`, `group1_group2_fitness_diff`, `group1_group2_species_diff`, and `intervention`.\n   - These features will be used as predictors in the logistic regression model.\n\n3. **Logistic Regression**:\n   - We will define a linear combination of the input features with coefficients (weights) and an intercept.\n   - The linear combination will be passed through a logistic function to get the probability of choosing group 2.\n\n4. **Prior Distributions**:\n   - We will assign normal priors to the coefficients and the intercept.\n\n### Probabilistic Program\n\n```python\nimport pymc as pm\nimport numpy as np\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    group1_group2_count_diff = observed_data['group1_group2_count_diff'].to_numpy()\n    group1_group2_gender_diff = observed_data['group1_group2_gender_diff'].to_numpy()\n    group1_group2_age_diff = observed_data['group1_group2_age_diff'].to_numpy()\n    group1_group2_social_status_diff = observed_data['group1_group2_social_status_diff'].to_numpy()\n    group1_group2_fitness_diff = observed_data['group1_group2_fitness_diff'].to_numpy()\n    group1_group2_species_diff = observed_data['group1_group2_species_diff'].to_numpy()\n    intervention = observed_data['intervention'].to_numpy()\n\n    rng1 = np.random.default_rng(42)\n    rng2 = np.random.default_rng(314)\n\n    with pm.Model() as model:\n        # Create pm.MutableData objects for each non-observation column\n        group1_group2_count_diff = pm.MutableData(\"group1_group2_count_diff\", group1_group2_count_diff, dims=\"obs_id\")\n        group1_group2_gender_diff = pm.MutableData(\"group1_group2_gender_diff\", group1_group2_gender_diff, dims=\"obs_id\")\n        group1_group2_age_diff = pm.MutableData(\"group1_group2_age_diff\", group1_group2_age_diff, dims=\"obs_id\")\n        group1_group2_social_status_diff = pm.MutableData(\"group1_group2_social_status_diff\", group1_group2_social_status_diff, dims=\"obs_id\")\n        group1_group2_fitness_diff = pm.MutableData(\"group1_group2_fitness_diff\", group1_group2_fitness_diff, dims=\"obs_id\")\n        group1_group2_species_diff = pm.MutableData(\"group1_group2_species_diff\", group1_group2_species_diff, dims=\"obs_id\")\n        intervention = pm.MutableData(\"intervention\", intervention, dims=\"obs_id\")\n\n        # Define priors for the coefficients and intercept\n        intercept = pm.Normal(\"intercept\", mu=0, sigma=10)\n        beta_count_diff = pm.Normal(\"beta_count_diff\", mu=0, sigma=10)\n        beta_gender_diff = pm.Normal(\"beta_gender_diff\", mu=0, sigma=10)\n        beta_age_diff = pm.Normal(\"beta_age_diff\", mu=0, sigma=10)\n        beta_social_status_diff = pm.Normal(\"beta_social_status_diff\", mu=0, sigma=10)\n        beta_fitness_diff = pm.Normal(\"beta_fitness_diff\", mu=0, sigma=10)\n        beta_species_diff = pm.Normal(\"beta_species_diff\", mu=0, sigma=10)\n        beta_intervention = pm.Normal(\"beta_intervention\", mu=0, sigma=10)\n\n        # Linear combination of input features\n        linear_combination = (\n            intercept +\n            beta_count_diff * group1_group2_count_diff +\n            beta_gender_diff * group1_group2_gender_diff +\n            beta_age_diff * group1_group2_age_diff +\n            beta_social_status_diff * group1_group2_social_status_diff +\n            beta_fitness_diff * group1_group2_fitness_diff +\n            beta_species_diff * group1_group2_species_diff +\n            beta_intervention * intervention\n        )\n\n        # Logistic function to get the probability of choosing group 2\n        p = pm.Deterministic(\"p\", pm.math.sigmoid(linear_combination))\n\n        # Likelihood of the observations\n        y_obs = pm.Bernoulli(\"y_obs\", p=p, observed=None, dims=\"obs_id\")\n\n        # Sample from the prior\n        prior_predictive = pm.sample_prior_predictive(samples=1000, random_seed=rng2, return_inferencedata=False)\n\n    return model, prior_predictive\n```\n\nThis program defines a logistic regression model for the binary choice outcome, using the input features as predictors. The priors for the coefficients and intercept are set to normal distributions with mean 0 and standard deviation 10. The logistic function is used to convert the linear combination of input features into a probability, which is then used in a Bernoulli likelihood for the observed choices. The model samples from the prior to generate prior predictive distributions.",
+            "### High-Level Probabilistic Program Sketch\n\nGiven the nature of the dataset, we are dealing with a binary classification problem where the participant's choice (1 or 2) is influenced by several features. A logistic regression model is a suitable choice for this type of problem. The logistic regression model will allow us to model the probability of choosing group 1 or group 2 based on the differences in various attributes between the two groups and the intervention.\n\n#### Hypotheses:\n1. The participant's choice is influenced by the differences in the attributes between the two groups.\n2. The intervention (swerve or stay) also influences the participant's choice.\n\n### Plan:\n1. Convert the observed data columns to numpy arrays.\n2. Create a PyMC model using logistic regression.\n3. Define the priors for the coefficients of the logistic regression.\n4. Define the likelihood using a Bernoulli distribution with a logistic link function.\n5. Sample from the posterior distribution.\n6. Return the model, posterior predictive, and trace.\n\n### Program:\n```python\nimport pymc as pm\nimport numpy as np\nimport pandas as pd\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    group1_group2_count_diff = observed_data['group1_group2_count_diff'].values\n    group1_group2_gender_diff = observed_data['group1_group2_gender_diff'].values\n    group1_group2_age_diff = observed_data['group1_group2_age_diff'].values\n    group1_group2_social_status_diff = observed_data['group1_group2_social_status_diff'].values\n    group1_group2_fitness_diff = observed_data['group1_group2_fitness_diff'].values\n    group1_group2_species_diff = observed_data['group1_group2_species_diff'].values\n    intervention = observed_data['intervention'].values\n    choice = observed_data['choice'].values\n\n    rng1 = np.random.default_rng(42)\n    rng2 = np.random.default_rng(314)\n\n    with pm.Model() as model:\n        # Create pm.MutableData objects for each non-observation column\n        group1_group2_count_diff = pm.MutableData(\"group1_group2_count_diff\", group1_group2_count_diff, dims=\"obs_id\")\n        group1_group2_gender_diff = pm.MutableData(\"group1_group2_gender_diff\", group1_group2_gender_diff, dims=\"obs_id\")\n        group1_group2_age_diff = pm.MutableData(\"group1_group2_age_diff\", group1_group2_age_diff, dims=\"obs_id\")\n        group1_group2_social_status_diff = pm.MutableData(\"group1_group2_social_status_diff\", group1_group2_social_status_diff, dims=\"obs_id\")\n        group1_group2_fitness_diff = pm.MutableData(\"group1_group2_fitness_diff\", group1_group2_fitness_diff, dims=\"obs_id\")\n        group1_group2_species_diff = pm.MutableData(\"group1_group2_species_diff\", group1_group2_species_diff, dims=\"obs_id\")\n        intervention = pm.MutableData(\"intervention\", intervention, dims=\"obs_id\")\n\n        # Define priors for the coefficients\n        beta_count = pm.Normal(\"beta_count\", mu=0, sigma=1)\n        beta_gender = pm.Normal(\"beta_gender\", mu=0, sigma=1)\n        beta_age = pm.Normal(\"beta_age\", mu=0, sigma=1)\n        beta_social_status = pm.Normal(\"beta_social_status\", mu=0, sigma=1)\n        beta_fitness = pm.Normal(\"beta_fitness\", mu=0, sigma=1)\n        beta_species = pm.Normal(\"beta_species\", mu=0, sigma=1)\n        beta_intervention = pm.Normal(\"beta_intervention\", mu=0, sigma=1)\n        intercept = pm.Normal(\"intercept\", mu=0, sigma=1)\n\n        # Define the linear model\n        logit_p = (intercept +\n                   beta_count * group1_group2_count_diff +\n                   beta_gender * group1_group2_gender_diff +\n                   beta_age * group1_group2_age_diff +\n                   beta_social_status * group1_group2_social_status_diff +\n                   beta_fitness * group1_group2_fitness_diff +\n                   beta_species * group1_group2_species_diff +\n                   beta_intervention * intervention)\n\n        # Define the likelihood\n        p = pm.Deterministic(\"p\", pm.math.sigmoid(logit_p))\n        y_obs = pm.Bernoulli(\"y_obs\", p=p, observed=choice - 1, dims=\"obs_id\")  # choice - 1 to convert to 0/1\n\n        # Sample from the posterior\n        trace = pm.sample(1000, tune=500, target_accept=0.90, chains=3, cores=1, random_seed=rng1, idata_kwargs={\"log_likelihood\": True})\n        posterior_predictive = pm.sample_posterior_predictive(trace, random_seed=rng2, return_inferencedata=False)\n\n        return model, posterior_predictive, trace\n```\n\nThis program sets up a logistic regression model to predict the participant's choice based on the differences in attributes between the two groups and the intervention. The model uses normal priors for the coefficients and an intercept. The likelihood is defined using a Bernoulli distribution with a logistic link function. The model is then sampled to obtain the posterior distribution and posterior predictive samples.",
+            "### High-Level Probabilistic Program Sketch\n\nGiven the dataset and the hypotheses, we need to build a generative model that can capture the participants' choices in the moral dilemma involving autonomous vehicles. The model should account for the differences between the two groups of characters and the intervention required to save them. \n\n**Hypotheses to Address:**\n1. The model might be underestimating the influence of certain features, such as social status or fitness, on the participants' choices.\n2. The model's linear assumption might be too simplistic, and interactions between features (e.g., social status and age) might be important.\n3. The priors for the coefficients might be too restrictive, not allowing enough flexibility to capture the true underlying relationships.\n4. The intervention variable might have a non-linear effect that is not captured by the current model.\n\n**Plan:**\n1. Use a logistic regression framework to model the binary choice (1 for group 1, 2 for group 2).\n2. Introduce interaction terms between features to capture more complex relationships.\n3. Use more flexible priors, such as hierarchical priors, to allow for more variability in the coefficients.\n4. Consider non-linear effects for the intervention variable by using polynomial terms or splines.\n\n### Probabilistic Program\n\n```python\nimport pymc as pm\nimport numpy as np\nimport pandas as pd\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    count_diff = observed_data['group1_group2_count_diff'].values\n    gender_diff = observed_data['group1_group2_gender_diff'].values\n    age_diff = observed_data['group1_group2_age_diff'].values\n    social_status_diff = observed_data['group1_group2_social_status_diff'].values\n    fitness_diff = observed_data['group1_group2_fitness_diff'].values\n    species_diff = observed_data['group1_group2_species_diff'].values\n    intervention = observed_data['intervention'].values\n    choice = observed_data['choice'].values\n\n    rng1 = np.random.default_rng(42)\n    rng2 = np.random.default_rng(314)\n\n    with pm.Model() as model:\n        # Create pm.MutableData objects for each non-observation column\n        count_diff_data = pm.MutableData(\"group1_group2_count_diff\", count_diff, dims=\"obs_id\")\n        gender_diff_data = pm.MutableData(\"group1_group2_gender_diff\", gender_diff, dims=\"obs_id\")\n        age_diff_data = pm.MutableData(\"group1_group2_age_diff\", age_diff, dims=\"obs_id\")\n        social_status_diff_data = pm.MutableData(\"group1_group2_social_status_diff\", social_status_diff, dims=\"obs_id\")\n        fitness_diff_data = pm.MutableData(\"group1_group2_fitness_diff\", fitness_diff, dims=\"obs_id\")\n        species_diff_data = pm.MutableData(\"group1_group2_species_diff\", species_diff, dims=\"obs_id\")\n        intervention_data = pm.MutableData(\"intervention\", intervention, dims=\"obs_id\")\n\n        # Priors for the coefficients\n        beta_count = pm.Normal(\"beta_count\", mu=0, sigma=1)\n        beta_gender = pm.Normal(\"beta_gender\", mu=0, sigma=1)\n        beta_age = pm.Normal(\"beta_age\", mu=0, sigma=1)\n        beta_social_status = pm.Normal(\"beta_social_status\", mu=0, sigma=1)\n        beta_fitness = pm.Normal(\"beta_fitness\", mu=0, sigma=1)\n        beta_species = pm.Normal(\"beta_species\", mu=0, sigma=1)\n        beta_intervention = pm.Normal(\"beta_intervention\", mu=0, sigma=1)\n        \n        # Interaction terms\n        beta_interaction_social_age = pm.Normal(\"beta_interaction_social_age\", mu=0, sigma=1)\n        beta_interaction_fitness_age = pm.Normal(\"beta_interaction_fitness_age\", mu=0, sigma=1)\n\n        # Linear model\n        logit_p = (beta_count * count_diff_data +\n                   beta_gender * gender_diff_data +\n                   beta_age * age_diff_data +\n                   beta_social_status * social_status_diff_data +\n                   beta_fitness * fitness_diff_data +\n                   beta_species * species_diff_data +\n                   beta_intervention * intervention_data +\n                   beta_interaction_social_age * social_status_diff_data * age_diff_data +\n                   beta_interaction_fitness_age * fitness_diff_data * age_diff_data)\n\n        # Likelihood\n        y_obs = pm.Bernoulli(\"y_obs\", logit_p=logit_p, observed=(choice - 1), dims=\"obs_id\")\n\n        # Sampling\n        trace = pm.sample(1000, tune=500, target_accept=0.90, chains=3, cores=1, random_seed=rng1, idata_kwargs={\"log_likelihood\": True})\n        posterior_predictive = pm.sample_posterior_predictive(trace, random_seed=rng2, return_inferencedata=False)\n\n        return model, posterior_predictive, trace\n```\n\n### Explanation of the Code:\n1. **Data Preparation:** Convert the observed data columns to numpy arrays and create `pm.MutableData` objects for each non-observation column.\n2. **Priors:** Define normal priors for the coefficients of the logistic regression model.\n3. **Interaction Terms:** Introduce interaction terms between social status and age, and fitness and age.\n4. **Linear Model:** Define the linear model for the log-odds of the choice.\n5. **Likelihood:** Use a Bernoulli distribution for the observed choices.\n6. **Sampling:** Sample from the posterior distribution and the posterior predictive distribution.\n\nThis model aims to capture more complex relationships and allow for more flexibility in the coefficients, addressing the hypotheses mentioned earlier.",
+            "### High-Level Probabilistic Program Sketch\n\nGiven the dataset and the hypotheses, we need to create a generative model that captures the decision-making process of participants in the moral dilemma involving autonomous vehicles. The model should account for the differences between the two groups of characters and the intervention required to save them. \n\n**Hypotheses to Address:**\n1. The model may be underestimating the importance of certain features, such as social status or fitness.\n2. Interaction terms between social status and age, and fitness and age, might not be capturing the true complexity of the decision-making process.\n3. The model might be oversimplifying the decision-making process by assuming linear relationships between the features and the choice.\n\n**Plan:**\n1. Use a logistic regression model to predict the choice (binary outcome: 1 for group 1, 2 for group 2).\n2. Include linear terms for each feature.\n3. Add interaction terms to capture the complexity of the decision-making process.\n4. Use informative priors for the coefficients based on domain knowledge.\n5. Consider hierarchical modeling to account for potential variability between participants.\n\n### Probabilistic Program\n\n```python\nimport pymc as pm\nimport numpy as np\nimport pandas as pd\n\ndef gen_model(observed_data):\n    # Convert observed_data columns to numpy arrays\n    count_diff = observed_data['group1_group2_count_diff'].values\n    gender_diff = observed_data['group1_group2_gender_diff'].values\n    age_diff = observed_data['group1_group2_age_diff'].values\n    social_status_diff = observed_data['group1_group2_social_status_diff'].values\n    fitness_diff = observed_data['group1_group2_fitness_diff'].values\n    species_diff = observed_data['group1_group2_species_diff'].values\n    intervention = observed_data['intervention'].values\n    choice = observed_data['choice'].values\n\n    rng1 = np.random.default_rng(42)\n    rng2 = np.random.default_rng(314)\n\n    with pm.Model() as model:\n        # Create pm.MutableData objects for each non-observation column\n        count_diff_data = pm.MutableData(\"group1_group2_count_diff\", count_diff, dims='obs_id')\n        gender_diff_data = pm.MutableData(\"group1_group2_gender_diff\", gender_diff, dims='obs_id')\n        age_diff_data = pm.MutableData(\"group1_group2_age_diff\", age_diff, dims='obs_id')\n        social_status_diff_data = pm.MutableData(\"group1_group2_social_status_diff\", social_status_diff, dims='obs_id')\n        fitness_diff_data = pm.MutableData(\"group1_group2_fitness_diff\", fitness_diff, dims='obs_id')\n        species_diff_data = pm.MutableData(\"group1_group2_species_diff\", species_diff, dims='obs_id')\n        intervention_data = pm.MutableData(\"intervention\", intervention, dims='obs_id')\n\n        # Priors for the coefficients\n        beta_count = pm.Normal(\"beta_count\", mu=0, sigma=1)\n        beta_gender = pm.Normal(\"beta_gender\", mu=0, sigma=1)\n        beta_age = pm.Normal(\"beta_age\", mu=0, sigma=1)\n        beta_social_status = pm.Normal(\"beta_social_status\", mu=0, sigma=1)\n        beta_fitness = pm.Normal(\"beta_fitness\", mu=0, sigma=1)\n        beta_species = pm.Normal(\"beta_species\", mu=0, sigma=1)\n        beta_intervention = pm.Normal(\"beta_intervention\", mu=0, sigma=1)\n\n        # Interaction terms\n        beta_social_age = pm.Normal(\"beta_social_age\", mu=0, sigma=1)\n        beta_fitness_age = pm.Normal(\"beta_fitness_age\", mu=0, sigma=1)\n\n        # Linear model\n        logit_p = (beta_count * count_diff_data +\n                   beta_gender * gender_diff_data +\n                   beta_age * age_diff_data +\n                   beta_social_status * social_status_diff_data +\n                   beta_fitness * fitness_diff_data +\n                   beta_species * species_diff_data +\n                   beta_intervention * intervention_data +\n                   beta_social_age * social_status_diff_data * age_diff_data +\n                   beta_fitness_age * fitness_diff_data * age_diff_data)\n\n        # Likelihood\n        y_obs = pm.Bernoulli(\"y_obs\", logit_p=logit_p, observed=(choice - 1), dims=\"obs_id\")\n\n        # Sampling\n        trace = pm.sample(1000, tune=500, target_accept=0.90, chains=3, cores=1, random_seed=rng1, idata_kwargs={\"log_likelihood\": True})\n        posterior_predictive = pm.sample_posterior_predictive(trace, random_seed=rng2, return_inferencedata=False)\n\n        return model, posterior_predictive, trace\n```\n\n### Explanation:\n1. **Data Preparation:** Convert the observed data columns to numpy arrays and create `pm.MutableData` objects for each feature.\n2. **Priors:** Use normal priors for the coefficients with mean 0 and standard deviation 1.\n3. **Interaction Terms:** Include interaction terms between social status and age, and fitness and age.\n4. **Linear Model:** Define the linear model using the coefficients and interaction terms.\n5. **Likelihood:** Use a Bernoulli distribution for the likelihood, with the logit link function.\n6. **Sampling:** Sample from the posterior distribution and the posterior predictive distribution.\n\nThis model aims to capture the complexity of the decision-making process by including interaction terms and using informative priors. The next step would be to fit this model to the data and evaluate its performance."
+        ]
+    },
+    "scientist_messages": [
+        "role:system, messaage:The Moral Machine is an experiment where participants are presented with moral dilemmas involving autonomous vehicles. In each dilemma, the vehicle must decide between two outcomes, each involving the death of a different group of characters.\nYour goal is to be able to predict the choice of the participant in the Moral Machine experiment based on the descriptions of the characters in each group and the intervention the car would take. Conduct experiments to gather data and build a model that can predict the participant's choice.\nYou may query the participant for their decision by providing the descriptions of the characters in each group and the intervention the car would take ('swerve' or 'stay'). The two groups involved are passengers and pedestrians.\nThe participant will provide their choice of which group to save (1 for group 1, 2 for group 2).\nProvide the characters in group 1 (passengers) and 2 (pedestrians) in the following format:\n<observe>\nGroup 1: [character1, character2, ...] \nGroup 2: [character1, character2, ...]\nIntervention: intervention (swerve to save group 1 or stay to save group 1)\n</observe>\nCharacters can be any of: stroller, boy, girl, pregnant_woman, male_doctor, female_doctor, female_athlete, male_athlete, female_executive, male_executive, large_woman, large_man, homeless, old_man, old_woman, criminal, dog, cat  \nYou can reflect before making an observation by providing your thoughts in <thought>.\n\nHere is an example:\n<thought> This scenario tests whether people value the young over the elderly. </thought>\n<observe>\nGroup 1: [boy, girl]\nGroup 2: [elderly_man, elderly_woman] \nIntervention: swerve\n</observe>\nWhen asked to answer a question about the environment, respond in the format specified in the question.\n<thought> your thought </thought>\n<answer> your answer </answer>\n",
+        "role:user, messaage:Think about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\n<thought>your thought</thought>\n<observe> your observation</observe>\nMake an observation now.",
+        "role:assistant, messaage:<thought>\nTo build a robust model, we need to gather data that covers a wide range of scenarios. This includes varying the number of characters, their ages, genders, social statuses, fitness levels, and species. Additionally, we should consider the intervention (swerve or stay) to understand its impact on the decision-making process.\n\nFor our first observation, let's start with a simple scenario where we compare the value placed on human life versus animal life. This will help us understand if participants prioritize saving humans over animals. We will also include an intervention to see if the action of swerving or staying influences the decision.\n\nScenario: A car must decide between swerving to save a group of humans or staying to save a group of animals.\n</thought>\n<observe>\nGroup 1: [male_doctor, female_athlete]\nGroup 2: [dog, cat]\nIntervention: swerve\n</observe>",
+        "role:user, messaage:Result: The participant responded with: I choose to save group 1 because the presence of a healthcare professional and a physically fit individual outweighs the lives of pets.\n\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>\nThe first observation indicated that participants might prioritize human lives over animal lives, especially when the humans have high social status or fitness levels. To further explore this, we should now compare different human groups with varying social statuses and fitness levels. This will help us understand if participants value certain human characteristics more than others.\n\nFor our next observation, let's compare a group of high-status individuals (executives) with a group of vulnerable individuals (children). This will help us see if participants prioritize the future potential of children over the current status of adults.\n</thought>\n<observe>\nGroup 1: [male_executive, female_executive]\nGroup 2: [boy, girl]\nIntervention: stay\n</observe>",
+        "role:user, messaage:Result: The participant responded with: I choose to save group 1 because their professional status may contribute significantly to society.\n\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>\nThe second observation suggests that participants may prioritize individuals with high professional status over children, possibly due to their current contributions to society. To further investigate the influence of social status, let's compare a group of high-status individuals with a group of elderly individuals. This will help us understand if participants value the contributions of high-status individuals over the wisdom and experience of the elderly.\n\nFor our next observation, let's compare a group of high-status individuals (executives) with a group of elderly individuals.\n</thought>\n<observe>\nGroup 1: [male_executive, female_executive]\nGroup 2: [old_man, old_woman]\nIntervention: swerve\n</observe>",
+        "role:user, messaage:Result: The participant responded with: I choose to save group 2 because the well-being of every human life is important regardless of their social status or physical condition.\n\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>\nThe third observation indicates that participants may value the inherent worth of human life over social status, especially when comparing high-status individuals to the elderly. To further explore the impact of age and social status, let's compare a group of children with a group of elderly individuals. This will help us understand if participants prioritize the potential future contributions of children over the wisdom and experience of the elderly.\n\nFor our next observation, let's compare a group of children with a group of elderly individuals.\n</thought>\n<observe>\nGroup 1: [boy, girl]\nGroup 2: [old_man, old_woman]\nIntervention: stay\n</observe>",
+        "role:user, messaage:Result: The participant responded with: I choose to save group 1 because the presence of younger individuals aligns more closely with the value placed on preserving the lives of the young.\n\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>\nThe fourth observation suggests that participants may prioritize the lives of younger individuals over the elderly, possibly due to the potential future contributions of the young. To further investigate the influence of age and social status, let's compare a group of children with a group of high-status individuals who are also young. This will help us understand if participants value the potential future contributions of children over the current contributions of young high-status individuals.\n\nFor our next observation, let's compare a group of children with a group of young high-status individuals.\n</thought>\n<observe>\nGroup 1: [boy, girl]\nGroup 2: [male_executive, female_executive]\nIntervention: swerve\n</observe>",
+        "role:user, messaage:Result: The participant responded with: I choose to save group 2 because their professional status suggests they may have a greater impact on society.\n\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>\nThe fifth observation indicates that participants may prioritize young high-status individuals over children, possibly due to the perceived immediate impact on society. To further explore the influence of social status and fitness, let's compare a group of high-status individuals with a group of physically fit individuals. This will help us understand if participants value social status over physical fitness.\n\nFor our next observation, let's compare a group of high-status individuals with a group of athletes.\n</thought>\n<observe>\nGroup 1: [male_executive, female_executive]\nGroup 2: [male_athlete, female_athlete]\nIntervention: stay\n</observe>",
+        "role:user, messaage:Result: The participant responded with: I choose to save group 2 because the presence of the athletes suggests a higher level of fitness, which is a significant priority in my decision-making.\n\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>\nThe sixth observation suggests that participants may prioritize physical fitness over social status. To further explore the influence of fitness and age, let's compare a group of physically fit individuals with a group of children. This will help us understand if participants value the potential future contributions of children over the current physical fitness of athletes.\n\nFor our next observation, let's compare a group of athletes with a group of children.\n</thought>\n<observe>\nGroup 1: [male_athlete, female_athlete]\nGroup 2: [boy, girl]\nIntervention: swerve\n</observe>",
+        "role:user, messaage:Result: The participant responded with: I choose to save group 1 because their athletic status suggests they have a high fitness level and social contribution.\n\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>\nThe seventh observation indicates that participants may prioritize physical fitness and social contribution over the potential future contributions of children. To further explore the influence of social status, fitness, and age, let's compare a group of elderly individuals with a group of physically fit individuals. This will help us understand if participants value the current physical fitness of athletes over the wisdom and experience of the elderly.\n\nFor our next observation, let's compare a group of elderly individuals with a group of athletes.\n</thought>\n<observe>\nGroup 1: [old_man, old_woman]\nGroup 2: [male_athlete, female_athlete]\nIntervention: stay\n</observe>",
+        "role:user, messaage:Result: The participant responded with: I choose to save group 2 because the presence of athletes suggests a higher level of fitness and potential social contribution.\n\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>\nThe eighth observation suggests that participants may prioritize physical fitness and potential social contribution over the wisdom and experience of the elderly. To further explore the influence of social status, fitness, and age, let's compare a group of high-status individuals with a group of vulnerable individuals, such as a pregnant woman and a child. This will help us understand if participants value the potential future contributions of vulnerable individuals over the current contributions of high-status individuals.\n\nFor our next observation, let's compare a group of high-status individuals with a group of a pregnant woman and a child.\n</thought>\n<observe>\nGroup 1: [male_executive, female_executive]\nGroup 2: [pregnant_woman, boy]\nIntervention: swerve\n</observe>",
+        "role:user, messaage:Result: The participant responded with: I choose to save group 2 because the presence of a pregnant woman and a child suggests a higher potential for saving lives, including that of an unborn child.\n\nThink about where to observe next. Articulate your strategy for choosing measurements in <thought>.\nProvide a new measurement point in the format:\nThought: <thought>\n<observe> your observation (remember the type of inputs accepted)</observe>",
+        "role:assistant, messaage:<thought>\nThe ninth observation indicates that participants may prioritize the potential future contributions of vulnerable individuals, such as a pregnant woman and a child, over the current contributions of high-status individuals. To further explore the influence of vulnerability and social status, let's compare a group of vulnerable individuals (e.g., a pregnant woman and an elderly person) with a group of high-status individuals. This will help us understand if participants consistently prioritize vulnerability over social status.\n\nFor our next observation, let's compare a group of high-status individuals with a group of a pregnant woman and an elderly person.\n</thought>\n<observe>\nGroup 1: [male_executive, female_executive]\nGroup 2: [pregnant_woman, old_man]\nIntervention: stay\n</observe>"
+    ],
+    "naive_messages": null
+}
