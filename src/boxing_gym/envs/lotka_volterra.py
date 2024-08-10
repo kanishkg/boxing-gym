@@ -1,8 +1,8 @@
 import numpy as np
 from scipy.integrate import odeint
 
-from src.boxing_gym.envs.goal import Goal
-from src.boxing_gym.agents.box_loop_helper import construct_dataframe
+from .goal import Goal
+from ..agents.box_loop_helper import construct_dataframe
 
 class DirectGoal(Goal):
     def __init__(self, env):

@@ -5,8 +5,8 @@ from scipy.stats import norm, halfnorm, expon
 import pymc as pm
 import matplotlib.pyplot as plt
 
-from src.boxing_gym.envs.goal import Goal
-from src.boxing_gym.agents.box_loop_helper import construct_dataframe
+from .goal import Goal
+from ..agents.box_loop_helper import construct_dataframe
 
 PRIOR = """A person has to choose between a delayed reward dR dollars in x days and an immediate reward iR dollars today."""
 NO_PRIOR = """You are observing a binary response for a tuple of three positive integer values (integer, integer, integer)."""

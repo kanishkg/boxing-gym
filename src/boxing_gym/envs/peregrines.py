@@ -4,8 +4,8 @@ import numpy as np
 import pymc as pm
 from scipy.stats import distributions
 
-from src.boxing_gym.envs.goal import Goal
-from src.boxing_gym.agents.box_loop_helper import construct_dataframe
+from .goal import Goal
+from ..agents.box_loop_helper import construct_dataframe
 
 
 class DirectGoal(Goal):

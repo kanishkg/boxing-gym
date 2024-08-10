@@ -6,8 +6,8 @@ import pymc as pm
 import openai
 from scipy.stats import norm
 
-from src.boxing_gym.envs.goal import Goal
-from src.boxing_gym.agents.box_loop_helper import construct_dataframe
+from .goal import Goal
+from ..agents.box_loop_helper import construct_dataframe
 
 class DirectEmotionPrediction(Goal):
     def __init__(self, env):

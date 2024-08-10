@@ -6,8 +6,8 @@ import pymc as pm
 from scipy.stats import norm
 import openai
 
-from src.boxing_gym.envs.goal import Goal
-from src.boxing_gym.agents.box_loop_helper import construct_dataframe
+from .goal import Goal
+from ..agents.box_loop_helper import construct_dataframe
 
 class DirectPrediction(Goal):
     def __init__(self, env):

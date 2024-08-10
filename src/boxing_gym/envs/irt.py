@@ -4,8 +4,8 @@ import random
 import pymc as pm
 import numpy as np
 
-from src.boxing_gym.envs.goal import Goal
-from src.boxing_gym.agents.box_loop_helper import construct_dataframe
+from .goal import Goal
+from ..agents.box_loop_helper import construct_dataframe
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))

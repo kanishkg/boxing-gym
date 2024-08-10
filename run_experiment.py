@@ -11,21 +11,21 @@ import hydra
 import pymc as pm
 import arviz as az
 
-from src.boxing_gym.agents.agent import LMExperimenter
-import src.boxing_gym.envs.location_finding as location_finding
-import src.boxing_gym.envs.hyperbolic_temporal_discount as hyperbolic_temporal_discount
-import src.boxing_gym.envs.death_process as death_process
-import src.boxing_gym.envs.irt as irt
-import src.boxing_gym.envs.survival_analysis as survival_analysis
-import src.boxing_gym.envs.peregrines as peregrines
-import src.boxing_gym.envs.dugongs as dugongs
-import src.boxing_gym.envs.lotka_volterra as lotka_volterra
-import src.boxing_gym.envs.moral_machines as moral_machines
-import src.boxing_gym.envs.emotion as emotion
-from src.boxing_gym.agents.box_loop_helper import construct_features
+from boxing_gym.agents.agent import LMExperimenter
+import boxing_gym.envs.location_finding as location_finding
+import boxing_gym.envs.hyperbolic_temporal_discount as hyperbolic_temporal_discount
+import boxing_gym.envs.death_process as death_process
+import boxing_gym.envs.irt as irt
+import boxing_gym.envs.survival_analysis as survival_analysis
+import boxing_gym.envs.peregrines as peregrines
+import boxing_gym.envs.dugongs as dugongs
+import boxing_gym.envs.lotka_volterra as lotka_volterra
+import boxing_gym.envs.moral_machines as moral_machines
+import boxing_gym.envs.emotion as emotion
+from boxing_gym.agents.box_loop_helper import construct_features
 
 try:
-    from src.boxing_gym.agents.model_search import run_box_loop
+    from boxing_gym.agents.model_search import run_box_loop
 except ImportError:
     print("Could not import model_search, make sure you have the correct version of the box-loop repo")
     pass
