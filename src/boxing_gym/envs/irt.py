@@ -1,10 +1,11 @@
 import re
+import random
+
 import pymc as pm
 import numpy as np
-from goal import Goal
-import random
-# from scipy.special import expit as sigmoid
-from box_loop_helper import construct_dataframe
+
+from src.boxing_gym.envs.goal import Goal
+from src.boxing_gym.agents.box_loop_helper import construct_dataframe
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))

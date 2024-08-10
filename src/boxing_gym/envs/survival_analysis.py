@@ -1,10 +1,10 @@
+import random
+
 import numpy as np
 import pymc as pm
-import json
-from goal import Goal
-import random
-from box_loop_helper import construct_dataframe
 
+from src.boxing_gym.envs.goal import Goal
+from src.boxing_gym.agents.box_loop_helper import construct_dataframe
 
 PRIOR = """There are breast cancer patients where, for each patient, an amount of time has passed since they received surgery and their cancer has either metastasized or not."""
 NO_PRIOR = """You are observing a binary response for a tuple of two values, one binary and one integer (0 or 1, integer)."""

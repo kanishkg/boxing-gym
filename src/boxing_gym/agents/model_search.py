@@ -1,21 +1,21 @@
 import os
-import base64
 import pathlib
 import traceback
 import logging
-from tqdm import tqdm
 from typing import List
 from io import StringIO
 from itertools import chain
 import time
+
+from tqdm import tqdm
 from omegaconf import DictConfig, OmegaConf
 import hydra
 from hydra import compose 
 
 from box_loop_helper import extract_python_code, extract_text_within_markers
-from openai_wrapper import AsyncOpenAIGPT4V, AsyncOpenAIGPT3_Turbo
-from llm import LLMAgent, StanProposalLLMAgent, StanCriticLLMAgent 
-from box_loop_experiment import BoxLoop_Experiment
+from src.boxing_gym.agents.openai_wrapper import AsyncOpenAIGPT4V, AsyncOpenAIGPT3_Turbo
+from src.boxing_gym.agents.llm import LLMAgent, StanProposalLLMAgent, StanCriticLLMAgent 
+from src.boxing_gym.agents.box_loop_experiment import BoxLoop_Experiment
 
 def extract_code_helper(response, logger):
   try:

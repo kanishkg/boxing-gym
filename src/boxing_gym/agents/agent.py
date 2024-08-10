@@ -1,4 +1,3 @@
-from crfm import crfmChatLLM
 from langchain.schema import HumanMessage, SystemMessage, AIMessage
 import json
 import anthropic
@@ -14,19 +13,14 @@ class LMExperimenter:
         self.system = None
         self.messages = []
         self.all_messages = []
-        if "openai" in model_name:
-            self.llm = crfmChatLLM(model_name=model_name, temperature=temperature, max_tokens=max_tokens)
-        elif "gpt-4o" in model_name:
+        if "gpt-4o" in model_name:
             self.llm = openai.OpenAI()
         elif "claude" in model_name:
             self.llm = anthropic.Anthropic()
 
     def set_system_message(self, message):
         self.all_messages.append(f"role:system, messaage:{message}")
-        if "openai" in self.model_name:
-            self.system = message
-            self.messages.append(SystemMessage(content=message))
-        elif "gpt-4o" in self.model_name:
+        if "gpt-4o" in self.model_name:
             self.system = message
             self.messages.append({"role": "system", "content": [{"type": "text", "text": message}]})
         elif "claude" in self.model_name:
@@ -38,12 +32,7 @@ class LMExperimenter:
         #     message = re.sub(r'<thought>.*?</thought>', '', message)
 
         self.all_messages.append(f"role:{role}, messaage:{message}")
-        if "openai" in self.model_name:
-            if role == "user":
-                self.messages.append(HumanMessage(content=message))
-            else:
-                self.messages.append(AIMessage(content=message))
-        elif "gpt-4o" in self.model_name:
+        if "gpt-4o" in self.model_name:
             self.messages.append(
                 {
                     "role": role,
@@ -68,9 +57,7 @@ class LMExperimenter:
 
     def prompt_llm(self, request_prompt):
         self.add_message(request_prompt)
-        if "openai" in self.model_name:
-            full_response = self.llm.generate([self.messages], stop=["Q:"]).generations[0][0].text
-        elif "gpt-4o" in self.model_name:
+        if "gpt-4o" in self.model_name:
             full_response = self.llm.chat.completions.create(model=self.model_name, messages=self.messages, max_tokens=self.max_tokens, temperature=self.temperature)#.content[0].text
             full_response = full_response.choices[0].message.content
         elif "claude" in self.model_name:

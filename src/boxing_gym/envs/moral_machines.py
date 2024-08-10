@@ -1,14 +1,13 @@
+import re
+import random
+
 import numpy as np
 import pymc as pm
-import re
-from crfm import crfmChatLLM
-from langchain.schema import HumanMessage, SystemMessage, AIMessage
-import re
-import anthropic
-from goal import Goal
-import random
 from scipy.stats import norm
-from box_loop_helper import construct_dataframe
+import openai
+
+from src.boxing_gym.envs.goal import Goal
+from src.boxing_gym.agents.box_loop_helper import construct_dataframe
 
 class DirectPrediction(Goal):
     def __init__(self, env):
@@ -288,13 +287,13 @@ Limit your explanation to {com_limit} words"""
         return description
 
 class MoralMachine:
-    def __init__(self, model_name="openai/gpt-4-1106-preview"):
+    def __init__(self, model_name="gpt-4o"):
         self.model_name = model_name
         self.env_name = "moral"
-        if "openai" in model_name:
-            self.llm = crfmChatLLM(model_name=model_name, temperature=0.7, max_tokens=200)
-        elif "claude" in model_name:
-            self.llm = anthropic.Anthropic()
+        if "gpt-4o" in model_name:
+            self.llm = openai.OpenAI()
+        else:
+            raise ValueError("Model not supported")
         self.characters = ['stroller', 'boy', 'girl', 'pregnant_woman', 'male_doctor', 'female_doctor',
                         'female_athlete', 'male_athlete', 'female_executive', 'male_executive',
                         'large_woman', 'large_man', 'homeless', 'old_man', 'old_woman', 'criminal', 'dog', 'cat']
@@ -506,11 +505,30 @@ When asked to answer a question about the environment, respond in the format spe
                         beta_intervention=self.beta_intervention)
         # print(system)
         # print(query)
-        if "openai" in self.model_name:
-            user_message = HumanMessage(content=query)
-            system_message = SystemMessage(content=system) 
-            response = self.llm.generate([[system_message, user_message]], stop=["Q:"]).generations[0][0].text
-        # print(response)
+        if "gpt-4o" in self.model_name:
+            messages = [
+                {
+                    "role": "system",
+                    "content": [
+                        {
+                            "type": "text",
+                            "value": system
+                        }
+                    ]
+                },
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "value": query
+                        }
+                    ]
+                }
+            ]
+            full_response = self.llm.chat.completions.create(model=self.model_name, messages=messages, max_tokens=512, temperature=0.7)#.content[0].text
+            response = full_response.choices[0].message.content
+
         response = f"The participant responded with: {response}\n"
         
         return response, choice

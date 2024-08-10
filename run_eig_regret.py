@@ -5,16 +5,16 @@ import hydra
 from omegaconf import DictConfig
 import json
 
-import location_finding
-import hyperbolic_temporal_discount
-import death_process
-import irt
-import survival_analysis
-import peregrines
-import dugongs
-import lotka_volterra
-import moral_machines
-import emotion
+import src.boxing_gym.envs.location_finding as location_finding
+import src.boxing_gym.envs.hyperbolic_temporal_discount as hyperbolic_temporal_discount
+import src.boxing_gym.envs.death_process as death_process
+import src.boxing_gym.envs.irt as irt
+import src.boxing_gym.envs.survival_analysis as survival_analysis
+import src.boxing_gym.envs.peregrines as peregrines
+import src.boxing_gym.envs.dugongs as dugongs
+import src.boxing_gym.envs.lotka_volterra as lotka_volterra
+import src.boxing_gym.envs.moral_machines as moral_machines
+import src.boxing_gym.envs.emotion as emotion
 
 
 @hydra.main(version_base=None, config_path="conf", config_name="config_eig")

@@ -1,11 +1,12 @@
 import numpy as np
-from itertools import permutations
-from scipy.stats import norm, halfnorm, expon
-from goal import Goal
-import pymc as pm
 import random
-import matplotlib.pyplot as plt
-from box_loop_helper import construct_dataframe
+from itertools import permutations
+
+from scipy.stats import norm
+import pymc as pm
+
+from src.boxing_gym.envs.goal import Goal
+from src.boxing_gym.agents.box_loop_helper import construct_dataframe
 
 class DirectGoal(Goal):
     def __init__(self, env):

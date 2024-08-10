@@ -1,11 +1,13 @@
-import numpy as np
-import pymc as pm
-from scipy.stats import norm, halfnorm
 import json
-from goal import Goal
 import random
 import re
-from box_loop_helper import construct_dataframe
+
+import numpy as np
+import pymc as pm
+from scipy.stats import norm
+
+from src.boxing_gym.envs.goal import Goal
+from src.boxing_gym.agents.box_loop_helper import construct_dataframe
 
 
 PRIOR = """Sea cows are different lengths at different ages."""

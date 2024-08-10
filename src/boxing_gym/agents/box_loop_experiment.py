@@ -4,20 +4,13 @@ import pandas as pd
 import importlib
 
 import numpy as np
-import json
-import pickle
-import os
-import time
-import arviz as az
+import pymc as pm
 
 from box_loop_prompts import get_stan_system_prompt, get_stan_user_prompt
 from box_loop_prompts import get_stan_system_prompt_prior, get_stan_user_prompt_prior
 from box_loop_helper import pymc_evaluate
 import threading
 import signal
-import time
-import pymc as pm
-from omegaconf import OmegaConf
 
 class BoxLoop_Experiment():
   def __init__(self, 
@@ -92,9 +85,9 @@ class BoxLoop_Experiment():
       file.write(gen_code)
 
     importlib.invalidate_caches()
-    import ppl_gen_model
+    import src.boxing_gym.agents.ppl_gen_model as ppl_gen_model
     importlib.reload(ppl_gen_model)
-    from ppl_gen_model import gen_model
+    from src.boxing_gym.agents.ppl_gen_model import gen_model
     return gen_model
 
   def get_prior_samples(self, str_prob_prog):

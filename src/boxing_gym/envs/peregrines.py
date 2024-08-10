@@ -1,10 +1,11 @@
+import random
+
 import numpy as np
 import pymc as pm
-from scipy.stats import norm, halfnorm, distributions
-import json
-from goal import Goal
-import random
-from box_loop_helper import construct_dataframe
+from scipy.stats import distributions
+
+from src.boxing_gym.envs.goal import Goal
+from src.boxing_gym.agents.box_loop_helper import construct_dataframe
 
 
 class DirectGoal(Goal):

@@ -1,6 +1,7 @@
+import re
+
 import pandas as pd
 import arviz as az
-import re
 
 def construct_dataframe(env):
     # Get the data from the environment

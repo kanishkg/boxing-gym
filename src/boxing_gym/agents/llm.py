@@ -5,9 +5,8 @@ from typing import (
 )
 
 import asyncio
-from base_agent import BaseAgent
-import base64
-import time
+
+from src.boxing_gym.agents.base_agent import BaseAgent
 
 # TODO: inherit from this class so we can support both stan and gp stuff
 # since the prompts for those are a bit different

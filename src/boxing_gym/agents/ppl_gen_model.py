@@ -1,5 +1,5 @@
-import pymc as pm
 import numpy as np
+import pymc as pm
 import pandas as pd
 
 def gen_model(observed_data):

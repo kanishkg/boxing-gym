@@ -1,13 +1,13 @@
-import pymc as pm
-import numpy as np
-from crfm import crfmChatLLM
-from langchain.schema import HumanMessage, SystemMessage, AIMessage
-import re
-import anthropic
-from goal import Goal
 import random
+import re
+
+import numpy as np
+import pymc as pm
+import openai
 from scipy.stats import norm
-from box_loop_helper import construct_dataframe
+
+from src.boxing_gym.envs.goal import Goal
+from src.boxing_gym.agents.box_loop_helper import construct_dataframe
 
 class DirectEmotionPrediction(Goal):
     def __init__(self, env):
@@ -262,14 +262,14 @@ Limit your explanation to {com_limit} words"""
     
 
 class EmotionFromOutcome:
-    def __init__(self, model_name="openai/gpt-4-1106-preview"):
+    def __init__(self, model_name="gpt-4o"):
         self.model_name = model_name
         self.env_name = "emotion"
 
-        if "openai" in model_name:
-            self.llm = crfmChatLLM(model_name=model_name, temperature=0.7, max_tokens=200)
-        elif "claude" in model_name:
-            self.llm = anthropic.Anthropic()
+        if "gpt-4o" in model_name:
+            self.llm = openai.OpenAI()
+        else:
+            raise ValueError("Model not supported")
         self.system = """You are observing a user play a game where they spin a wheel.
 The wheel has three possible outcomes (monetary values), and the probabilities of landing on each are known to you and the player. 
 You are observing the player play the game and the outcomes.
@@ -418,10 +418,29 @@ When asked to answer a question about the environment, respond in the format spe
         # call the LLM to generate a response
         query = self.user_template.format(v1=prizes[0], p1=probs[0], v2=prizes[1], p2=probs[1], v3=prizes[2], p3=probs[2], outcome=win, **emotions)
         # print(query)
-        if "openai" in self.model_name:
-            user_message = HumanMessage(content=query)
-            system_message = SystemMessage(content=self.system) 
-            response = self.llm.generate([[system_message, user_message]], stop=["Q:"]).generations[0][0].text
+        if "gpt-4o" in self.model_name:
+            messages = [
+                {
+                    "role": "system",
+                    "content": [
+                        {
+                            "type": "text",
+                            "value": self.system
+                        }
+                    ]
+                },
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "value": query
+                        }
+                    ]
+                }
+            ]
+            full_response = self.llm.chat.completions.create(model=self.model_name, messages=messages, max_tokens=512, temperature=0.7)#.content[0].text
+            response = full_response.choices[0].message.content
         response = f"The participant responded with: {response}\n"
         return response, emotions 
     

@@ -1,30 +1,31 @@
 import os
-import tqdm
-import json
+import importlib
 import logging
-import hydra
+import json
 import random
+
 import numpy as np
-from agent import LMExperimenter
+import tqdm
 from omegaconf import DictConfig, OmegaConf
-import location_finding
-import hyperbolic_temporal_discount
-import death_process
-import irt
-import survival_analysis
-import peregrines
-import dugongs
-import lotka_volterra
-import moral_machines
-import emotion
+import hydra
 import pymc as pm
 import arviz as az
-import importlib
-import rat_tumor
-from box_loop_helper import construct_features
+
+from src.boxing_gym.agents.agent import LMExperimenter
+import src.boxing_gym.envs.location_finding as location_finding
+import src.boxing_gym.envs.hyperbolic_temporal_discount as hyperbolic_temporal_discount
+import src.boxing_gym.envs.death_process as death_process
+import src.boxing_gym.envs.irt as irt
+import src.boxing_gym.envs.survival_analysis as survival_analysis
+import src.boxing_gym.envs.peregrines as peregrines
+import src.boxing_gym.envs.dugongs as dugongs
+import src.boxing_gym.envs.lotka_volterra as lotka_volterra
+import src.boxing_gym.envs.moral_machines as moral_machines
+import src.boxing_gym.envs.emotion as emotion
+from src.boxing_gym.agents.box_loop_helper import construct_features
 
 try:
-    from model_search import run_box_loop
+    from src.boxing_gym.agents.model_search import run_box_loop
 except ImportError:
     print("Could not import model_search, make sure you have the correct version of the box-loop repo")
     pass
@@ -149,9 +150,9 @@ def get_gen_model(gen_code):
     with open("ppl_gen_model.py", 'w') as file:
         file.write(gen_code)
     importlib.invalidate_caches()
-    import ppl_gen_model
+    import src.boxing_gym.agents.ppl_gen_model as ppl_gen_model
     importlib.reload(ppl_gen_model)
-    from ppl_gen_model import gen_model
+    from src.boxing_gym.agents.ppl_gen_model import gen_model
     return gen_model
 
 def get_ppl_prediction(env, program_dict, question, prior_mode):
@@ -353,7 +354,6 @@ def main(config: DictConfig):
         "morals": moral_machines.MoralMachine,
         "emotion": emotion.EmotionFromOutcome,
         "lotka_volterra": lotka_volterra.LotkaVolterra,
-        "rat_tumor": rat_tumor.RatTumorModel
     }
     nameenvtogoal = {
         ("hyperbolic_temporal_discount", "direct"): hyperbolic_temporal_discount.DirectGoal,
@@ -382,8 +382,6 @@ def main(config: DictConfig):
         ("morals", "direct_discovery"): moral_machines.DirectPredictionNaive,
         ("lotka_volterra", "direct"): lotka_volterra.DirectGoal,
         ("lotka_volterra", "direct_discovery"): lotka_volterra.DirectGoalNaive,
-        ("rat_tumor", "direct"): rat_tumor.DirectGoal,
-        ("rat_tumor", "direct_discovery"): rat_tumor.DirectGoalNaive
     }
 
     env = nametoenv[env_name](**env_params)

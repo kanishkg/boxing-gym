@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "boxing_gym"
+version = "0.1.0"
+description = "Boxing Gym"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Kanishk Gandhi", email = "kanishk.gandhi@stanford.edu" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "dependency1>=1.0",
+    "dependency2>=2.0",
+    # Add your dependencies here, or leave it empty if you're using a requirements.txt
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools]
+include_package_data = true

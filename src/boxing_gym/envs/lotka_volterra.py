@@ -1,18 +1,9 @@
 import numpy as np
-import json
-from crfm import crfmChatLLM
-from langchain.schema import HumanMessage, SystemMessage, AIMessage
-import pymc as pm
 from scipy.integrate import odeint
-from scipy.stats import norm
-from goal import Goal
-from box_loop_helper import construct_dataframe
-import random
 
-# TODO: check system messages in env
-# TODO: Add eig
-# 
-# DirectGoalNaive 
+from src.boxing_gym.envs.goal import Goal
+from src.boxing_gym.agents.box_loop_helper import construct_dataframe
+
 class DirectGoal(Goal):
     def __init__(self, env):
         super().__init__(env)
