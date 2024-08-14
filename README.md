@@ -12,6 +12,11 @@ cd boxing_gym
 pip install -e .
 ```
 
+You should now be able to import the BoxingGym package in your Python environment.
+```python
+import boxing_gym
+```
+
 ## Interacting with an Environment
 Environments in BoxingGym simulate scientific models across different domains. You can interact with an environment using predefined methods to conduct experiments, collect data, and test hypotheses.
 
@@ -128,6 +133,12 @@ class MyCustomGoal(Goal):
 ```
 
 ## Creating a New Agent
+
+## Metrics
+BoxingGym provides a set of metrics to evaluate the performance of agents in different environments. These metrics include:
+- **Expected Information Gain (EIG)**: Measures the expected reduction in uncertainty after collecting new data.
+- **Mean Squared Error (MSE)**: Measures the average squared difference between predictions and measurements.
+- **Communication Error**: ...
 
 ## Directory Structure
 - Environments: `src/boxing_gym/envs/`
