@@ -1,7 +1,17 @@
-# BoxingGym
--------
-## Overview
+<h1 align="center">🥊 BoxingGym 🥊</h1>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Version-0.1.0-blue" alt="Version">
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
+</p>
+
+---
+
+<p align="center">
 BoxingGym is a benchmarking framework designed to evaluate the capabilities of language-based agents in experimental design and model discovery. The framework consists of several simulated environments where agents can perform experiments, propose models, and refine them based on collected data.
+</p>
+
+
 
 ## Getting Started with Installation
 To install BoxingGym, clone the repository and install the dependencies:
