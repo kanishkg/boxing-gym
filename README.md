@@ -5,11 +5,16 @@
   <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
 </p>
 
----
-
 <p align="center">
+  <em>“To understand a system, you must perturb it.”</em><br>
+  – George Box
+</p>
+
+
+<p align="justify">
 BoxingGym is a benchmarking framework designed to evaluate the capabilities of language-based agents in experimental design and model discovery. The framework consists of several simulated environments where agents can perform experiments, propose models, and refine them based on collected data.
 </p>
+
 
 
 
