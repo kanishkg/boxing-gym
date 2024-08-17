@@ -219,7 +219,6 @@ def get_ppl_prediction(env, program_dict, question, prior_mode):
             prediction = str(numerical_pred)
         return prediction
 
-
 def ppl_evaluate(final_results, goal, scientist, num_evals, include_prior, proposed_programs_all, critic_info_all, prior_mode=False, critic_mode=False):
 
     if not prior_mode:
@@ -276,7 +275,6 @@ def evaluate(final_results, goal, scientist, num_evals, include_prior):
     for i in tqdm.tqdm(range(num_evals)):
         question, gt = goal.get_goal_eval_question(include_prior)
         question = final_results + '\n' + question
-        # TODO check scientist does not save goal question
         prediction = scientist.generate_predictions(question)
         gts.append(gt)
         questions.append(question)

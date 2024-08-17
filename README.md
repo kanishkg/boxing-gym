@@ -18,7 +18,7 @@ import boxing_gym
 ```
 
 ## Interacting with an Environment
-Environments in BoxingGym simulate scientific models across different domains. You can interact with an environment using predefined methods to conduct experiments, collect data, and test hypotheses.
+Environments in BoxingGym simulate models of the world across different domains. You can interact with an environment using predefined methods to conduct experiments, collect data, and test hypotheses.
 
 Example code to interact with an environment(see `run_experiment.py` for a complete example):
     
@@ -50,6 +50,49 @@ next_observation = env.step(action)
 ```
 
 ## Creating a New Environment 
+Environment in BoxingGym define the simulated world model and the interactions an agent can have with it. To create a new environment, subclass the Environment class and implement the necessary methods:
+
+```python
+
+class CustomEnvironment:
+    def __init__(self, param1, param2, param3):
+        super().__init__()
+        self.param1 = param1
+        self.param2 = param2
+        self.param3 = param3
+        self.reset()
+        self.env_name = "custom_environment"
+
+    def reset(self):
+        # Initialize or reset the environment to a starting state
+        # sample params for the world model
+        self.model_params = sample...
+        self.data = []
+
+    def get_system_message(self, include_prior=True, goal=None):
+        # Add a system message to the environment
+    
+    def step(self, action):
+        # Process the input_value to produce an output
+        result = # pass input through model to get the next observation
+        self.data.append(result)  # Store the result if necessary
+        return result
+    
+    def validate_input(self, action):
+        # validate the input action
+        # return error message if invalid so that the agent can correct it
+        return action
+    
+    def sample_random_input(self):
+        # Sample a random valid action for the environment
+
+    def run_experiment(self, action):
+        validated_input = self.validate_input(action)
+        if isinstance(validated_input, str):
+            return validated_input, False
+        result = self.step(validated_input)
+        return result, True
+```
 
 ## Creating a New Goal
 Goals in BoxingGym define the objectives for an agent within an environment. To create a new goal, subclass the Goal class and implement the necessary methods:
@@ -62,11 +105,11 @@ class MyCustomGoal(Goal):
         super().__init__(env)  # Initialize with environment
         self.eval_points = []  # Store evaluation points
         self.eval_pointer = 0  # Pointer for evaluation
-        self.update_param_cache = {}  # Cache for parameter updates
+        # other initialization code
     
     def get_system_message(self, include_prior):
         # Generate goal description based on prior knowledge
-        goal_description = "Predict output based on observations." if include_prior else "Predict environment's integer output."
+        goal_description = "Your goal is to "# goal description
         return self.env.get_system_message(include_prior, goal_description)
     
     def get_goal_eval_question(self, include_prior):
@@ -76,97 +119,99 @@ class MyCustomGoal(Goal):
             y = self.env.step(x) # Get output
             self.eval_points.append((time, infected_num)) # Store evaluation point
         else:
-            time, infected_num = self.eval_points[self.eval_pointer] # Retrieve evaluation point
+            x, y = self.eval_points[self.eval_pointer] # Retrieve evaluation point
         
         self.eval_pointer += 1
-        question = f"What is the number of infected individuals at time {time}?" if include_prior else f"What is the output of the environment at input {time}?"
-        return question + " Respond with a positive integer.", infected_num
+        question = f"What y for {x}"
+        return question, y
     
     def evaluate_predictions(self, predictions, measurements):
-        # Evaluate predictions using Mean Squared Error (MSE)
-        parsed_predictions = [int(float(pred)) for pred in predictions]
-        mse = np.mean((np.array(parsed_predictions) - np.array(measurements)) ** 2)
-        std = np.std((np.array(parsed_predictions) - np.array(measurements)) ** 2)
+        # Evaluate the predictions made by the agent
         return mse, std
     
     def expected_information_gain(self, query_point, num_outer_samples=1000, num_inner_samples=10):
         # Calculate EIG for a new query point using a Bayesian approach
-        xi = query_point
-        existing_data = self.env.observation_data
-        
-        if tuple(existing_data) not in self.update_param_cache:
-            with pm.Model() as model:
-                theta = pm.TruncatedNormal('theta', mu=self.env.mu, sigma=self.env.sigma, lower=self.env.lower_bound, upper=self.env.upper_bound)
-                pm.Binomial('infected_num', n=self.env.N, p=1 - pm.math.exp(-theta * xi), observed=[d[1] for d in existing_data])
-                trace = pm.sample(num_outer_samples * num_inner_samples + num_outer_samples, tune=1000, return_inferencedata=False)
-            
-            thetas = trace['theta']
-            updated_theta_samples = thetas[:num_outer_samples]
-            self.update_param_cache[tuple(existing_data)] = (updated_theta_samples, thetas[num_outer_samples:])
-        else:
-            updated_theta_samples, thetas = self.update_param_cache[tuple(existing_data)]
-        
-        log_likelihoods = []
-        for n, outer_theta in enumerate(updated_theta_samples):
-            eta = 1 - np.exp(-outer_theta * xi)
-            sampled_infected_num = np.random.binomial(self.env.N, eta)
-            log_liks = [np.log(eta) if i < sampled_infected_num else np.log(1 - eta) for i in range(self.env.N)]
-            log_likelihood = np.mean(log_liks)
-            
-            marginal_log_likelihoods = []
-            for inner_theta in thetas[n*num_inner_samples:(n+1)*num_inner_samples]:
-                eta = 1 - np.exp(-inner_theta * xi)
-                marginal_log_liks = [np.log(eta) if i < sampled_infected_num else np.log(1 - eta) for i in range(self.env.N)]
-                marginal_log_likelihoods.append(np.mean(marginal_log_liks))
-            
-            log_marginal_likelihood = np.max(marginal_log_likelihoods) + np.log(np.mean(np.exp(np.array(marginal_log_likelihoods) - np.max(marginal_log_likelihoods))))
-            log_likelihoods.append(log_likelihood - log_marginal_likelihood)
-        
-        return np.mean(log_likelihoods)
-    
-    def get_norm_factors(self):
-        # Calculate normalization factors (mean and std of errors)
-        outs = [self.env.step(self.env.sample_random_input()) for _ in range(10000)]
-        mean_err, std_err = np.mean(outs), np.std(outs)
-        return mean_err, std_err
-
+        # See existing environments for more details on how to implement this method
 ```
 
 ## Creating a New Agent
+An agent in BoxingGym is an entity that interacts with environments to perform experiments, propose models, and refine them based on collected data. To create a new agent, subclass the Agent class and implement the necessary methods:
 
-## Metrics
-BoxingGym provides a set of metrics to evaluate the performance of agents in different environments. These metrics include:
-- **Expected Information Gain (EIG)**: Measures the expected reduction in uncertainty after collecting new data.
-- **Mean Squared Error (MSE)**: Measures the average squared difference between predictions and measurements.
-- **Communication Error**: ...
+```python
+class MyCustomAgent:
+    def __init__(self, param1, param2, param3):
+        super().__init__()
+        self.param1 = param1
+        self.param2 = param2
+        self.param3 = param3
+        self.reset()
+        self.agent_name = "custom_agent"
+    
+    def generate_actions(self, observation):
+        # Generate an action based on the past result 
+        return action
+    
+    def generate_predictions(self, query):
+        # Generate a prediction based on the current query 
+        return prediction
+```
+
+## Running Experiments
+To run an experiment in BoxingGym, you can use the `run_experiment.py` script. The script allows you to specify the environment, agent, and goal for the experiment. You can also configure the experiment using Hydra configuration files.
+
+Example configuration file for running an experiment:
+
+example.yaml
+```yaml
+  - _self_
+  - llms: openai # LLM config to use
+  - exp: oed # Experiment type discovery or oed (Optimal Experiment Design)
+  - envs: custom_env # Environments to use
+include_prior: true # Include prior knowledge in the goal description
+```
+
+openai.yaml
+```yaml
+  - model_name: "gpt-4o"
+  - temperature: 0.0
+  - max_tokens: 512
+```
+
+oed.yaml
+```yaml
+  - num_experiments: [0, 1, 3, 5, 7, 10]
+  - experiment_type: "oed"
+```
+
+custom_env.yaml
+```yaml
+  - env_name: "custom_environment"
+  - goal_name: "custom_goal"
+  - num_evals: 10
+  - env_params:
+    - param1: 1
+    - param2: 2
+    - param3: 3
+```
 
 ## Directory Structure
 - Environments: `src/boxing_gym/envs/`
 - Agents: `src/boxing_gym/agents/`
-- Configurations for experiments: `configs/`
+    - LLM Agent: `src/boxing_gym/agents/agent.py`
+    - Box's Apprentice: Model Criticism LLM in `src/boxing_gym/agents/llm.py`
+- Configurations for experiments: We use hydra for configs, `conf/`
 - Running experiments: `run_experiment.py`
 - Scripts for running experiments: `scripts/`
 - Analysis of experiments: `analysis/`
 
-## Existing Environments
-BoxingGym comes with a set of pre-built environments, each representing different scientific domains:
-
-- **Location Finding**: Predict and locate signal sources in an n-dimensional space.
-- **Hyperbolic Temporal Discounting**: Understand participant behavior in reward delay scenarios.
-- **Predator-Prey Dynamics**: Simulate and predict population dynamics over time.
-- **Item Response Theory (IRT)**: Model student responses based on question difficulty and student ability.
-And more...
-
 ## Existing Agents
 ### Box's Apprentice
 Box's Apprentice is an agent that combines language model capabilities with statistical modeling to perform experimental design and model discovery. It can build explicit generative models to improve predictions.
-
-See ...
-
+Box's Apprentice: Model Criticism LLM in `src/boxing_gym/agents/llm.py`
 ### LLM Agent
 The LLM Agent is a language-based agent that interacts with environments purely through natural language. It is capable of proposing and testing scientific theories but relies on its language processing abilities.
+LLM Agent: `src/boxing_gym/agents/agent.py`
 
-See ...
 
 ## Contributing
 We welcome contributions to BoxingGym, especially for new environments and agents. If you want to contribute, please follow these steps:

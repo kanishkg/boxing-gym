@@ -254,7 +254,6 @@ class ModelCriticismLLMAgent(LLMAgent):
           self.add_incontext_examples(messages=messages, incontext_info=incontext_info)
         return messages
 
-
 class StanProposalLLMAgent(LLMAgent):
 
     def add_incontext_examples(self, messages: List[str], incontext_info: List):
